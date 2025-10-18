@@ -1,0 +1,81 @@
+{
+  "layouts": {
+    "bold-minimalist-hero": {
+      "description": "Bold minimalist hero slide with title and subtitle",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "items": [
+        { "i": "title", "x": 0, "y": 0, "w": 12, "h": 4, "type": "text", "data": { "text": "Hero Title", "size": "4xl", "align": "center" } },
+        { "i": "subtitle", "x": 0, "y": 4, "w": 12, "h": 2, "type": "text", "data": { "text": "Hero Subtitle", "size": "xl", "align": "center" } }
+      ]
+    },
+    "data-grid-dashboard": {
+      "description": "Data grid dashboard with KPI cards",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "header": { "i": "header", "x": 0, "y": 0, "w": 12, "h": 3, "type": "header", "data": { "title": "Key Performance Indicators", "subtitle": "Q4 2024 Dashboard" } },
+      "items": [
+        { "i": "kpi1", "x": 0, "y": 0, "w": 3, "h": 3, "type": "kpi-card", "data": { "metric": "24%", "label": "Growth", "icon": "trending-up" } },
+        { "i": "kpi2", "x": 3, "y": 0, "w": 3, "h": 3, "type": "kpi-card", "data": { "metric": "$2.5M", "label": "Revenue", "icon": "dollar-sign" } },
+        { "i": "kpi3", "x": 6, "y": 0, "w": 3, "h": 3, "type": "kpi-card", "data": { "metric": "150k", "label": "Users", "icon": "users" } },
+        { "i": "kpi4", "x": 9, "y": 0, "w": 3, "h": 3, "type": "kpi-card", "data": { "metric": "95%", "label": "Satisfaction", "icon": "smile" } }
+      ]
+    },
+    "photo-narrative-flow": {
+      "description": "Photo narrative flow with images and text",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "items": [
+        { "i": "image1", "x": 0, "y": 0, "w": 6, "h": 6, "type": "photo-card", "data": { "src": "/placeholder.jpg", "alt": "Product Image" } },
+        { "i": "text1", "x": 6, "y": 0, "w": 6, "h": 6, "type": "text", "data": { "text": "Story text here", "size": "lg", "align": "left" } }
+      ]
+    },
+    "comparison-table": {
+      "description": "Comparison table layout",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "items": [
+        { "i": "table", "x": 0, "y": 0, "w": 12, "h": 8, "type": "table", "data": { "headers": ["Feature", "Us", "Them"], "rows": [["Speed", "Fast", "Slow"]] } }
+      ]
+    },
+    "chart-showcase": {
+      "description": "Chart showcase with data visualization",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "header": { "i": "header", "x": 0, "y": 0, "w": 12, "h": 3, "type": "header", "data": { "title": "Data Visualization", "subtitle": "Performance Analytics" } },
+      "items": [
+        { "i": "chart", "x": 0, "y": 0, "w": 8, "h": 6, "type": "chart", "data": { "type": "bar", "data": [] } },
+        { "i": "legend", "x": 8, "y": 0, "w": 4, "h": 6, "type": "text", "data": { "text": "Chart explanation", "size": "sm" } }
+      ]
+    },
+    "timeline-roadmap": {
+      "description": "Timeline roadmap layout",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "items": [
+        { "i": "timeline", "x": 0, "y": 0, "w": 12, "h": 8, "type": "timeline", "data": { "events": [] } }
+      ]
+    },
+    "testimonial-gallery": {
+      "description": "Testimonial gallery with quotes",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "header": { "i": "header", "x": 0, "y": 0, "w": 12, "h": 3, "type": "header", "data": { "title": "Customer Testimonials", "subtitle": "What Our Clients Say" } },
+      "items": [
+        { "i": "testimonial1", "x": 0, "y": 0, "w": 6, "h": 4, "type": "testimonial", "data": { "quote": "Great product!", "author": "John Doe" } },
+        { "i": "testimonial2", "x": 6, "y": 0, "w": 6, "h": 4, "type": "testimonial", "data": { "quote": "Love it!", "author": "Jane Smith" } }
+      ]
+    },
+    "metrics-breakdown": {
+      "description": "Metrics breakdown with detailed KPIs",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "header": { "i": "header", "x": 0, "y": 0, "w": 12, "h": 3, "type": "header", "data": { "title": "Performance Metrics", "subtitle": "Detailed KPI Analysis" } },
+      "items": [
+        { "i": "metric1", "x": 0, "y": 0, "w": 4, "h": 3, "type": "metric-card", "data": { "value": 85, "unit": "%", "label": "Conversion" } },
+        { "i": "metric2", "x": 4, "y": 0, "w": 4, "h": 3, "type": "metric-card", "data": { "value": 120, "unit": "days", "label": "Retention" } },
+        { "i": "metric3", "x": 8, "y": 0, "w": 4, "h": 3, "type": "metric-card", "data": { "value": 4.8, "unit": "/5", "label": "Rating" } }
+      ]
+    },
+    "call-to-action": {
+      "description": "Call to action slide",
+      "grid": { "cols": 12, "rowHeight": 30, "margin": [10, 10] },
+      "items": [
+        { "i": "cta-text", "x": 0, "y": 0, "w": 12, "h": 4, "type": "text", "data": { "text": "Get Started Today!", "size": "3xl", "align": "center" } },
+        { "i": "cta-button", "x": 4, "y": 4, "w": 4, "h": 2, "type": "button", "data": { "text": "Click Here", "variant": "primary" } }
+      ]
+    }
+  }
+}
