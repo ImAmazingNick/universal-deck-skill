@@ -44,6 +44,7 @@ class DeckExporter {
         if (!this.theme) {
             throw new Error(`Theme '${options.theme}' not found`);
         }
+        this.typographyScale = this.buildTypographyScale();
         // Compute PPTX-friendly theme background
         this.slideBgColor = this.computeBackgroundColor(this.theme);
         // Configure presentation settings
@@ -107,46 +108,62 @@ class DeckExporter {
         console.log(`✅ Deck generation complete in ${totalTime}ms!`);
     }
     createTitleSlide() {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
         const slide = this.pptx.addSlide();
         // Add background
         slide.background = { color: this.slideBgColor };
         // Add title
         const title = ((_a = this.titleSlide) === null || _a === void 0 ? void 0 : _a.title) || 'Marketing Presentation';
+        const titleFontSize = (_b = this.typographyScale['6xl']) !== null && _b !== void 0 ? _b : 60;
         slide.addText(title, {
-            x: 0.5,
-            y: 1.5,
-            w: 9,
-            h: 1,
-            fontSize: 44,
+            x: 0.8,
+            y: 1.2,
+            w: 8.4,
+            h: 1.4,
+            fontSize: titleFontSize,
+            fontFace: ((_d = (_c = this.theme.typography) === null || _c === void 0 ? void 0 : _c.fontFamily) === null || _d === void 0 ? void 0 : _d.heading) || 'Space Grotesk',
             color: this.theme.colors.primary,
             bold: true,
-            align: 'center',
-            valign: 'middle'
+            align: 'left',
+            valign: 'top',
+            lineSpacing: this.getLineSpacing(titleFontSize, 'heading'),
+            shrinkText: true
         });
         // Add subtitle
         const subtitleParts = [];
-        if ((_b = this.titleSlide) === null || _b === void 0 ? void 0 : _b.subtitle)
+        if ((_e = this.titleSlide) === null || _e === void 0 ? void 0 : _e.subtitle)
             subtitleParts.push(this.titleSlide.subtitle);
         const meta = [];
-        if ((_c = this.titleSlide) === null || _c === void 0 ? void 0 : _c.author)
+        if ((_f = this.titleSlide) === null || _f === void 0 ? void 0 : _f.author)
             meta.push(this.titleSlide.author);
-        if ((_d = this.titleSlide) === null || _d === void 0 ? void 0 : _d.company)
+        if ((_g = this.titleSlide) === null || _g === void 0 ? void 0 : _g.company)
             meta.push(this.titleSlide.company);
-        if ((_e = this.titleSlide) === null || _e === void 0 ? void 0 : _e.date)
+        if ((_h = this.titleSlide) === null || _h === void 0 ? void 0 : _h.date)
             meta.push(this.titleSlide.date);
         if (meta.length > 0)
             subtitleParts.push(meta.join(' • '));
         const subtitleText = subtitleParts.length > 0 ? subtitleParts.join(' — ') : 'Generated with Claude Skills';
+        const subtitleFontSize = (_j = this.typographyScale['xl']) !== null && _j !== void 0 ? _j : 32;
         slide.addText(subtitleText, {
-            x: 0.5,
-            y: 3,
-            w: 9,
-            h: 0.5,
-            fontSize: 24,
+            x: 0.8,
+            y: 2.8,
+            w: 8.4,
+            h: 0.9,
+            fontSize: subtitleFontSize,
+            fontFace: ((_l = (_k = this.theme.typography) === null || _k === void 0 ? void 0 : _k.fontFamily) === null || _l === void 0 ? void 0 : _l.body) || 'Inter',
             color: this.theme.colors.foreground,
-            align: 'center',
-            valign: 'middle'
+            align: 'left',
+            valign: 'top',
+            lineSpacing: this.getLineSpacing(subtitleFontSize, 'snug'),
+            shrinkText: true
+        });
+        // Accent underline to introduce theme color
+        slide.addShape('line', {
+            x: 0.8,
+            y: 3.9,
+            w: 3,
+            h: 0,
+            line: { color: this.theme.colors.primary, width: 4 }
         });
     }
     createContentSlide() {
@@ -332,12 +349,48 @@ class DeckExporter {
                 break;
         }
     }
+    buildTypographyScale() {
+        var _a, _b, _c;
+        const fallbackScale = {
+            xs: 16,
+            sm: 18,
+            base: 24,
+            lg: 28,
+            xl: 34,
+            '2xl': 38,
+            '3xl': 46,
+            '4xl': 54,
+            '5xl': 64,
+            '6xl': 72,
+            '7xl': 86,
+            '8xl': 104,
+            '9xl': 132
+        };
+        const themeSizes = (_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontSize) !== null && _b !== void 0 ? _b : {};
+        const scale = {};
+        for (const [key, fallbackValue] of Object.entries(fallbackScale)) {
+            const themeValueRaw = themeSizes[key];
+            const themeValue = typeof themeValueRaw === 'number' ? themeValueRaw : Number(themeValueRaw);
+            const scaledTheme = !Number.isNaN(themeValue) ? Math.round(themeValue * 1.35) : Number.NaN;
+            scale[key] = Math.max(fallbackValue, Number.isNaN(scaledTheme) ? fallbackValue : scaledTheme);
+        }
+        // Preserve any additional theme steps that may exist (e.g., 10xl) with a generous upscale
+        for (const [key, value] of Object.entries(themeSizes)) {
+            if (scale[key])
+                continue;
+            const numericValue = typeof value === 'number' ? value : Number(value);
+            if (!Number.isNaN(numericValue)) {
+                scale[key] = Math.round(Math.max(numericValue * 1.35, (_c = scale.base) !== null && _c !== void 0 ? _c : fallbackScale.base));
+            }
+        }
+        return scale;
+    }
     // Unified mapping helpers that respect layout.grid rowHeight/margin
     computeMapping(layoutConfig) {
         var _a, _b;
         const slideWidthInches = 10; // 16:9 width
         const baseRowHeightPx = 30; // baseline matches resources default
-        const baseRowHeightInches = 0.45; // improved vertical rhythm
+        const baseRowHeightInches = 0.52; // taller row height for slide readability
         const baseMarginPx = 10; // baseline matches resources default
         const grid = layoutConfig.grid || { cols: 12, rowHeight: baseRowHeightPx, margin: [baseMarginPx, baseMarginPx] };
         const gridCols = (_a = grid.cols) !== null && _a !== void 0 ? _a : 12;
@@ -346,10 +399,10 @@ class DeckExporter {
         const rowHeightInches = baseRowHeightInches * (rowHeightPx / baseRowHeightPx);
         const scaleX = marginXpx / baseMarginPx;
         const scaleY = marginYpx / baseMarginPx;
-        const xPadInches = 0.15 * scaleX; // increased for better margins
-        const wPadInches = 0.25 * scaleX; // increased for better spacing
-        const yPadInches = 0.25 * scaleY; // increased for better vertical rhythm
-        const hPadInches = 0.15 * scaleY; // increased for better breathing room
+        const xPadInches = 0.25 * scaleX; // generous outer margin
+        const wPadInches = 0.35 * scaleX; // improved gutter spacing
+        const yPadInches = 0.35 * scaleY; // more vertical breathing room
+        const hPadInches = 0.2 * scaleY; // reduce crowding within blocks
         return { gridCols, rowHeightInches, xPadInches, wPadInches, yPadInches, hPadInches, slideWidthInches };
     }
     toInchesX(gridX, gridCols = 12) {
@@ -381,7 +434,7 @@ class DeckExporter {
         const color = this.validateColor(textData.color) || this.theme.colors.foreground;
         const fontFamily = textData.fontFamily || ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.body) || 'Inter';
         const letterSpacing = this.getLetterSpacingValue(textData.letterSpacing);
-        const lineHeight = textData.lineHeight ? this.getLineHeightValue(textData.lineHeight) : undefined;
+        const lineSpacing = this.getLineSpacing(fontSize, textData.lineHeight);
         // Use theme-aware shadow color instead of hardcoded black
         const shadowColor = textData.textShadow ? (this.theme.colors.primary.replace('#', '') || '000000') : undefined;
         const textShadow = textData.textShadow ? { type: 'outer', color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
@@ -407,12 +460,13 @@ class DeckExporter {
             slide.addText(richTextSegments, {
                 x, y, w, h,
                 align: align,
-                valign: 'middle',
+                valign: 'top',
                 fontFace: fontFamily,
                 wrap: true,
-                lineSpacing: lineHeight,
+                lineSpacing,
                 charSpacing: letterSpacing,
-                shadow: textShadow
+                shadow: textShadow,
+                shrinkText: true
             });
         }
         else {
@@ -424,37 +478,40 @@ class DeckExporter {
                 fontSize,
                 color,
                 align: align,
-                valign: 'middle',
+                valign: 'top',
                 fontFace: fontFamily,
                 bold: weight === 'bold' || weight === 'semibold' || weight === 'extrabold',
                 italic: weight === 'italic',
                 wrap: true,
-                lineSpacing: lineHeight,
+                lineSpacing,
                 charSpacing: letterSpacing,
-                shadow: textShadow
+                shadow: textShadow,
+                shrinkText: true
             });
         }
     }
     addHeaderToSlide(slide, item, x, y, w, h) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         const headerData = item.data;
         // Fixed inch spacing for title/subtitle
-        const titleHeight = 0.6;
-        const subtitleHeight = 0.35;
-        const lineSpacing = 0.2;
+        const titleHeight = Math.min(Math.max(h * 0.55, 0.8), 1.3);
+        const subtitleHeight = headerData.subtitle ? Math.min(Math.max(h * 0.28, 0.45), 0.9) : 0;
+        const lineSpacing = 0.25;
         if (headerData.title) {
             slide.addText(headerData.title, {
                 x: x + 0.3,
                 y: y + 0.1,
                 w: w - 0.6,
                 h: titleHeight,
-                fontSize: 32,
-                fontFace: ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.heading) || 'Space Grotesk',
+                fontSize: (_a = this.typographyScale['3xl']) !== null && _a !== void 0 ? _a : 46,
+                fontFace: ((_c = (_b = this.theme.typography) === null || _b === void 0 ? void 0 : _b.fontFamily) === null || _c === void 0 ? void 0 : _c.heading) || 'Space Grotesk',
                 color: this.theme.colors.primary,
                 bold: true,
                 align: 'left',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                shrinkText: true,
+                lineSpacing: this.getLineSpacing((_d = this.typographyScale['3xl']) !== null && _d !== void 0 ? _d : 46, 'heading')
             });
         }
         if (headerData.subtitle) {
@@ -463,12 +520,14 @@ class DeckExporter {
                 y: y + titleHeight + 0.08,
                 w: w - 0.6,
                 h: subtitleHeight,
-                fontSize: 20,
-                fontFace: ((_d = (_c = this.theme.typography) === null || _c === void 0 ? void 0 : _c.fontFamily) === null || _d === void 0 ? void 0 : _d.body) || 'Inter',
+                fontSize: (_e = this.typographyScale['lg']) !== null && _e !== void 0 ? _e : 28,
+                fontFace: ((_g = (_f = this.theme.typography) === null || _f === void 0 ? void 0 : _f.fontFamily) === null || _g === void 0 ? void 0 : _g.body) || 'Inter',
                 color: this.theme.colors.foreground,
                 align: 'left',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                lineSpacing: this.getLineSpacing((_h = this.typographyScale['lg']) !== null && _h !== void 0 ? _h : 28, 'normal'),
+                shrinkText: true
             });
         }
         if (headerData.showDivider !== false) {
@@ -495,7 +554,9 @@ class DeckExporter {
         slide.addShape('rect', {
             x, y, w, h,
             fill: { color: this.theme.colors.muted },
-            line: { color: this.theme.colors.border, width: 1 }
+            line: { color: this.theme.colors.border, width: 1 },
+            rectRadius: 10,
+            shadow: { type: 'outer', color: '000000', opacity: 0.15, blur: 6, angle: 270, offset: 6 }
         });
         // Use JetBrains Mono for numbers (with tabular figures and slashed zero)
         const numberFont = ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.mono) || 'JetBrains Mono';
@@ -507,7 +568,7 @@ class DeckExporter {
                     text: segment.text,
                     options: {
                         color: this.validateColor((_a = segment.formatting) === null || _a === void 0 ? void 0 : _a.color) || this.theme.colors.primary,
-                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || 36,
+                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || this.getFontSize('4xl'),
                         fontFace: numberFont,
                         bold: ((_c = segment.formatting) === null || _c === void 0 ? void 0 : _c.bold) !== false,
                         italic: (_d = segment.formatting) === null || _d === void 0 ? void 0 : _d.italic,
@@ -531,7 +592,7 @@ class DeckExporter {
                 y: y + 0.15,
                 w: w - 0.3,
                 h: h * 0.65,
-                fontSize: 36,
+                fontSize: this.getFontSize('4xl'),
                 fontFace: numberFont,
                 color: this.theme.colors.primary,
                 bold: true,
@@ -545,12 +606,14 @@ class DeckExporter {
             y: y + h * 0.65,
             w: w - 0.3,
             h: h * 0.35 - 0.15,
-            fontSize: 16,
+            fontSize: this.getFontSize('sm'),
             fontFace: ((_d = (_c = this.theme.typography) === null || _c === void 0 ? void 0 : _c.fontFamily) === null || _d === void 0 ? void 0 : _d.body) || 'Inter',
             color: this.theme.colors.foreground,
             align: 'center',
             valign: 'top',
-            bold: true
+            bold: true,
+            lineSpacing: this.getLineSpacing(this.getFontSize('sm'), 'tight'),
+            shrinkText: true
         });
     }
     addChartToSlide(slide, item, x, y, w, h) {
@@ -644,7 +707,7 @@ class DeckExporter {
                     text: segment.text,
                     options: {
                         color: this.validateColor((_a = segment.formatting) === null || _a === void 0 ? void 0 : _a.color) || this.theme.colors.foreground,
-                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || 14,
+                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || this.getFontSize('lg'),
                         bold: (_c = segment.formatting) === null || _c === void 0 ? void 0 : _c.bold,
                         italic: ((_d = segment.formatting) === null || _d === void 0 ? void 0 : _d.italic) !== false, // Default to italic for testimonials
                         underline: ((_e = segment.formatting) === null || _e === void 0 ? void 0 : _e.underline) ? { style: 'single' } : undefined,
@@ -658,7 +721,9 @@ class DeckExporter {
                 h: h * 0.6,
                 align: 'left',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                lineSpacing: this.getLineSpacing(this.getFontSize('lg'), 'relaxed'),
+                shrinkText: true
             });
         }
         else {
@@ -667,12 +732,14 @@ class DeckExporter {
                 y: y + 0.4,
                 w: w - 0.2,
                 h: h * 0.6,
-                fontSize: 14,
+                fontSize: this.getFontSize('lg'),
                 color: this.theme.colors.foreground,
                 italic: true,
                 align: 'left',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                lineSpacing: this.getLineSpacing(this.getFontSize('lg'), 'relaxed'),
+                shrinkText: true
             });
         }
         // Add author
@@ -681,10 +748,12 @@ class DeckExporter {
             y: y + h - 0.4,
             w: w - 0.2,
             h: 0.3,
-            fontSize: 12,
+            fontSize: this.getFontSize('sm'),
             color: this.theme.colors.primary,
             align: 'right',
-            valign: 'bottom'
+            valign: 'bottom',
+            lineSpacing: this.getLineSpacing(this.getFontSize('sm'), 'tight'),
+            shrinkText: true
         });
     }
     addMetricCardToSlide(slide, item, x, y, w, h) {
@@ -708,12 +777,13 @@ class DeckExporter {
         }
     }
     addButtonToSlide(slide, item, x, y, w, h) {
-        var _a;
+        var _a, _b, _c, _d, _e;
         // Add button background
         slide.addShape('rect', {
             x, y, w, h,
             fill: { color: this.theme.colors.primary },
-            line: { color: this.theme.colors.primary, width: 2 }
+            line: { color: this.theme.colors.primary, width: 2 },
+            rectRadius: 12
         });
         // Add button text - handle rich text segments
         const btn = item.data;
@@ -724,7 +794,7 @@ class DeckExporter {
                     text: segment.text,
                     options: {
                         color: this.validateColor((_a = segment.formatting) === null || _a === void 0 ? void 0 : _a.color) || this.theme.colors.background,
-                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || 16,
+                        fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || this.getFontSize('lg'),
                         bold: ((_c = segment.formatting) === null || _c === void 0 ? void 0 : _c.bold) !== false, // Default to bold for buttons
                         italic: (_d = segment.formatting) === null || _d === void 0 ? void 0 : _d.italic,
                         underline: ((_e = segment.formatting) === null || _e === void 0 ? void 0 : _e.underline) ? { style: 'single' } : undefined,
@@ -734,17 +804,21 @@ class DeckExporter {
             slide.addText(richTextSegments, {
                 x, y, w, h,
                 align: 'center',
-                valign: 'middle'
+                valign: 'middle',
+                fontFace: ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.heading) || 'Space Grotesk',
+                shrinkText: true
             });
         }
         else {
-            slide.addText(String((_a = btn.text) !== null && _a !== void 0 ? _a : 'Click Here'), {
+            slide.addText(String((_c = btn.text) !== null && _c !== void 0 ? _c : 'Click Here'), {
                 x, y, w, h,
-                fontSize: 16,
+                fontSize: this.getFontSize('lg'),
                 color: this.theme.colors.background,
                 bold: true,
                 align: 'center',
-                valign: 'middle'
+                valign: 'middle',
+                fontFace: ((_e = (_d = this.theme.typography) === null || _d === void 0 ? void 0 : _d.fontFamily) === null || _e === void 0 ? void 0 : _e.heading) || 'Space Grotesk',
+                shrinkText: true
             });
         }
     }
@@ -756,6 +830,8 @@ class DeckExporter {
         if (typeof addTable === 'function' && headers.length > 0) {
             const zebraFillA = this.theme.colors.background;
             const zebraFillB = this.theme.colors.muted;
+            const headerFontSize = Math.max(20, Math.round(this.getFontSize('xl')));
+            const bodyFontSize = Math.max(16, Math.round(this.getFontSize('base') * 0.9));
             const tableRows = [
                 headers.map((text) => {
                     var _a, _b;
@@ -766,7 +842,7 @@ class DeckExporter {
                             color: this.theme.colors.foreground,
                             fill: this.theme.colors.primary,
                             fontFace: ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.heading) || 'Space Grotesk',
-                            fontSize: 16,
+                            fontSize: headerFontSize,
                             align: 'center'
                         }
                     });
@@ -782,8 +858,9 @@ class DeckExporter {
                             color: this.theme.colors.foreground,
                             fill,
                             fontFace: ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.body) || 'Inter',
-                            fontSize: 14,
-                            align: 'center'
+                            fontSize: bodyFontSize,
+                            align: 'center',
+                            shrinkText: true
                         }
                     });
                 }));
@@ -878,15 +955,18 @@ class DeckExporter {
                 y: cy + 0.12,
                 w: 1.6,
                 h: Math.max(0.2, h - (cy - y) - 0.2),
-                fontSize: 10,
+                fontSize: Math.max(16, this.getFontSize('sm')),
                 color: this.theme.colors.foreground,
                 align: 'center',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                shrinkText: true,
+                lineSpacing: this.getLineSpacing(Math.max(16, this.getFontSize('sm')), 'tight')
             });
         }
     }
     addAdditionalSlides() {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         // Add a summary slide
         const summarySlide = this.pptx.addSlide();
         summarySlide.background = { color: this.slideBgColor };
@@ -895,21 +975,25 @@ class DeckExporter {
             y: 2,
             w: 6,
             h: 1,
-            fontSize: 36,
+            fontSize: (_a = this.typographyScale['4xl']) !== null && _a !== void 0 ? _a : 54,
             color: this.theme.colors.primary,
             bold: true,
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            fontFace: ((_c = (_b = this.theme.typography) === null || _b === void 0 ? void 0 : _b.fontFamily) === null || _c === void 0 ? void 0 : _c.heading) || 'Space Grotesk',
+            lineSpacing: this.getLineSpacing((_d = this.typographyScale['4xl']) !== null && _d !== void 0 ? _d : 54, 'heading')
         });
         summarySlide.addText('Questions?', {
             x: 2,
             y: 3.5,
             w: 6,
             h: 0.5,
-            fontSize: 24,
+            fontSize: (_e = this.typographyScale['2xl']) !== null && _e !== void 0 ? _e : 38,
             color: this.theme.colors.foreground,
             align: 'center',
-            valign: 'middle'
+            valign: 'middle',
+            fontFace: ((_g = (_f = this.theme.typography) === null || _f === void 0 ? void 0 : _f.fontFamily) === null || _g === void 0 ? void 0 : _g.body) || 'Inter',
+            lineSpacing: this.getLineSpacing((_h = this.typographyScale['2xl']) !== null && _h !== void 0 ? _h : 38, 'normal')
         });
     }
     addRichTextToSlide(slide, item, x, y, w, h) {
@@ -922,7 +1006,7 @@ class DeckExporter {
                 ? ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.heading) || 'Space Grotesk'
                 : ((_d = (_c = this.theme.typography) === null || _c === void 0 ? void 0 : _c.fontFamily) === null || _d === void 0 ? void 0 : _d.body) || 'Inter');
         const letterSpacing = this.getLetterSpacingValue(richTextData.letterSpacing);
-        const lineHeight = richTextData.lineHeight ? this.getLineHeightValue(richTextData.lineHeight) : undefined;
+        const lineSpacing = this.getLineSpacing(fontSize, richTextData.lineHeight);
         const textShadow = richTextData.textShadow ? { type: 'outer', color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
         // Handle rich text segments
         if (Array.isArray(richTextData.content)) {
@@ -947,9 +1031,10 @@ class DeckExporter {
                 align: richTextData.align || 'left',
                 valign: 'top',
                 wrap: true,
-                lineSpacing: lineHeight,
+                lineSpacing,
                 charSpacing: letterSpacing,
-                shadow: textShadow
+                shadow: textShadow,
+                shrinkText: true
             });
         }
         else {
@@ -964,15 +1049,18 @@ class DeckExporter {
                 wrap: true,
                 bold: richTextData.type === 'header' || richTextData.type === 'subheader',
                 italic: richTextData.type === 'blockquote',
-                lineSpacing: lineHeight,
+                lineSpacing,
                 charSpacing: letterSpacing,
-                shadow: textShadow
+                shadow: textShadow,
+                shrinkText: true
             });
         }
     }
     addListToSlide(slide, item, x, y, w, h) {
         const listData = item.data;
-        const fontSize = Math.min(this.getFontSize(listData.size || 'base'), 14); // Cap list font size
+        const fontSize = this.getFontSize(listData.size || 'lg');
+        const lineSpacing = this.getLineSpacing(fontSize, listData.lineHeight || 'snug');
+        const charSpacing = this.getLetterSpacingValue(listData.letterSpacing);
         // Group items to reduce number of text elements (better performance)
         const maxItemsPerGroup = 8;
         const groups = [];
@@ -983,10 +1071,15 @@ class DeckExporter {
             var _a, _b;
             let content = '';
             group.forEach((listItem, index) => {
+                var _a, _b;
                 const globalIndex = groupIndex * maxItemsPerGroup + index;
-                const bullet = listData.type === 'numbered' ? `${globalIndex + 1}.` :
-                    listData.type === 'checklist' ? '✓' : '•';
-                content += `${bullet} ${listItem}\n`;
+                const bullet = listData.type === 'numbered'
+                    ? `${globalIndex + 1}.`
+                    : listData.type === 'checklist'
+                        ? '✓'
+                        : '•';
+                const listItemText = typeof listItem === 'string' ? listItem : String((_b = (_a = listItem === null || listItem === void 0 ? void 0 : listItem.text) !== null && _a !== void 0 ? _a : listItem) !== null && _b !== void 0 ? _b : '');
+                content += `${bullet} ${listItemText}\n`;
             });
             const groupHeight = (h / groups.length);
             const groupY = y + (groupIndex * groupHeight);
@@ -997,18 +1090,24 @@ class DeckExporter {
                 color: this.theme.colors.foreground,
                 align: 'left',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                lineSpacing,
+                charSpacing,
+                shrinkText: true
             });
         });
     }
     addQuoteToSlide(slide, item, x, y, w, h) {
+        var _a, _b, _c;
         const quoteData = item.data;
-        const fontSize = Math.min(quoteData.variant === 'large' ? 24 : 18, 24); // Cap quote font size
+        const quoteSizeKey = quoteData.size || (quoteData.variant === 'large' ? '2xl' : 'xl');
+        const fontSize = this.getFontSize(quoteSizeKey);
+        const lineSpacing = this.getLineSpacing(fontSize, quoteData.lineHeight || 'relaxed');
         // Add quote mark as separate element for better performance
         if (quoteData.variant !== 'minimal') {
             slide.addText('"', {
-                x: x + 0.05, y: y + 0.05, w: 0.3, h: 0.3,
-                fontSize: fontSize + 4,
+                x: x + 0.05, y: y + 0.05, w: 0.4, h: 0.4,
+                fontSize: Math.min(fontSize + 10, (_a = this.typographyScale['4xl']) !== null && _a !== void 0 ? _a : fontSize + 10),
                 color: this.theme.colors.primary,
                 align: 'left',
                 valign: 'top'
@@ -1022,24 +1121,31 @@ class DeckExporter {
             align: quoteData.align === 'center' ? 'center' : 'left',
             valign: 'middle',
             wrap: true,
-            italic: quoteData.variant !== 'minimal'
+            italic: quoteData.variant !== 'minimal',
+            fontFace: ((_c = (_b = this.theme.typography) === null || _b === void 0 ? void 0 : _b.fontFamily) === null || _c === void 0 ? void 0 : _c.body) || 'Inter',
+            lineSpacing,
+            shrinkText: true
         });
         // Add author attribution separately
         if (quoteData.author) {
             const authorText = `— ${quoteData.author}${quoteData.role ? `, ${quoteData.role}` : ''}${quoteData.company ? `, ${quoteData.company}` : ''}`;
             slide.addText(authorText, {
                 x: x + 0.1, y: y + h - 0.6, w: w - 0.2, h: 0.4,
-                fontSize: Math.max(fontSize - 4, 10),
+                fontSize: Math.max(this.getFontSize('sm'), Math.round(fontSize * 0.6)),
                 color: this.theme.colors.muted || '#6b7280',
                 align: quoteData.align === 'center' ? 'center' : 'right',
                 valign: 'top',
-                wrap: true
+                wrap: true,
+                lineSpacing: this.getLineSpacing(Math.max(this.getFontSize('sm'), Math.round(fontSize * 0.6)), 'tight'),
+                shrinkText: true
             });
         }
     }
     addCodeToSlide(slide, item, x, y, w, h) {
+        var _a, _b;
         const codeData = item.data;
-        const fontSize = Math.min(this.getFontSize(codeData.size || 'base'), 12); // Cap code font size for performance
+        const fontSize = Math.min(this.getFontSize(codeData.size || 'sm'), 22); // Preserve readability without overflowing
+        const monoFace = ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.mono) || 'JetBrains Mono';
         // Add a background rectangle for code
         slide.addShape('rect', {
             x, y, w, h,
@@ -1053,12 +1159,16 @@ class DeckExporter {
             color: codeData.theme === 'dark' ? 'f9fafb' : '1e293b',
             align: 'left',
             valign: 'top',
-            wrap: true
+            wrap: true,
+            fontFace: monoFace,
+            lineSpacing: this.getLineSpacing(fontSize, 'tight'),
+            shrinkText: true
         });
     }
     addNoteToSlide(slide, item, x, y, w, h) {
+        var _a, _b;
         const noteData = item.data;
-        const fontSize = Math.min(this.getFontSize(noteData.size || 'base'), 14); // Cap note font size
+        const fontSize = Math.min(this.getFontSize(noteData.size || 'base'), 26);
         const noteColors = {
             info: '3b82f6',
             warning: 'f59e0b',
@@ -1081,48 +1191,29 @@ class DeckExporter {
             align: 'left',
             valign: 'top',
             wrap: true,
+            fontFace: ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.body) || 'Inter',
             fill: { color: bgColor + '15' }, // Subtle background
-            line: { color: bgColor, width: 1 }
+            line: { color: bgColor, width: 1 },
+            lineSpacing: this.getLineSpacing(fontSize, 'normal'),
+            shrinkText: true
         });
     }
     getRichTextFontSize(size, type) {
-        var _a, _b;
-        // Use theme typography if available
-        if ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontSize) === null || _b === void 0 ? void 0 : _b[size]) {
-            let fontSize = this.theme.typography.fontSize[size];
-            // Adjust based on type
-            switch (type) {
-                case 'header':
-                    fontSize = Math.max(fontSize + 4, 18);
-                    break;
-                case 'subheader':
-                    fontSize = Math.max(fontSize + 2, 16);
-                    break;
-                case 'lead':
-                    fontSize = Math.max(fontSize + 2, 18);
-                    break;
-            }
-            return fontSize;
-        }
-        // Fallback base sizes
-        const baseSizes = {
-            'sm': 12,
-            'base': 14,
-            'lg': 18,
-            'xl': 20,
-            '2xl': 24
-        };
-        let fontSize = baseSizes[size] || 14;
-        // Adjust based on type
+        var _a, _b, _c, _d, _e, _f;
+        const baseSize = (_b = (_a = this.typographyScale[size]) !== null && _a !== void 0 ? _a : this.typographyScale.base) !== null && _b !== void 0 ? _b : 24;
+        let fontSize = baseSize;
         switch (type) {
             case 'header':
-                fontSize += 4;
+                fontSize = Math.max(fontSize, (_c = this.typographyScale['4xl']) !== null && _c !== void 0 ? _c : fontSize + 8);
                 break;
             case 'subheader':
-                fontSize += 2;
+                fontSize = Math.max(fontSize, (_d = this.typographyScale['2xl']) !== null && _d !== void 0 ? _d : fontSize + 4);
                 break;
             case 'lead':
-                fontSize += 2;
+                fontSize = Math.max(fontSize, (_e = this.typographyScale['xl']) !== null && _e !== void 0 ? _e : fontSize + 2);
+                break;
+            case 'blockquote':
+                fontSize = Math.max(fontSize, (_f = this.typographyScale['lg']) !== null && _f !== void 0 ? _f : fontSize);
                 break;
         }
         return fontSize;
@@ -1139,23 +1230,14 @@ class DeckExporter {
     }
     getFontSize(size) {
         var _a, _b;
-        // Use theme typography if available, fallback to responsive sizes
-        if ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontSize) === null || _b === void 0 ? void 0 : _b[size]) {
-            return this.theme.typography.fontSize[size];
+        if (typeof size === 'number' && size > 0) {
+            return size;
         }
-        // Fallback responsive sizes for PPTX (scaled down for better fit)
-        const sizes = {
-            'xs': 9, // Smaller for better performance
-            'sm': 11, // Optimized sizes
-            'base': 12, // Standard readable size
-            'lg': 14, // Good for emphasis
-            'xl': 16, // Section headers
-            '2xl': 18, // Subheaders
-            '3xl': 22, // Main headers (reduced from 30)
-            '4xl': 26, // Hero text (reduced from 36)
-            '5xl': 32 // Max size (reduced from 48)
-        };
-        return sizes[size] || 12;
+        const numericValue = Number(size);
+        if (!Number.isNaN(numericValue) && numericValue > 0) {
+            return numericValue;
+        }
+        return (_b = (_a = this.typographyScale[String(size)]) !== null && _a !== void 0 ? _a : this.typographyScale.base) !== null && _b !== void 0 ? _b : 24;
     }
     // Color validation helper
     validateColor(color) {
@@ -1201,6 +1283,11 @@ class DeckExporter {
             'loose': 2.0
         };
         return conversions[height] || 1.5;
+    }
+    getLineSpacing(fontSize, height) {
+        var _a, _b;
+        const multiplier = (_b = (_a = this.getLineHeightValue(height)) !== null && _a !== void 0 ? _a : this.getLineHeightValue('normal')) !== null && _b !== void 0 ? _b : 1.5;
+        return Math.max(12, Math.round(fontSize * multiplier));
     }
     // Theme → PPTX helpers
     computeBackgroundColor(theme) {

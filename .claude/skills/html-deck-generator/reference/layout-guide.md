@@ -1,6 +1,6 @@
 # HTML Deck Layout Guide
 
-Use this guide to map user intent to the ECM-Atlas style slide patterns.
+Use this guide to map user intent to the ECM-Atlas style slide patterns. Pair it with the archetype playbook (`reference/audience-archetypes.md`) after you collect clarifying inputs. For variant specifics and rich media, see `reference/variants-and-media.md`.
 
 ## Slide Structure Overview
 
@@ -114,4 +114,4 @@ Key layout classes:
 - Provide descriptive copy for screen readers
 - Ensure color contrast meets WCAG AA (template colors comply)
 
-Refer to `resources/templates/html-deck-template.html` for the full CSS and JS scaffold.
+Refer to `resources/templates/html-deck-template.html` for the full CSS and JS scaffold, and `reference/dynamic-theming.md` for safe color overrides.

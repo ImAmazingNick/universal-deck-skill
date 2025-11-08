@@ -56,6 +56,7 @@ interface ExportOptions {
 export class DeckExporter {
   private pptx: PptxGenJS;
   private theme: ThemeConfig;
+  private typographyScale: Record<string, number>;
   private slideBgColor: string;
   private layout?: LayoutConfig;
   private slides?: Array<{ layout: string; title?: string; subtitle?: string; description?: string; items?: Array<Partial<DeckItem> & { i: string }>; notes?: string; data?: any; layoutConfig?: LayoutConfig }>;
@@ -78,6 +79,8 @@ export class DeckExporter {
     if (!this.theme) {
       throw new Error(`Theme '${options.theme}' not found`);
     }
+
+    this.typographyScale = this.buildTypographyScale();
 
     // Compute PPTX-friendly theme background
     this.slideBgColor = this.computeBackgroundColor(this.theme);
@@ -158,16 +161,20 @@ export class DeckExporter {
 
     // Add title
     const title = this.titleSlide?.title || 'Marketing Presentation';
+    const titleFontSize = this.typographyScale['6xl'] ?? 60;
     slide.addText(title, {
-      x: 0.5,
-      y: 1.5,
-      w: 9,
-      h: 1,
-      fontSize: 44,
+      x: 0.8,
+      y: 1.2,
+      w: 8.4,
+      h: 1.4,
+      fontSize: titleFontSize,
+      fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
       color: this.theme.colors.primary,
       bold: true,
-      align: 'center',
-      valign: 'middle'
+      align: 'left',
+      valign: 'top',
+      lineSpacing: this.getLineSpacing(titleFontSize, 'heading'),
+      shrinkText: true
     });
 
     // Add subtitle
@@ -179,15 +186,28 @@ export class DeckExporter {
     if (this.titleSlide?.date) meta.push(this.titleSlide.date);
     if (meta.length > 0) subtitleParts.push(meta.join(' • '));
     const subtitleText = subtitleParts.length > 0 ? subtitleParts.join(' — ') : 'Generated with Claude Skills';
+    const subtitleFontSize = this.typographyScale['xl'] ?? 32;
     slide.addText(subtitleText, {
-      x: 0.5,
-      y: 3,
-      w: 9,
-      h: 0.5,
-      fontSize: 24,
+      x: 0.8,
+      y: 2.8,
+      w: 8.4,
+      h: 0.9,
+      fontSize: subtitleFontSize,
+      fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
       color: this.theme.colors.foreground,
-      align: 'center',
-      valign: 'middle'
+      align: 'left',
+      valign: 'top',
+      lineSpacing: this.getLineSpacing(subtitleFontSize, 'snug'),
+      shrinkText: true
+    });
+
+    // Accent underline to introduce theme color
+    slide.addShape('line', {
+      x: 0.8,
+      y: 3.9,
+      w: 3,
+      h: 0,
+      line: { color: this.theme.colors.primary, width: 4 }
     });
   }
 
@@ -384,11 +404,53 @@ export class DeckExporter {
     }
   }
 
+  private buildTypographyScale(): Record<string, number> {
+    const fallbackScale: Record<string, number> = {
+      xs: 16,
+      sm: 18,
+      base: 24,
+      lg: 28,
+      xl: 34,
+      '2xl': 38,
+      '3xl': 46,
+      '4xl': 54,
+      '5xl': 64,
+      '6xl': 72,
+      '7xl': 86,
+      '8xl': 104,
+      '9xl': 132
+    };
+
+    const themeSizes = this.theme.typography?.fontSize ?? {};
+    const scale: Record<string, number> = {};
+
+    for (const [key, fallbackValue] of Object.entries(fallbackScale)) {
+      const themeValueRaw = themeSizes[key as keyof typeof themeSizes];
+      const themeValue = typeof themeValueRaw === 'number' ? themeValueRaw : Number(themeValueRaw);
+      const scaledTheme = !Number.isNaN(themeValue) ? Math.round(themeValue * 1.35) : Number.NaN;
+      scale[key] = Math.max(
+        fallbackValue,
+        Number.isNaN(scaledTheme) ? fallbackValue : scaledTheme
+      );
+    }
+
+    // Preserve any additional theme steps that may exist (e.g., 10xl) with a generous upscale
+    for (const [key, value] of Object.entries(themeSizes)) {
+      if (scale[key]) continue;
+      const numericValue = typeof value === 'number' ? value : Number(value);
+      if (!Number.isNaN(numericValue)) {
+        scale[key] = Math.round(Math.max(numericValue * 1.35, scale.base ?? fallbackScale.base));
+      }
+    }
+
+    return scale;
+  }
+
   // Unified mapping helpers that respect layout.grid rowHeight/margin
   private computeMapping(layoutConfig: LayoutConfig) {
     const slideWidthInches = 10; // 16:9 width
     const baseRowHeightPx = 30; // baseline matches resources default
-    const baseRowHeightInches = 0.45; // improved vertical rhythm
+    const baseRowHeightInches = 0.52; // taller row height for slide readability
     const baseMarginPx = 10; // baseline matches resources default
     const grid = layoutConfig.grid || { cols: 12, rowHeight: baseRowHeightPx, margin: [baseMarginPx, baseMarginPx] };
     const gridCols = grid.cols ?? 12;
@@ -399,10 +461,10 @@ export class DeckExporter {
     const scaleX = marginXpx / baseMarginPx;
     const scaleY = marginYpx / baseMarginPx;
 
-    const xPadInches = 0.15 * scaleX; // increased for better margins
-    const wPadInches = 0.25 * scaleX; // increased for better spacing
-    const yPadInches = 0.25 * scaleY; // increased for better vertical rhythm
-    const hPadInches = 0.15 * scaleY; // increased for better breathing room
+    const xPadInches = 0.25 * scaleX; // generous outer margin
+    const wPadInches = 0.35 * scaleX; // improved gutter spacing
+    const yPadInches = 0.35 * scaleY; // more vertical breathing room
+    const hPadInches = 0.2 * scaleY; // reduce crowding within blocks
 
     return { gridCols, rowHeightInches, xPadInches, wPadInches, yPadInches, hPadInches, slideWidthInches };
   }
@@ -437,7 +499,7 @@ export class DeckExporter {
     const color = this.validateColor(textData.color) || this.theme.colors.foreground;
     const fontFamily = textData.fontFamily || this.theme.typography?.fontFamily?.body || 'Inter';
     const letterSpacing = this.getLetterSpacingValue(textData.letterSpacing);
-    const lineHeight = textData.lineHeight ? this.getLineHeightValue(textData.lineHeight) : undefined;
+    const lineSpacing = this.getLineSpacing(fontSize, textData.lineHeight);
     // Use theme-aware shadow color instead of hardcoded black
     const shadowColor = textData.textShadow ? (this.theme.colors.primary.replace('#', '') || '000000') : undefined;
     const textShadow = textData.textShadow ? { type: 'outer' as const, color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
@@ -464,12 +526,13 @@ export class DeckExporter {
       slide.addText(richTextSegments, {
         x, y, w, h,
         align: align as 'left' | 'center' | 'right' | 'justify',
-        valign: 'middle',
+        valign: 'top',
         fontFace: fontFamily,
         wrap: true,
-        lineSpacing: lineHeight,
+        lineSpacing,
         charSpacing: letterSpacing,
-        shadow: textShadow
+        shadow: textShadow,
+        shrinkText: true
       });
     } else {
       // Simple text - handle both text and content properties
@@ -480,14 +543,15 @@ export class DeckExporter {
         fontSize,
         color,
         align: align as 'left' | 'center' | 'right' | 'justify',
-        valign: 'middle',
+        valign: 'top',
         fontFace: fontFamily,
         bold: weight === 'bold' || weight === 'semibold' || weight === 'extrabold',
         italic: weight === 'italic',
         wrap: true,
-        lineSpacing: lineHeight,
+        lineSpacing,
         charSpacing: letterSpacing,
-        shadow: textShadow
+        shadow: textShadow,
+        shrinkText: true
       });
     }
   }
@@ -496,9 +560,9 @@ export class DeckExporter {
     const headerData = item.data as { title: string; subtitle?: string; icon?: string; showDivider?: boolean };
 
     // Fixed inch spacing for title/subtitle
-    const titleHeight = 0.6;
-    const subtitleHeight = 0.35;
-    const lineSpacing = 0.2;
+    const titleHeight = Math.min(Math.max(h * 0.55, 0.8), 1.3);
+    const subtitleHeight = headerData.subtitle ? Math.min(Math.max(h * 0.28, 0.45), 0.9) : 0;
+    const lineSpacing = 0.25;
 
     if (headerData.title) {
       slide.addText(headerData.title, {
@@ -506,13 +570,15 @@ export class DeckExporter {
         y: y + 0.1,
         w: w - 0.6,
         h: titleHeight,
-        fontSize: 32,
+        fontSize: this.typographyScale['3xl'] ?? 46,
         fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
         color: this.theme.colors.primary,
         bold: true,
         align: 'left',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        shrinkText: true,
+        lineSpacing: this.getLineSpacing(this.typographyScale['3xl'] ?? 46, 'heading')
       });
     }
 
@@ -522,12 +588,14 @@ export class DeckExporter {
         y: y + titleHeight + 0.08,
         w: w - 0.6,
         h: subtitleHeight,
-        fontSize: 20,
+        fontSize: this.typographyScale['lg'] ?? 28,
         fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
         color: this.theme.colors.foreground,
         align: 'left',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        lineSpacing: this.getLineSpacing(this.typographyScale['lg'] ?? 28, 'normal'),
+        shrinkText: true
       });
     }
 
@@ -557,7 +625,9 @@ export class DeckExporter {
     slide.addShape('rect', {
       x, y, w, h,
       fill: { color: this.theme.colors.muted },
-      line: { color: this.theme.colors.border, width: 1 }
+      line: { color: this.theme.colors.border, width: 1 },
+      rectRadius: 10,
+      shadow: { type: 'outer', color: '000000', opacity: 0.15, blur: 6, angle: 270, offset: 6 }
     });
 
     // Use JetBrains Mono for numbers (with tabular figures and slashed zero)
@@ -569,7 +639,7 @@ export class DeckExporter {
         text: segment.text,
         options: {
           color: this.validateColor(segment.formatting?.color) || this.theme.colors.primary,
-          fontSize: segment.formatting?.fontSize || 36,
+          fontSize: segment.formatting?.fontSize || this.getFontSize('4xl'),
           fontFace: numberFont,
           bold: segment.formatting?.bold !== false,
           italic: segment.formatting?.italic,
@@ -592,7 +662,7 @@ export class DeckExporter {
         y: y + 0.15,
         w: w - 0.3,
         h: h * 0.65,
-        fontSize: 36,
+        fontSize: this.getFontSize('4xl'),
         fontFace: numberFont,
         color: this.theme.colors.primary,
         bold: true,
@@ -607,12 +677,14 @@ export class DeckExporter {
       y: y + h * 0.65,
       w: w - 0.3,
       h: h * 0.35 - 0.15,
-      fontSize: 16,
+      fontSize: this.getFontSize('sm'),
       fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
       color: this.theme.colors.foreground,
       align: 'center',
       valign: 'top',
-      bold: true
+      bold: true,
+      lineSpacing: this.getLineSpacing(this.getFontSize('sm'), 'tight'),
+      shrinkText: true
     });
   }
 
@@ -707,7 +779,7 @@ export class DeckExporter {
         text: segment.text,
         options: {
           color: this.validateColor(segment.formatting?.color) || this.theme.colors.foreground,
-          fontSize: segment.formatting?.fontSize || 14,
+          fontSize: segment.formatting?.fontSize || this.getFontSize('lg'),
           bold: segment.formatting?.bold,
           italic: segment.formatting?.italic !== false, // Default to italic for testimonials
           underline: segment.formatting?.underline ? { style: 'single' } : undefined,
@@ -721,7 +793,9 @@ export class DeckExporter {
         h: h * 0.6,
         align: 'left',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        lineSpacing: this.getLineSpacing(this.getFontSize('lg'), 'relaxed'),
+        shrinkText: true
       });
     } else {
       slide.addText(String(testimonial.quote ?? 'This is a great product!'), {
@@ -729,12 +803,14 @@ export class DeckExporter {
         y: y + 0.4,
         w: w - 0.2,
         h: h * 0.6,
-        fontSize: 14,
+        fontSize: this.getFontSize('lg'),
         color: this.theme.colors.foreground,
         italic: true,
         align: 'left',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        lineSpacing: this.getLineSpacing(this.getFontSize('lg'), 'relaxed'),
+        shrinkText: true
       });
     }
 
@@ -744,10 +820,12 @@ export class DeckExporter {
       y: y + h - 0.4,
       w: w - 0.2,
       h: 0.3,
-      fontSize: 12,
+      fontSize: this.getFontSize('sm'),
       color: this.theme.colors.primary,
       align: 'right',
-      valign: 'bottom'
+      valign: 'bottom',
+      lineSpacing: this.getLineSpacing(this.getFontSize('sm'), 'tight'),
+      shrinkText: true
     });
   }
 
@@ -779,7 +857,8 @@ export class DeckExporter {
     slide.addShape('rect', {
       x, y, w, h,
       fill: { color: this.theme.colors.primary },
-      line: { color: this.theme.colors.primary, width: 2 }
+      line: { color: this.theme.colors.primary, width: 2 },
+      rectRadius: 12
     });
 
     // Add button text - handle rich text segments
@@ -789,7 +868,7 @@ export class DeckExporter {
         text: segment.text,
         options: {
           color: this.validateColor(segment.formatting?.color) || this.theme.colors.background,
-          fontSize: segment.formatting?.fontSize || 16,
+          fontSize: segment.formatting?.fontSize || this.getFontSize('lg'),
           bold: segment.formatting?.bold !== false, // Default to bold for buttons
           italic: segment.formatting?.italic,
           underline: segment.formatting?.underline ? { style: 'single' } : undefined,
@@ -799,16 +878,20 @@ export class DeckExporter {
       slide.addText(richTextSegments, {
         x, y, w, h,
         align: 'center',
-        valign: 'middle'
+        valign: 'middle',
+        fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
+        shrinkText: true
       });
     } else {
       slide.addText(String(btn.text ?? 'Click Here'), {
         x, y, w, h,
-        fontSize: 16,
+        fontSize: this.getFontSize('lg'),
         color: this.theme.colors.background,
         bold: true,
         align: 'center',
-        valign: 'middle'
+        valign: 'middle',
+        fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
+        shrinkText: true
       });
     }
   }
@@ -822,6 +905,8 @@ export class DeckExporter {
     if (typeof addTable === 'function' && headers.length > 0) {
       const zebraFillA = this.theme.colors.background;
       const zebraFillB = this.theme.colors.muted;
+      const headerFontSize = Math.max(20, Math.round(this.getFontSize('xl')));
+      const bodyFontSize = Math.max(16, Math.round(this.getFontSize('base') * 0.9));
 
       const tableRows: any[] = [
         headers.map((text) => ({
@@ -831,7 +916,7 @@ export class DeckExporter {
             color: this.theme.colors.foreground,
             fill: this.theme.colors.primary,
             fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
-            fontSize: 16,
+            fontSize: headerFontSize,
             align: 'center'
           }
         }))
@@ -844,8 +929,9 @@ export class DeckExporter {
             color: this.theme.colors.foreground,
             fill,
             fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
-            fontSize: 14,
-            align: 'center'
+            fontSize: bodyFontSize,
+            align: 'center',
+            shrinkText: true
           }
         })));
       });
@@ -949,11 +1035,13 @@ export class DeckExporter {
         y: cy + 0.12,
         w: 1.6,
         h: Math.max(0.2, h - (cy - y) - 0.2),
-        fontSize: 10,
+        fontSize: Math.max(16, this.getFontSize('sm')),
         color: this.theme.colors.foreground,
         align: 'center',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        shrinkText: true,
+        lineSpacing: this.getLineSpacing(Math.max(16, this.getFontSize('sm')), 'tight')
       });
     }
   }
@@ -968,11 +1056,13 @@ export class DeckExporter {
       y: 2,
       w: 6,
       h: 1,
-      fontSize: 36,
+      fontSize: this.typographyScale['4xl'] ?? 54,
       color: this.theme.colors.primary,
       bold: true,
       align: 'center',
-      valign: 'middle'
+      valign: 'middle',
+      fontFace: this.theme.typography?.fontFamily?.heading || 'Space Grotesk',
+      lineSpacing: this.getLineSpacing(this.typographyScale['4xl'] ?? 54, 'heading')
     });
 
     summarySlide.addText('Questions?', {
@@ -980,10 +1070,12 @@ export class DeckExporter {
       y: 3.5,
       w: 6,
       h: 0.5,
-      fontSize: 24,
+      fontSize: this.typographyScale['2xl'] ?? 38,
       color: this.theme.colors.foreground,
       align: 'center',
-      valign: 'middle'
+      valign: 'middle',
+      fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
+      lineSpacing: this.getLineSpacing(this.typographyScale['2xl'] ?? 38, 'normal')
     });
   }
 
@@ -996,7 +1088,7 @@ export class DeckExporter {
         ? this.theme.typography?.fontFamily?.heading || 'Space Grotesk'
         : this.theme.typography?.fontFamily?.body || 'Inter');
     const letterSpacing = this.getLetterSpacingValue(richTextData.letterSpacing);
-    const lineHeight = richTextData.lineHeight ? this.getLineHeightValue(richTextData.lineHeight) : undefined;
+    const lineSpacing = this.getLineSpacing(fontSize, richTextData.lineHeight);
     const textShadow = richTextData.textShadow ? { type: 'outer' as const, color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
 
     // Handle rich text segments
@@ -1022,9 +1114,10 @@ export class DeckExporter {
         align: richTextData.align || 'left',
         valign: 'top',
         wrap: true,
-        lineSpacing: lineHeight,
+        lineSpacing,
         charSpacing: letterSpacing,
-        shadow: textShadow
+        shadow: textShadow,
+        shrinkText: true
       });
     } else {
       // Simple rich text
@@ -1038,16 +1131,19 @@ export class DeckExporter {
         wrap: true,
         bold: richTextData.type === 'header' || richTextData.type === 'subheader',
         italic: richTextData.type === 'blockquote',
-        lineSpacing: lineHeight,
+        lineSpacing,
         charSpacing: letterSpacing,
-        shadow: textShadow
+        shadow: textShadow,
+        shrinkText: true
       });
     }
   }
 
   private addListToSlide(slide: PptxGenJS.Slide, item: DeckItem, x: number, y: number, w: number, h: number): void {
     const listData = item.data as any;
-    const fontSize = Math.min(this.getFontSize(listData.size || 'base'), 14); // Cap list font size
+    const fontSize = this.getFontSize(listData.size || 'lg');
+    const lineSpacing = this.getLineSpacing(fontSize, listData.lineHeight || 'snug');
+    const charSpacing = this.getLetterSpacingValue(listData.letterSpacing);
 
     // Group items to reduce number of text elements (better performance)
     const maxItemsPerGroup = 8;
@@ -1058,11 +1154,15 @@ export class DeckExporter {
 
     groups.forEach((group, groupIndex) => {
       let content = '';
-      group.forEach((listItem: string, index: number) => {
+      group.forEach((listItem: any, index: number) => {
         const globalIndex = groupIndex * maxItemsPerGroup + index;
-        const bullet = listData.type === 'numbered' ? `${globalIndex + 1}.` :
-                      listData.type === 'checklist' ? '✓' : '•';
-        content += `${bullet} ${listItem}\n`;
+        const bullet = listData.type === 'numbered'
+          ? `${globalIndex + 1}.`
+          : listData.type === 'checklist'
+            ? '✓'
+            : '•';
+        const listItemText = typeof listItem === 'string' ? listItem : String(listItem?.text ?? listItem ?? '');
+        content += `${bullet} ${listItemText}\n`;
       });
 
       const groupHeight = (h / groups.length);
@@ -1075,20 +1175,25 @@ export class DeckExporter {
         color: this.theme.colors.foreground,
         align: 'left',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        lineSpacing,
+        charSpacing,
+        shrinkText: true
       });
     });
   }
 
   private addQuoteToSlide(slide: PptxGenJS.Slide, item: DeckItem, x: number, y: number, w: number, h: number): void {
     const quoteData = item.data as any;
-    const fontSize = Math.min(quoteData.variant === 'large' ? 24 : 18, 24); // Cap quote font size
+    const quoteSizeKey = quoteData.size || (quoteData.variant === 'large' ? '2xl' : 'xl');
+    const fontSize = this.getFontSize(quoteSizeKey);
+    const lineSpacing = this.getLineSpacing(fontSize, quoteData.lineHeight || 'relaxed');
 
     // Add quote mark as separate element for better performance
     if (quoteData.variant !== 'minimal') {
       slide.addText('"', {
-        x: x + 0.05, y: y + 0.05, w: 0.3, h: 0.3,
-        fontSize: fontSize + 4,
+        x: x + 0.05, y: y + 0.05, w: 0.4, h: 0.4,
+        fontSize: Math.min(fontSize + 10, this.typographyScale['4xl'] ?? fontSize + 10),
         color: this.theme.colors.primary,
         align: 'left',
         valign: 'top'
@@ -1103,7 +1208,10 @@ export class DeckExporter {
       align: quoteData.align === 'center' ? 'center' : 'left',
       valign: 'middle',
       wrap: true,
-      italic: quoteData.variant !== 'minimal'
+      italic: quoteData.variant !== 'minimal',
+      fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
+      lineSpacing,
+      shrinkText: true
     });
 
     // Add author attribution separately
@@ -1111,18 +1219,21 @@ export class DeckExporter {
       const authorText = `— ${quoteData.author}${quoteData.role ? `, ${quoteData.role}` : ''}${quoteData.company ? `, ${quoteData.company}` : ''}`;
       slide.addText(authorText, {
         x: x + 0.1, y: y + h - 0.6, w: w - 0.2, h: 0.4,
-        fontSize: Math.max(fontSize - 4, 10),
+        fontSize: Math.max(this.getFontSize('sm'), Math.round(fontSize * 0.6)),
         color: this.theme.colors.muted || '#6b7280',
         align: quoteData.align === 'center' ? 'center' : 'right',
         valign: 'top',
-        wrap: true
+        wrap: true,
+        lineSpacing: this.getLineSpacing(Math.max(this.getFontSize('sm'), Math.round(fontSize * 0.6)), 'tight'),
+        shrinkText: true
       });
     }
   }
 
   private addCodeToSlide(slide: PptxGenJS.Slide, item: DeckItem, x: number, y: number, w: number, h: number): void {
     const codeData = item.data as any;
-    const fontSize = Math.min(this.getFontSize(codeData.size || 'base'), 12); // Cap code font size for performance
+    const fontSize = Math.min(this.getFontSize(codeData.size || 'sm'), 22); // Preserve readability without overflowing
+    const monoFace = this.theme.typography?.fontFamily?.mono || 'JetBrains Mono';
 
     // Add a background rectangle for code
     slide.addShape('rect', {
@@ -1138,13 +1249,16 @@ export class DeckExporter {
       color: codeData.theme === 'dark' ? 'f9fafb' : '1e293b',
       align: 'left',
       valign: 'top',
-      wrap: true
+      wrap: true,
+      fontFace: monoFace,
+      lineSpacing: this.getLineSpacing(fontSize, 'tight'),
+      shrinkText: true
     });
   }
 
   private addNoteToSlide(slide: PptxGenJS.Slide, item: DeckItem, x: number, y: number, w: number, h: number): void {
     const noteData = item.data as any;
-    const fontSize = Math.min(this.getFontSize(noteData.size || 'base'), 14); // Cap note font size
+    const fontSize = Math.min(this.getFontSize(noteData.size || 'base'), 26);
 
     const noteColors = {
       info: '3b82f6',
@@ -1171,53 +1285,30 @@ export class DeckExporter {
       align: 'left',
       valign: 'top',
       wrap: true,
+      fontFace: this.theme.typography?.fontFamily?.body || 'Inter',
       fill: { color: bgColor + '15' }, // Subtle background
-      line: { color: bgColor, width: 1 }
+      line: { color: bgColor, width: 1 },
+      lineSpacing: this.getLineSpacing(fontSize, 'normal'),
+      shrinkText: true
     });
   }
 
   private getRichTextFontSize(size: string, type: string): number {
-    // Use theme typography if available
-    if (this.theme.typography?.fontSize?.[size as keyof typeof this.theme.typography.fontSize]) {
-      let fontSize = this.theme.typography.fontSize[size as keyof typeof this.theme.typography.fontSize];
+    const baseSize = this.typographyScale[size] ?? this.typographyScale.base ?? 24;
+    let fontSize = baseSize;
 
-      // Adjust based on type
-      switch (type) {
-        case 'header':
-          fontSize = Math.max(fontSize + 4, 18);
-          break;
-        case 'subheader':
-          fontSize = Math.max(fontSize + 2, 16);
-          break;
-        case 'lead':
-          fontSize = Math.max(fontSize + 2, 18);
-          break;
-      }
-
-      return fontSize;
-    }
-
-    // Fallback base sizes
-    const baseSizes: Record<string, number> = {
-      'sm': 12,
-      'base': 14,
-      'lg': 18,
-      'xl': 20,
-      '2xl': 24
-    };
-
-    let fontSize = baseSizes[size] || 14;
-
-    // Adjust based on type
     switch (type) {
       case 'header':
-        fontSize += 4;
+        fontSize = Math.max(fontSize, this.typographyScale['4xl'] ?? fontSize + 8);
         break;
       case 'subheader':
-        fontSize += 2;
+        fontSize = Math.max(fontSize, this.typographyScale['2xl'] ?? fontSize + 4);
         break;
       case 'lead':
-        fontSize += 2;
+        fontSize = Math.max(fontSize, this.typographyScale['xl'] ?? fontSize + 2);
+        break;
+      case 'blockquote':
+        fontSize = Math.max(fontSize, this.typographyScale['lg'] ?? fontSize);
         break;
     }
 
@@ -1235,25 +1326,17 @@ export class DeckExporter {
     }
   }
 
-  private getFontSize(size: string): number {
-    // Use theme typography if available, fallback to responsive sizes
-    if (this.theme.typography?.fontSize?.[size as keyof typeof this.theme.typography.fontSize]) {
-      return this.theme.typography.fontSize[size as keyof typeof this.theme.typography.fontSize];
+  private getFontSize(size: string | number): number {
+    if (typeof size === 'number' && size > 0) {
+      return size;
     }
 
-    // Fallback responsive sizes for PPTX (scaled down for better fit)
-    const sizes: Record<string, number> = {
-      'xs': 9,      // Smaller for better performance
-      'sm': 11,     // Optimized sizes
-      'base': 12,   // Standard readable size
-      'lg': 14,     // Good for emphasis
-      'xl': 16,     // Section headers
-      '2xl': 18,    // Subheaders
-      '3xl': 22,    // Main headers (reduced from 30)
-      '4xl': 26,    // Hero text (reduced from 36)
-      '5xl': 32     // Max size (reduced from 48)
-    };
-    return sizes[size] || 12;
+    const numericValue = Number(size);
+    if (!Number.isNaN(numericValue) && numericValue > 0) {
+      return numericValue;
+    }
+
+    return this.typographyScale[String(size)] ?? this.typographyScale.base ?? 24;
   }
 
   // Color validation helper
@@ -1306,6 +1389,11 @@ export class DeckExporter {
     };
 
     return conversions[height] || 1.5;
+  }
+
+  private getLineSpacing(fontSize: number, height?: string): number {
+    const multiplier = this.getLineHeightValue(height) ?? this.getLineHeightValue('normal') ?? 1.5;
+    return Math.max(12, Math.round(fontSize * multiplier));
   }
 
   // Theme → PPTX helpers

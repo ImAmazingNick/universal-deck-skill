@@ -1,0 +1,154 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "AI Agents Evolution",
+    "subtitle": "From rule-based scripts to autonomous collaborators",
+    "author": "AI Strategy Group",
+    "company": "FutureOps",
+    "date": "2025-11-08"
+  },
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "AI Agents Evolution",
+      "items": [
+        {
+          "i": "title",
+          "data": {
+            "content": "AI Agents, Accelerated"
+          }
+        },
+        {
+          "i": "subtitle",
+          "data": {
+            "content": "Autonomous intelligence reshaping every workflow"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Phase 1: Reactive Helpers (2000-2015)",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": "Rule-Based",
+            "label": "Scripts",
+            "icon": "code"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": "Task Bots",
+            "label": "RPA",
+            "icon": "zap"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": "Assistants",
+            "label": "Narrow Domain",
+            "icon": "message-square"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": "Brittle",
+            "label": "Limited Coverage",
+            "icon": "alert-circle"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Phase 2: Collaborative Autonomy (2016-2024)",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": "LLM Core",
+            "label": "Reason",
+            "icon": "brain"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": "Tooling",
+            "label": "Act",
+            "icon": "wrench"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": "Memory",
+            "label": "Learn",
+            "icon": "database"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": "92%",
+            "label": "Accuracy",
+            "icon": "check-circle"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Phase 3: Autonomous Orchestration (2025-2027)",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "2025",
+                "title": "Multi-Agent Workcells",
+                "description": "Specialized agents coordinate across Ops, Finance, GTM with minimal supervision"
+              },
+              {
+                "date": "2026",
+                "title": "Self-Optimizing Loops",
+                "description": "Closed-loop agents monitor KPIs, adapt playbooks, request approvals only for outliers"
+              },
+              {
+                "date": "2027",
+                "title": "Autonomous Operating Layer",
+                "description": "Agent mesh acts as shared brain for decision-making, compliance, and cross-domain execution"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Partner with Us",
+      "items": [
+        {
+          "i": "cta-text",
+          "data": {
+          "content": "Co-design your agent roadmap with enterprise-grade governance and ROI tracking. Let's build autonomous operations together."
+          }
+        },
+        {
+          "i": "cta-button",
+          "data": {
+            "text": "Schedule Your Strategy Session",
+            "variant": "primary"
+          }
+        }
+      ]
+    }
+  ]
+}
+

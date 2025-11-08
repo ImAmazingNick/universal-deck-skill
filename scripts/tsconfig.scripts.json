@@ -16,6 +16,7 @@
   "include": [
     "./exportPptx.ts",
     "../src/lib/content-generator.ts",
-    "../src/lib/deck-request.ts"
+    "../src/lib/deck-request.ts",
+    "./tools/**/*.ts"
   ]
 }

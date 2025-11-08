@@ -52,26 +52,26 @@ function generateDeck() {
           console.warn('⚠️  Deck request data detected but could not be parsed. Falling back to default slides.');
         }
         if (deckRequest) {
-          generatedDeck = generatorModule.generateDeckFromRequest(deckRequest);
-          if (generatedDeck.theme && !options.theme) {
-            options.theme = generatedDeck.theme;
-          }
-          if (generatedDeck.slides?.length) {
-            options.slides = generatedDeck.slides.map(slide => ({
-              layout: slide.layout,
-              title: slide.title,
-              subtitle: slide.subtitle,
-              description: slide.description,
-              items: slide.items,
-              notes: slide.notes,
-            }));
-            options.layout = undefined;
-          }
-          if (generatedDeck?.warnings?.length) {
-            generatedDeck.warnings.forEach(warning => {
-              console.warn(`⚠️  ${warning}`);
-            });
-          }
+        generatedDeck = generatorModule.generateDeckFromRequest(deckRequest);
+        if (generatedDeck.theme && !options.theme) {
+          options.theme = generatedDeck.theme;
+        }
+        if (generatedDeck.slides?.length) {
+          options.slides = generatedDeck.slides.map(slide => ({
+            layout: slide.layout,
+            title: slide.title,
+            subtitle: slide.subtitle,
+            description: slide.description,
+            items: slide.items,
+            notes: slide.notes,
+          }));
+          options.layout = undefined;
+        }
+        if (generatedDeck?.warnings?.length) {
+          generatedDeck.warnings.forEach(warning => {
+            console.warn(`⚠️  ${warning}`);
+          });
+        }
         }
       } catch (error) {
         console.error('❌ Failed to generate deck from context:', error.message);

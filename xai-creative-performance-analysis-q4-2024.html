@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xAI - Creative Performance Analysis Q4 2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles/html-decks-global-optimized.css">
+    <style>
+        /* XAI WHITELABEL STYLING */
+        
+        /* XAI DESIGN SYSTEM OVERRIDE - Following Template Blueprint */
+        :root {
+            /* Core Design Tokens Override */
+            --primary-color: #000000 !important; /* xAI Primary Black */
+            --secondary-color: #333333 !important; /* xAI Secondary Dark Gray */
+            --accent-color: #666666 !important; /* xAI Accent Gray */
+            --brand-dark: #000000 !important; /* Pure black for cover gradient */
+            
+            /* Legacy Color Variables Override (any theme) */
+            --orange-500: #000000 !important;
+            --orange-600: #333333 !important;
+            --deep-orange: #000000 !important;
+            --metric-orange: #000000 !important;
+            --chart-orange: #000000 !important;
+        }
+        
+        /* XAI COVER GRADIENT */
+        .slide:first-child .slide-card {
+            background: linear-gradient(135deg, var(--brand-dark) 0%, #333333 100%) !important;
+        }
+        
+        /* KPI/METRIC ELEMENTS - Following Blueprint */
+        .kpi-stat-number, .metric-value, .takeaway-number, .text--number {
+            color: #000000 !important;
+        }
+        
+        /* INDICATOR ELEMENTS - Following Blueprint */
+        .performance-good, .creative-rank {
+            background-color: #000000 !important;
+            color: white !important;
+        }
+        
+        /* CHART ELEMENTS - Following Blueprint */
+        .chart-container {
+            background-color: #f8f9fa !important; /* Light background for contrast with black/gray charts */
+            border-radius: 8px !important;
+            padding: 1rem !important;
+        }
+        .chart-container canvas {
+            --chart-primary: #000000 !important;
+            --chart-secondary: #333333 !important;
+        }
+        /* Chart text colors updated in JS: legend, title, ticks use #333333 for visibility on light background */
+        
+        /* PRESERVE ELEMENTS - Following Blueprint */
+        .cover-title, .cover-subtitle {
+            color: white !important; /* Keep white on cover */
+        }
+        
+        .slide-title, .slide-subtitle, .breadcrumbs, 
+        .impact-label, .impact-description, .takeaway-title, .takeaway-description {
+            /* Preserve black/gray text hierarchy - don't override */
+        }
+        
+        /* LEGACY THEME CLEANUP - Any remaining default colors */
+        [style*="#ea580c"], [style*="rgb(234, 88, 12)"] {
+            color: #000000 !important;
+            background-color: transparent !important;
+        }
+        
+        /* XAI GEOMETRIC AESTHETIC ENHANCEMENTS */
+        .creative-rank, .performance-indicator {
+            border-radius: 2px !important; /* Sharp, geometric edges */
+        }
+        
+        .slide-card {
+            border-radius: 8px !important; /* Minimal rounded corners */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="deck-container">
+        <!-- COVER SLIDE -->
+        <div class="slide" id="slide-1">
+            <div class="slide-card">
+                <div class="slide-content">
+                    <div class="cover-content">
+                        <div class="cover-logo">
+                            <svg width="120" height="40" viewBox="0 0 120 40" class="logo-cover">
+                                <g fill="white">
+                                    <!-- xAI geometric X logo -->
+                                    <path d="M20 8 L32 8 L26 20 L32 32 L20 32 L14 20 Z" />
+                                    <path d="M34 20 L40 14 L40 26 Z" />
+                                    <!-- AI text -->
+                                    <text x="50" y="28" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="white">AI</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="cover-header">
+                            <h1 class="cover-title text--title text--title--large">Creative Performance Analysis</h1>
+                            <p class="cover-subtitle text--subtitle text--subtitle--large">xAI's comprehensive Q4 2024 analysis of AI-powered creative campaigns, revealing breakthrough performance metrics, optimization insights, and strategic recommendations for next-generation advertising intelligence.</p>
+                        </div>
+                        <div class="cover-body">
+                            <div class="cover-meta">
+                                <div class="meta-tag">Q4 2024</div>
+                                <div class="meta-tag">287 AI Creatives</div>
+                                <div class="meta-tag">Jan 15, 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI STATS SLIDE -->
+        <div class="slide" id="slide-2">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-title text--title text--title--medium">AI-Powered Performance Overview</div>
+                    <div class="slide-subtitle text--subtitle text--subtitle--medium">Our Q4 AI creative portfolio delivered exceptional performance through advanced machine learning optimization, achieving breakthrough results in engagement and conversion metrics across all intelligence-driven campaigns.</div>
+                    <div class="summary-content">
+                        <div class="kpi-stats">
+                            <div class="kpi-stat">
+                                <div class="kpi-stat-number text--number text--number--medium">8.7x</div>
+                                <div class="kpi-stat-label text--label text--label--medium">Average ROAS</div>
+                                <div class="kpi-stat-change positive">+2.1x vs Q3</div>
+                            </div>
+                            <div class="kpi-stat">
+                                <div class="kpi-stat-number text--number text--number--medium">6.3%</div>
+                                <div class="kpi-stat-label text--label text--label--medium">Average CTR</div>
+                                <div class="kpi-stat-change positive">+2.1% vs Q3</div>
+                            </div>
+                            <div class="kpi-stat">
+                                <div class="kpi-stat-number text--number text--number--medium">$3.8M</div>
+                                <div class="kpi-stat-label text--label text--label--medium">Total Revenue</div>
+                                <div class="kpi-stat-change positive">+67% vs Q3</div>
+                            </div>
+                            <div class="kpi-stat">
+                                <div class="kpi-stat-number text--number text--number--medium">$18.40</div>
+                                <div class="kpi-stat-label text--label text--label--medium">Avg CPC</div>
+                                <div class="kpi-stat-change negative">-$6.20 vs Q3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOP 3 CREATIVE CARDS -->
+        <div class="slide" id="slide-3">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / AI Top Performers</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-title text--title text--title--medium">Top 3 AI-Generated Creatives</div>
+                    <div class="slide-subtitle text--subtitle text--subtitle--medium">These breakthrough AI creatives demonstrate the power of advanced neural networks in generating compelling content that resonates with audiences and drives exceptional performance metrics.</div>
+                    <div class="creatives-grid-bottom">
+                        <div class="creative-card">
+                            <div class="creative-image-container">
+                                <img src="images/ai-neural-campaign.jpg" alt="AI Neural Campaign" class="creative-image-medium" loading="lazy">
+                                <div class="creative-rank">#1</div>
+                            </div>
+                            <div class="creative-content">
+                                <div class="creative-title">AI Neural Campaign</div>
+                                <div class="creative-metrics">
+                                    <div class="metric"><span class="metric-label">ROAS:</span><span class="metric-value text--number text--number--tiny">18.4x</span></div>
+                                    <div class="metric"><span class="metric-label">CTR:</span><span class="metric-value text--number text--number--tiny">9.1%</span></div>
+                                    <div class="metric"><span class="metric-label">Clicks:</span><span class="metric-value text--number text--number--tiny">7,820</span></div>
+                                    <div class="metric"><span class="metric-label">CPC:</span><span class="metric-value text--number text--number--tiny">$12.60</span></div>
+                                    <div class="metric"><span class="metric-label">Spend:</span><span class="metric-value text--number text--number--tiny">$98K</span></div>
+                                </div>
+                                <div class="performance-indicator performance-good">AI Breakthrough</div>
+                            </div>
+                        </div>
+                        <div class="creative-card">
+                            <div class="creative-image-container">
+                                <img src="images/grok-intelligence.jpg" alt="Grok Intelligence Showcase" class="creative-image-medium" loading="lazy">
+                                <div class="creative-rank">#2</div>
+                            </div>
+                            <div class="creative-content">
+                                <div class="creative-title">Grok Intelligence Showcase</div>
+                                <div class="creative-metrics">
+                                    <div class="metric"><span class="metric-label">ROAS:</span><span class="metric-value text--number text--number--tiny">15.2x</span></div>
+                                    <div class="metric"><span class="metric-label">CTR:</span><span class="metric-value text--number text--number--tiny">8.3%</span></div>
+                                    <div class="metric"><span class="metric-label">Clicks:</span><span class="metric-value text--number text--number--tiny">6,540</span></div>
+                                    <div class="metric"><span class="metric-label">CPC:</span><span class="metric-value text--number text--number--tiny">$14.80</span></div>
+                                    <div class="metric"><span class="metric-label">Spend:</span><span class="metric-value text--number text--number--tiny">$97K</span></div>
+                                </div>
+                                <div class="performance-indicator performance-good">AI Excellence</div>
+                            </div>
+                        </div>
+                        <div class="creative-card">
+                            <div class="creative-image-container">
+                                <img src="images/truthgpt-campaign.jpg" alt="TruthGPT Campaign" class="creative-image-medium" loading="lazy">
+                                <div class="creative-rank">#3</div>
+                            </div>
+                            <div class="creative-content">
+                                <div class="creative-title">TruthGPT Campaign</div>
+                                <div class="creative-metrics">
+                                    <div class="metric"><span class="metric-label">ROAS:</span><span class="metric-value text--number text--number--tiny">12.8x</span></div>
+                                    <div class="metric"><span class="metric-label">CTR:</span><span class="metric-value text--number text--number--tiny">7.2%</span></div>
+                                    <div class="metric"><span class="metric-label">Clicks:</span><span class="metric-value text--number text--number--tiny">5,980</span></div>
+                                    <div class="metric"><span class="metric-label">CPC:</span><span class="metric-value text--number text--number--tiny">$16.40</span></div>
+                                    <div class="metric"><span class="metric-label">Spend:</span><span class="metric-value text--number text--number--tiny">$98K</span></div>
+                                </div>
+                                <div class="performance-indicator performance-good">AI Innovation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CREATIVE PERFORMANCE TABLE -->
+        <div class="slide" id="slide-4">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / AI Rankings</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-title text--title text--title--medium">Top 8 AI Creative Performance Rankings</div>
+                    <div class="list-layout-container">
+                        <table class="list-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>AI Creative</th>
+                                    <th>Spend</th>
+                                    <th>Conv.</th>
+                                    <th>Clicks</th>
+                                    <th>CTR</th>
+                                    <th>CPC</th>
+                                    <th>ROAS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img src="images/ai-neural-campaign.jpg" alt="AI Neural Campaign" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">AI Neural Campaign</div></td>
+                                    <td><div class="list-metric-value">$98,400</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">485</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">7,820</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">9.1%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$12.60</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">18.4x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/grok-intelligence.jpg" alt="Grok Intelligence Showcase" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">Grok Intelligence Showcase</div></td>
+                                    <td><div class="list-metric-value">$96,800</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">398</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">6,540</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">8.3%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$14.80</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">15.2x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/truthgpt-campaign.jpg" alt="TruthGPT Campaign" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">TruthGPT Campaign</div></td>
+                                    <td><div class="list-metric-value">$98,200</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">342</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">5,980</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">7.2%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$16.40</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">12.8x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/neural-network-demo.jpg" alt="Neural Network Demo" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">Neural Network Demo</div></td>
+                                    <td><div class="list-metric-value">$89,600</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">278</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">5,120</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">6.8%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$17.50</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">11.2x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/machine-learning-viz.jpg" alt="Machine Learning Visualization" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">Machine Learning Visualization</div></td>
+                                    <td><div class="list-metric-value">$78,400</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">234</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">4,560</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">6.2%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$17.20</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">9.8x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/ai-automation.jpg" alt="AI Automation Showcase" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">AI Automation Showcase</div></td>
+                                    <td><div class="list-metric-value">$67,800</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">198</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">3,890</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">5.7%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$17.40</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">8.6x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/data-intelligence.jpg" alt="Data Intelligence Campaign" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">Data Intelligence Campaign</div></td>
+                                    <td><div class="list-metric-value">$62,400</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">167</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">3,420</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">5.2%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$18.20</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">7.8x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="images/ai-future-tech.jpg" alt="AI Future Technology" class="list-image-placeholder" loading="lazy"></td>
+                                    <td><div class="list-performer-label">AI Future Technology</div></td>
+                                    <td><div class="list-metric-value">$58,900</div><div class="list-metric-label">Spend</div></td>
+                                    <td><div class="list-metric-value">145</div><div class="list-metric-label">Conv.</div></td>
+                                    <td><div class="list-metric-value">3,120</div><div class="list-metric-label">Clicks</div></td>
+                                    <td><div class="list-metric-value">4.9%</div><div class="list-metric-label">CTR</div></td>
+                                    <td><div class="list-metric-value">$18.80</div><div class="list-metric-label">CPC</div></td>
+                                    <td><div class="list-metric-value">7.2x</div><div class="list-metric-label">ROAS</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHART + METRICS -->
+        <div class="slide" id="slide-5">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / AI Trends</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-title text--title text--title--medium">AI Performance Trends & Intelligence Metrics</div>
+                    <div class="slide-subtitle text--subtitle text--subtitle--medium">Our Q4 AI performance analysis demonstrates exponential growth in machine learning optimization, with neural network-driven campaigns achieving unprecedented efficiency and engagement rates across all intelligence metrics.</div>
+                    <div class="metrics-highlight-container">
+                        <div class="metrics-chart-section">
+                            <div class="chart-container">
+                                <canvas id="performanceChart" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                        <div class="metrics-display-section">
+                            <div class="metric-item">
+                                <div class="metric-value">$3.8M</div>
+                                <div class="metric-label">Total AI Revenue Generated</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">67%</div>
+                                <div class="metric-label">Revenue Growth vs Q3</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">2,347</div>
+                                <div class="metric-label">Total AI Conversions</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">287</div>
+                                <div class="metric-label">AI Creatives Analyzed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOP VS BOTTOM PERFORMERS -->
+        <div class="slide" id="slide-6">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / AI Comparison</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="dual-list-container">
+                        <div class="dual-list-column" style="background: var(--white); border: 1px solid var(--gray-200);">
+                            <div class="dual-list-title text--title text--title--small">Top 5 AI Performers</div>
+                            <div class="list-layout-container">
+                                <table class="list-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><img src="images/ai-neural-campaign.jpg" alt="AI Neural Campaign" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">AI Neural Campaign</div></td>
+                                            <td><div class="list-metric-value">$98K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">485</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">18.4x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/grok-intelligence.jpg" alt="Grok Intelligence Showcase" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Grok Intelligence Showcase</div></td>
+                                            <td><div class="list-metric-value">$97K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">398</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">15.2x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/truthgpt-campaign.jpg" alt="TruthGPT Campaign" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">TruthGPT Campaign</div></td>
+                                            <td><div class="list-metric-value">$98K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">342</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">12.8x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/neural-network-demo.jpg" alt="Neural Network Demo" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Neural Network Demo</div></td>
+                                            <td><div class="list-metric-value">$90K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">278</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">11.2x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/machine-learning-viz.jpg" alt="Machine Learning Visualization" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Machine Learning Viz</div></td>
+                                            <td><div class="list-metric-value">$78K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">234</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">9.8x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="dual-list-column" style="background: var(--white); border: 1px solid var(--gray-200);">
+                            <div class="dual-list-title text--title text--title--small">Bottom 5 AI Performers</div>
+                            <div class="list-layout-container">
+                                <table class="list-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><img src="images/basic-ai-template.jpg" alt="Basic AI Template" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Basic AI Template</div></td>
+                                            <td><div class="list-metric-value">$42K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">18</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">1.4x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/generic-ai-text.jpg" alt="Generic AI Text" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Generic AI Text</div></td>
+                                            <td><div class="list-metric-value">$38K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">24</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">1.6x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/simple-chatbot.jpg" alt="Simple Chatbot Demo" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Simple Chatbot Demo</div></td>
+                                            <td><div class="list-metric-value">$35K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">28</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">1.8x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/basic-ml-concept.jpg" alt="Basic ML Concept" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Basic ML Concept</div></td>
+                                            <td><div class="list-metric-value">$32K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">32</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">2.1x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img src="images/outdated-ai-visual.jpg" alt="Outdated AI Visual" class="list-image-placeholder" loading="lazy"></td>
+                                            <td><div class="list-performer-label">Outdated AI Visual</div></td>
+                                            <td><div class="list-metric-value">$29K</div><div class="list-metric-label">Spend</div></td>
+                                            <td><div class="list-metric-value">34</div><div class="list-metric-label">Conv.</div></td>
+                                            <td><div class="list-metric-value">2.3x</div><div class="list-metric-label">ROAS</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHAT'S WORKING VS WHAT'S NOT -->
+        <div class="slide" id="slide-7">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / AI Success Factors</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content impact-content">
+                    <div class="dual-list-container">
+                        <div class="dual-list-column impact-column">
+                            <div class="dual-list-title text--title text--title--small">What's Working</div>
+                            <div class="list-layout-container">
+                                <table class="list-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Neural Network Optimization</div>
+                                                <div class="impact-description">Advanced neural networks achieved 89% higher engagement rates and 5.2x better ROAS than traditional AI approaches</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">ROAS</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Grok Intelligence Integration</div>
+                                                <div class="impact-description">Grok-powered creatives demonstrated 78% higher conversion rates through truthful, unbiased AI messaging</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Conversions</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Real-time Learning</div>
+                                                <div class="impact-description">AI models with real-time optimization drove 56% higher click-through rates through continuous learning</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">CTR</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Multi-modal AI Content</div>
+                                                <div class="impact-description">Creatives combining text, image, and data intelligence saw 43% longer engagement times</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Engagement</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Transparency in AI</div>
+                                                <div class="impact-description">Openly AI-generated content with transparency labels increased trust scores by 67%</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Trust Score</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="dual-list-column impact-column">
+                            <div class="dual-list-title text--title text--title--small">What's Not Working</div>
+                            <div class="list-layout-container">
+                                <table class="list-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Generic AI Templates</div>
+                                                <div class="impact-description">Basic AI templates performed 91% worse than custom neural network-generated content</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">ROAS</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Static AI Models</div>
+                                                <div class="impact-description">Non-learning AI approaches saw 83% lower engagement due to lack of optimization</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Engagement</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Biased AI Content</div>
+                                                <div class="impact-description">AI models with inherent bias reduced brand perception scores by 74% among conscious consumers</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Brand Perception</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Complex AI Interfaces</div>
+                                                <div class="impact-description">Overly technical AI demonstrations decreased CTR by 68% across consumer segments</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">CTR</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="impact-cell">
+                                                <div class="impact-label">Hidden AI Usage</div>
+                                                <div class="impact-description">Non-transparent AI usage without disclosure reduced conversion rates by 62%</div>
+                                            </td>
+                                            <td class="impact-metric">
+                                                <div class="list-metric-value">Conversions</div>
+                                                <div class="list-metric-label">Affected</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY TAKEAWAYS -->
+        <div class="slide" id="slide-8">
+            <div class="slide-card">
+                <div class="slide-header">
+                    <div class="header-logo">
+                        <svg width="80" height="24" viewBox="0 0 80 24" class="logo-header">
+                            <g fill="#000000">
+                                <path d="M12 5 L19 5 L15.5 12 L19 19 L12 19 L8.5 12 Z" />
+                                <path d="M20 12 L24 8 L24 16 Z" />
+                                <text x="30" y="17" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#000000">AI</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="breadcrumbs">Creative Performance Analysis / Key AI Insights</div>
+                    <div class="header-period">Q4 2024</div>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-title text--title text--title--medium" style="color: var(--gray-900);">Key AI Insights</div>
+                    <div class="list-layout-container">
+                        <table class="list-table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="takeaway-number text--number text--number--huge" style="color: var(--primary-color);">01</div>
+                                    </td>
+                                    <td>
+                                        <div class="takeaway-content">
+                                            <div class="takeaway-title text--title text--title--small" style="color: var(--gray-900);">Advanced Neural Networks Dominate Performance</div>
+                                            <div class="takeaway-description text--description text--description--small" style="color: var(--gray-600);">Neural network-powered creatives consistently outperformed traditional AI approaches, achieving 89% higher engagement rates and 5.2x better ROAS. Our AI Neural Campaign led with 18.4x ROAS, demonstrating the superior performance of deep learning models in creative generation.</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="takeaway-number text--number text--number--huge" style="color: var(--primary-color);">02</div>
+                                    </td>
+                                    <td>
+                                        <div class="takeaway-content">
+                                            <div class="takeaway-title text--title text--title--small" style="color: var(--gray-900);">Transparency and Truth Drive Trust and Conversions</div>
+                                            <div class="takeaway-description text--description text--description--small" style="color: var(--gray-600);">Grok-powered and transparently labeled AI content significantly outperformed hidden or biased AI approaches. Transparent AI usage increased trust scores by 67% and conversion rates by 78%, proving that honest AI communication resonates with conscious consumers.</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="takeaway-number text--number text--number--huge" style="color: var(--primary-color);">03</div>
+                                    </td>
+                                    <td>
+                                        <div class="takeaway-content">
+                                            <div class="takeaway-title text--title text--title--small" style="color: var(--gray-900);">Real-time Learning Creates Competitive Advantage</div>
+                                            <div class="takeaway-description text--description text--description--small" style="color: var(--gray-600);">AI models with real-time optimization capabilities drove 56% higher CTR through continuous learning and adaptation. Static AI templates performed 91% worse, highlighting the critical importance of dynamic, learning-enabled AI systems in creative performance.</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="takeaway-number text--number text--number--huge" style="color: var(--primary-color);">04</div>
+                                    </td>
+                                    <td>
+                                        <div class="takeaway-content">
+                                            <div class="takeaway-title text--title text--title--small" style="color: var(--gray-900);">Massive Performance Gap Reveals AI Optimization Potential</div>
+                                            <div class="takeaway-description text--description text--description--small" style="color: var(--gray-600);">The 16.1x ROAS difference between top performers (18.4x) and underperformers (2.3x) reveals enormous optimization potential. By scaling advanced neural network approaches and eliminating generic templates, we can dramatically improve overall AI creative portfolio performance.</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="navigation">
+        <div class="nav-container">
+            <div class="nav-arrows">
+                <button class="nav-button prev-btn" onclick="previousSlide()"><span>←</span></button>
+                <button class="nav-button next-btn" onclick="nextSlide()"><span>→</span></button>
+            </div>
+            <div class="dot-indicators">
+                <div class="dot-indicator active" onclick="goToSlide(1)"></div>
+                <div class="dot-indicator" onclick="goToSlide(2)"></div>
+                <div class="dot-indicator" onclick="goToSlide(3)"></div>
+                <div class="dot-indicator" onclick="goToSlide(4)"></div>
+                <div class="dot-indicator" onclick="goToSlide(5)"></div>
+                <div class="dot-indicator" onclick="goToSlide(6)"></div>
+                <div class="dot-indicator" onclick="goToSlide(7)"></div>
+                <div class="dot-indicator" onclick="goToSlide(8)"></div>
+            </div>
+            <div class="slide-counter-pill">
+                <span id="current-slide">1</span> of <span id="total-slides">8</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Optimized SlideManager
+        const SM = {
+            c: 1, t: 8, ch: null, e: {}, tx: 0,
+            
+            init() {
+                this.cache(); this.scroll(); this.show(1); this.events();
+            },
+            
+            cache() {
+                this.e = {
+                    s: document.querySelectorAll('.slide'),
+                    c: document.getElementById('current-slide'),
+                    d: document.querySelectorAll('.dot-indicator'),
+                    p: document.querySelector('.prev-btn'),
+                    n: document.querySelector('.next-btn')
+                };
+            },
+            
+            scroll() {
+                document.querySelectorAll('.list-layout-container').forEach(c => {
+                    const t = c.querySelector('.list-table tbody');
+                    if (t && t.querySelectorAll('tr').length > 5) {
+                        c.classList.add('scrollable');
+                        c.style.cssText = 'scroll-behavior:smooth;position:relative';
+                        const i = document.createElement('div');
+                        i.className = 'scroll-indicator';
+                        i.innerHTML = '↕';
+                        i.title = 'Scroll to see more';
+                        c.appendChild(i);
+                        
+                        let sc = false;
+                        c.addEventListener('scroll', () => {
+                            if (!sc && c.scrollTop > 10) {
+                                sc = true; c.classList.add('scrolled');
+                            }
+                        });
+                    }
+                });
+            },
+            
+            show(n) {
+                this.e.s.forEach((s, i) => s.classList.toggle('active', i + 1 === n));
+                if (n === 5 && !this.ch) requestAnimationFrame(() => this.chart());
+                this.nav(n); this.c = n;
+            },
+            
+            nav(n) {
+                this.e.c.textContent = n;
+                this.e.d.forEach((d, i) => d.classList.toggle('active', i + 1 === n));
+                this.e.p.disabled = n === 1;
+                this.e.n.disabled = n === this.t;
+                this.e.p.style.opacity = n === 1 ? '0.4' : '1';
+                this.e.n.style.opacity = n === this.t ? '0.4' : '1';
+            },
+            
+            next() { if (this.c < this.t) this.show(this.c + 1); },
+            prev() { if (this.c > 1) this.show(this.c - 1); },
+            go(n) { if (n >= 1 && n <= this.t) this.show(n); },
+            
+            events() {
+                let kt;
+                document.addEventListener('keydown', e => {
+                    if (kt) return;
+                    const ka = {
+                        'ArrowRight': () => this.next(),
+                        ' ': () => this.next(),
+                        'ArrowLeft': () => this.prev(),
+                        'Home': () => this.go(1),
+                        'End': () => this.go(this.t)
+                    };
+                    if (ka[e.key]) {
+                        e.preventDefault();
+                        ka[e.key]();
+                        kt = setTimeout(() => kt = null, 100);
+                    }
+                });
+                
+                document.addEventListener('touchstart', e => {
+                    this.tx = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                document.addEventListener('touchend', e => {
+                    const diff = this.tx - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) > 50) {
+                        diff > 0 ? this.next() : this.prev();
+                    }
+                }, { passive: true });
+            },
+            
+            chart() {
+                const ctx = document.getElementById('performanceChart');
+                if (!ctx) return;
+                
+                this.ch = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+                        datasets: [{
+                            label: 'AI Revenue ($M)',
+                            data: [1.2, 1.8, 2.3, 3.8],
+                            backgroundColor: '#000000', // xAI Primary Black
+                            borderRadius: 6,
+                            barThickness: 40
+                        }, {
+                            label: 'AI ROAS',
+                            data: [4.8, 5.6, 6.4, 8.7],
+                            backgroundColor: '#333333', // xAI Secondary Gray
+                            borderRadius: 6,
+                            barThickness: 40
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: 10
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: { color: '#333333', font: { size: 12 }, usePointStyle: true }
+                            },
+                            title: {
+                                display: true,
+                                text: 'AI Performance Growth Trajectory',
+                                color: '#000000',
+                                font: { size: 16, weight: '600' }
+                            }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#333333', font: { size: 12 } } },
+                            y: { grid: { color: 'rgba(0,0,0,0.1)', drawBorder: false }, ticks: { color: '#333333', font: { size: 11 } } }
+                        }
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => SM.init());
+        
+        // Global functions for onclick handlers
+        const nextSlide = () => SM.next();
+        const previousSlide = () => SM.prev();
+        const goToSlide = n => SM.go(n);
+    </script>
+</body>
+</html> 
