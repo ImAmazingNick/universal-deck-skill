@@ -58,20 +58,28 @@ Document the reasoning (bullet list or short plan) before and after generating H
 
 ## Layout Patterns
 
-Replicate the longevity style slide patterns:
+Replicate the longevity style slide patterns and incorporate advanced layouts from performance analysis decks:
 
 | Slide Type | Layout Components | Suggested Use |
 |------------|------------------|---------------|
-| Title Hero | `title-slide` with stat cards | Vision statement, metrics snapshot |
-| Problem/Insight | `.stats-grid` cards + narrative paragraph | Highlight pain points |
-| Narrative Quote | `.text-large` headings + body | Vision, mission, storytelling |
-| Data Story | `.metrics-grid`, `.stats-grid-4`, or timeline | KPIs, adoption, roadmap |
-| Visual Proof | `<img>` embed with caption | Screenshots, charts, prototypes |
-| Comparison | `.comparison-container` | Before/after, competitor analysis |
-| Feature Showcase | `.feature-showcase`, `.feature-card` | Product capabilities |
-| CTA | `.cta-section` | Close with strong call-to-action |
+| **Title Hero** | `title-slide` with stat cards | Vision statement, metrics snapshot |
+| **Cover Slide** | `cover-content`, `cover-logo`, `cover-meta` | Presentation title with branding and metadata |
+| **KPI Dashboard** | `kpi-stats` grid with `.kpi-stat` cards | Key performance indicators display |
+| **Problem/Insight** | `.stats-grid` cards + narrative paragraph | Highlight pain points with metrics |
+| **Image Card Grid** | `.creatives-grid-bottom` with `.creative-card` | Portfolio showcase with images and metrics |
+| **Data Table** | `.list-layout-container` with `.list-table` | Detailed performance rankings and comparisons |
+| **Chart Dashboard** | `.metrics-highlight-container` with `.chart-container` | Data visualization with accompanying metrics |
+| **Narrative Quote** | `.text-large` headings + body | Vision, mission, storytelling |
+| **Dual Column Comparison** | `.dual-list-container` with side-by-side tables | Performance comparisons, pros/cons analysis |
+| **Impact Analysis** | `.impact-content` with `.impact-column` | Success factors and challenges analysis |
+| **Data Story** | `.metrics-grid`, `.stats-grid-4`, or timeline | KPIs, adoption, roadmap |
+| **Visual Proof** | `<img>` embed with caption | Screenshots, charts, prototypes |
+| **Comparison** | `.comparison-container` | Before/after, competitor analysis |
+| **Feature Showcase** | `.feature-showcase`, `.feature-card` | Product capabilities |
+| **Numbered Takeaways** | `.takeaway-number` with `.takeaway-content` | Key insights and strategic recommendations |
+| **CTA** | `.cta-section` | Close with strong call-to-action |
 
-Feel free to remix patterns when intent demands.
+Feel free to remix patterns when intent demands. The skill now supports both narrative-driven layouts (hero, storytelling) and data-heavy layouts (KPIs, tables, charts).
 
 ## Audience Archetypes
 
@@ -80,12 +88,33 @@ Use predefined archetypes to accelerate personalization. Each archetype bundles 
 | Archetype | Audience Signals | Layout Priorities | Tone & Visuals |
 |-----------|------------------|-------------------|----------------|
 | Investor Pitch | Fundraising, metrics requests, capital raise timelines | Hero → traction metrics → market size → roadmap → CTA | Confident, metric-forward, warm gradients with sharp highlights |
+| Performance Analysis | QBR reviews, analytics reports, data insights | Cover → KPI Dashboard → Data Tables → Chart Dashboard → Takeaways | Analytical, data-driven, clean grids with performance indicators |
 | Internal Onboarding | New hires, enablement, process walkthroughs | Hero → mission/values → process timeline → resource hub → CTA | Warm, supportive, lighter backgrounds with high-contrast typography |
 | Enterprise Sales | Stakeholder buy-in, solution demos, ROI proof | Hero → problem framing → solution features → proof points → CTA | Consultative, crisp, neutral gradients with focal accent color |
+| Portfolio Showcase | Creative reviews, case studies, work samples | Cover → Image Card Grid → Impact Analysis → Dual Comparison → CTA | Visual, achievement-focused, image-rich layouts with metrics |
 | Conference Keynote | Thought leadership, storytelling, inspiration | Hero → narrative quote → trend data → vision roadmap → CTA | Inspirational, bold typography, elevated motion cues |
 | Product Update | Release notes, feature emphasis, adoption nudges | Hero → capability deep-dive → demo visuals → adoption metrics → CTA | Energetic, modular layouts, badge callouts and iconography |
 
 If a request spans multiple archetypes, blend the relevant layout priorities and narrate your rationale during intent documentation.
+
+## Advanced Layout Components
+
+### Data-Heavy Layouts
+- **KPI Dashboard**: Use `kpi-stats` container with multiple `kpi-stat` cards showing key metrics, changes, and labels
+- **Image Card Grid**: `creatives-grid-bottom` container with `creative-card` elements featuring images, rankings, metrics, and performance indicators
+- **Data Tables**: `list-layout-container` with `list-table` for detailed rankings, comparisons, and performance data
+- **Chart Dashboards**: `metrics-highlight-container` combining `chart-container` with `metrics-display-section` for visual analytics
+
+### Comparison & Analysis Layouts
+- **Dual Column Comparisons**: `dual-list-container` with side-by-side `dual-list-column` sections for performance comparisons
+- **Impact Analysis**: `impact-content` with `impact-column` elements for pros/cons, success factors, and challenges
+- **Numbered Takeaways**: Sequential insights using `takeaway-number` and `takeaway-content` for key recommendations
+
+### Visual Enhancement Components
+- **Performance Indicators**: Color-coded badges showing performance levels (good/excellent/breakthrough)
+- **Metric Change Indicators**: Positive/negative change arrows with percentage values
+- **Ranking Elements**: Numbered rankings with visual prominence
+- **Meta Information**: Period tags, data source indicators, and contextual breadcrumbs
 
 ## Dynamic Theming & Accessibility
 

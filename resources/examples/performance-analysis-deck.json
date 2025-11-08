@@ -1,0 +1,212 @@
+{
+  "theme": "performance-analysis",
+  "titleSlide": {
+    "title": "Performance Analysis Dashboard",
+    "subtitle": "Q4 2024 Comprehensive Review",
+    "date": "2025-01-15",
+    "author": "Analytics Team",
+    "company": "Company Name"
+  },
+  "assetsBasePath": "./public",
+  "slides": [
+    {
+      "layout": "cover-slide",
+      "title": "Performance Analysis",
+      "items": [
+        { "i": "logo", "data": { "svg": "<svg>...</svg>" } },
+        { "i": "title", "data": { "text": "Performance Analysis Dashboard", "size": "large" } },
+        { "i": "subtitle", "data": { "text": "Comprehensive Q4 2024 review of key metrics, trends, and strategic insights", "size": "large" } },
+        { "i": "meta", "data": { "tags": ["Q4 2024", "287 Data Points", "Jan 15, 2025"] } }
+      ]
+    },
+    {
+      "layout": "kpi-dashboard",
+      "title": "Key Performance Overview",
+      "items": [
+        { "i": "kpi1", "data": { "metric": "8.7x", "label": "Average ROAS", "change": "+2.1x", "changeType": "positive" } },
+        { "i": "kpi2", "data": { "metric": "6.3%", "label": "Average CTR", "change": "+2.1%", "changeType": "positive" } },
+        { "i": "kpi3", "data": { "metric": "$3.8M", "label": "Total Revenue", "change": "+67%", "changeType": "positive" } },
+        { "i": "kpi4", "data": { "metric": "$18.40", "label": "Avg CPC", "change": "-$6.20", "changeType": "negative" } }
+      ]
+    },
+    {
+      "layout": "image-card-grid",
+      "title": "Top Performers Showcase",
+      "items": [
+        {
+          "i": "card1",
+          "data": {
+            "image": "top-performer-1.jpg",
+            "rank": "#1",
+            "title": "High-Impact Campaign",
+            "metrics": [
+              { "label": "ROAS", "value": "18.4x" },
+              { "label": "CTR", "value": "9.1%" },
+              { "label": "Spend", "value": "$98K" }
+            ],
+            "performance": "Breakthrough"
+          }
+        },
+        {
+          "i": "card2",
+          "data": {
+            "image": "top-performer-2.jpg",
+            "rank": "#2",
+            "title": "Optimization Success",
+            "metrics": [
+              { "label": "ROAS", "value": "15.2x" },
+              { "label": "CTR", "value": "8.3%" },
+              { "label": "Spend", "value": "$97K" }
+            ],
+            "performance": "Excellent"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-table",
+      "title": "Detailed Performance Rankings",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Campaign", "Spend", "Conversions", "CTR", "ROAS"],
+            "rows": [
+              {
+                "image": "campaign1.jpg",
+                "name": "Campaign Alpha",
+                "metrics": ["$98,400", "485", "9.1%", "18.4x"]
+              },
+              {
+                "image": "campaign2.jpg",
+                "name": "Campaign Beta",
+                "metrics": ["$96,800", "398", "8.3%", "15.2x"]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-dashboard",
+      "title": "Performance Trends",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "line",
+            "title": "Quarterly Performance Growth",
+            "data": [
+              { "period": "Q1 2024", "revenue": 1.2, "roas": 4.8 },
+              { "period": "Q2 2024", "revenue": 1.8, "roas": 5.6 },
+              { "period": "Q3 2024", "revenue": 2.3, "roas": 6.4 },
+              { "period": "Q4 2024", "revenue": 3.8, "roas": 8.7 }
+            ]
+          }
+        },
+        {
+          "i": "metrics",
+          "data": [
+            { "value": "$3.8M", "label": "Q4 Revenue" },
+            { "value": "67%", "label": "YoY Growth" },
+            { "value": "2,347", "label": "Total Conversions" }
+          ]
+        }
+      ]
+    },
+    {
+      "layout": "dual-column-comparison",
+      "title": "Performance Comparison",
+      "items": [
+        {
+          "i": "column1",
+          "data": {
+            "title": "Top 25% Performers",
+            "items": [
+              {
+                "image": "top1.jpg",
+                "name": "Top Campaign A",
+                "metrics": ["$98K", "485", "18.4x"]
+              }
+            ]
+          }
+        },
+        {
+          "i": "column2",
+          "data": {
+            "title": "Bottom 25% Performers",
+            "items": [
+              {
+                "image": "bottom1.jpg",
+                "name": "Bottom Campaign A",
+                "metrics": ["$42K", "18", "1.4x"]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "impact-analysis",
+      "title": "Success Factors Analysis",
+      "items": [
+        {
+          "i": "positive",
+          "data": {
+            "title": "What's Working",
+            "factors": [
+              {
+                "factor": "Advanced Neural Networks",
+                "description": "Neural network-powered campaigns achieved 89% higher engagement",
+                "impact": "Engagement +89%"
+              }
+            ]
+          }
+        },
+        {
+          "i": "negative",
+          "data": {
+            "title": "Areas for Improvement",
+            "factors": [
+              {
+                "factor": "Generic Templates",
+                "description": "Basic AI templates underperformed custom approaches",
+                "impact": "ROAS -91%"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "numbered-takeaways",
+      "title": "Key Strategic Insights",
+      "items": [
+        {
+          "i": "takeaway1",
+          "data": {
+            "number": "01",
+            "title": "Neural Networks Dominate Performance",
+            "description": "Advanced neural network approaches consistently outperform traditional methods by 5x+ in key metrics"
+          }
+        },
+        {
+          "i": "takeaway2",
+          "data": {
+            "number": "02",
+            "title": "Transparency Builds Trust",
+            "description": "Transparent AI labeling increased conversion rates by 78% among conscious consumers"
+          }
+        },
+        {
+          "i": "takeaway3",
+          "data": {
+            "number": "03",
+            "title": "Real-time Learning is Critical",
+            "description": "Static AI models underperformed by 83% compared to real-time learning systems"
+          }
+        }
+      ]
+    }
+  ]
+}
