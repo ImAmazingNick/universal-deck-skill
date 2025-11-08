@@ -1,14 +1,15 @@
 "use client";
 
 import React from 'react';
-import { SlideGrid } from '@/grid/SlideGrid';
-import { DeckItem, ThemeConfig } from '@/lib/deck-types';
-import { cn } from '@/lib/utils';
+import { DeckItem, ThemeConfig, LayoutConfig } from '@/lib/deck-types';
+import { BaseLayout } from './BaseLayout';
+import { createTextItem, mergeLayoutItems } from './utils/layout-helpers';
 
 interface PhotoNarrativeFlowProps {
   imageSrc?: string;
   imageAlt?: string;
   text?: string;
+  layout?: LayoutConfig;
   theme: ThemeConfig;
   className?: string;
 }
@@ -17,10 +18,11 @@ export const PhotoNarrativeFlow: React.FC<PhotoNarrativeFlowProps> = ({
   imageSrc,
   imageAlt = "Product Image",
   text = "Tell your story here. This layout combines compelling visuals with narrative text to create an engaging flow that captures attention and communicates your message effectively.",
+  layout,
   theme,
   className
 }) => {
-  const items: DeckItem[] = [
+  const defaultItems: DeckItem[] = [
     {
       i: 'image',
       x: 0,
@@ -33,42 +35,23 @@ export const PhotoNarrativeFlow: React.FC<PhotoNarrativeFlowProps> = ({
         alt: imageAlt
       }
     },
-    {
-      i: 'text',
-      x: 7,
-      y: 1,
-      w: 5,
-      h: 10,
-      type: 'text',
-      data: {
-        text: text,
-        size: 'lg',
-        align: 'left',
-        weight: 'medium'
-      }
-    }
+    createTextItem('text', text, 7, 1, 5, 10, {
+      size: 'lg',
+      align: 'left',
+      weight: 'medium'
+    })
   ];
 
-  return (
-    <div
-      className={cn("w-full h-full relative", className)}
-      style={{
-        background: theme.gradients.background,
-      }}
-    >
-      {/* Subtle vignette effect */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          background: `radial-gradient(ellipse at center, transparent 0%, ${theme.colors.background} 70%)`,
-        }}
-      />
+  const { items } = mergeLayoutItems(layout, defaultItems);
 
-      <SlideGrid
-        items={items}
-        theme={theme}
-        className="relative z-10"
-      />
-    </div>
+  return (
+    <BaseLayout
+      items={items}
+      theme={theme}
+      layout={layout}
+      backgroundPattern="vignette"
+      patternIntensity="subtle"
+      className={className}
+    />
   );
 };

@@ -71,9 +71,11 @@ const layoutComponents = {
 
 export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
   const [selectedLayout, setSelectedLayout] = useState<string>('data-grid-dashboard');
+  const [selectedLayouts, setSelectedLayouts] = useState<Set<string>>(new Set(['data-grid-dashboard']));
   const [selectedTheme, setSelectedTheme] = useState<string>('metallic-earth');
   const [currentTheme, setCurrentTheme] = useState<ThemeConfig>(themesData.themes['metallic-earth']);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     setCurrentTheme(themesData.themes[selectedTheme as keyof typeof themesData.themes]);
@@ -82,16 +84,57 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
   const LayoutComponent = layoutComponents[selectedLayout as keyof typeof layoutComponents];
   const currentLayout = layoutsData.layouts[selectedLayout as keyof typeof layoutsData.layouts] as LayoutConfig;
 
+  const handleLayoutSelect = (layoutKey: string) => {
+    setSelectedLayout(layoutKey);
+    // Also toggle in selected layouts set
+    setSelectedLayouts(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(layoutKey)) {
+        // If clicking the currently selected layout, keep it selected (at least one must be selected)
+        if (newSet.size > 1) {
+          newSet.delete(layoutKey);
+        }
+      } else {
+        newSet.add(layoutKey);
+      }
+      return newSet;
+    });
+  };
+
+  const handleLayoutToggle = (layoutKey: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setSelectedLayouts(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(layoutKey)) {
+        // Don't allow deselecting if it's the only one selected
+        if (newSet.size > 1) {
+          newSet.delete(layoutKey);
+        }
+      } else {
+        newSet.add(layoutKey);
+      }
+      return newSet;
+    });
+  };
+
   const handleExport = async () => {
+    if (isExporting) return;
+    
     try {
+      setIsExporting(true);
+      const layoutsArray = Array.from(selectedLayouts);
+      
       await exportDeckClient({
-        layout: selectedLayout,
+        layouts: layoutsArray.length > 1 ? layoutsArray : undefined,
+        layout: layoutsArray.length === 1 ? layoutsArray[0] : undefined,
         theme: selectedTheme,
-        filename: 'generated-deck.pptx'
+        filename: `deck-${Date.now()}.pptx`
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Export failed:', error);
-      alert('Export failed. Check console for details.');
+      alert(`Export failed: ${error.message || 'Check console for details.'}`);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -144,30 +187,49 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
             </SidebarGroup>
 
             <SidebarGroup>
-              <SidebarGroupLabel>Layouts</SidebarGroupLabel>
+              <SidebarGroupLabel>
+                <div className="flex items-center justify-between w-full">
+                  <span>Layouts</span>
+                  <span className="text-xs text-muted-foreground font-normal">
+                    {selectedLayouts.size} selected
+                  </span>
+                </div>
+              </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {Object.entries(layoutsData.layouts).map(([key, layout]) => (
-                    <SidebarMenuItem key={key}>
-                      <SidebarMenuButton
-                        isActive={selectedLayout === key}
-                        onClick={() => setSelectedLayout(key)}
-                        className="w-full justify-start"
-                      >
-                        <div className="flex items-center gap-3">
-                          {getLayoutIcon(key)}
-                          <div className="flex-1 text-left">
-                            <div className="text-sm font-medium">
-                              {layout.description.split(' ').slice(0, 3).join(' ')}
-                            </div>
-                            <div className="text-xs text-muted-foreground">
-                              {key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  {Object.entries(layoutsData.layouts).map(([key, layout]) => {
+                    const isSelected = selectedLayouts.has(key);
+                    const isActive = selectedLayout === key;
+                    return (
+                      <SidebarMenuItem key={key}>
+                        <SidebarMenuButton
+                          isActive={isActive}
+                          onClick={() => handleLayoutSelect(key)}
+                          className="w-full justify-start"
+                        >
+                          <div className="flex items-center gap-3 w-full">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => {}}
+                              onClick={(e) => handleLayoutToggle(key, e)}
+                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                              style={{ pointerEvents: 'auto' }}
+                            />
+                            {getLayoutIcon(key)}
+                            <div className="flex-1 text-left">
+                              <div className="text-sm font-medium">
+                                {layout.description.split(' ').slice(0, 3).join(' ')}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
@@ -195,10 +257,11 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
               </Button>
               <Button
                 onClick={handleExport}
+                disabled={isExporting || selectedLayouts.size === 0}
                 className="w-full justify-start"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Export PPTX
+                {isExporting ? 'Exporting...' : `Export PPTX (${selectedLayouts.size})`}
               </Button>
             </div>
           </SidebarFooter>

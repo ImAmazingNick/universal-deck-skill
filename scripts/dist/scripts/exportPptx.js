@@ -177,7 +177,7 @@ class DeckExporter {
         }
     }
     createContentSlideFromConfig(slideConfig, slideIndex) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         console.log(`  📊 Creating slide ${slideIndex + 1} with layout: ${slideConfig.layout}`);
         const slide = this.pptx.addSlide();
         slide.background = { color: this.slideBgColor };
@@ -197,8 +197,8 @@ class DeckExporter {
                     ...explicitHeader,
                     data: {
                         ...explicitHeader.data,
-                        // If slide provides a custom title, prefer it over layout header title
-                        title: (_d = slideConfig.title) !== null && _d !== void 0 ? _d : (_e = explicitHeader.data) === null || _e === void 0 ? void 0 : _e.title
+                        title: (_d = slideConfig.title) !== null && _d !== void 0 ? _d : (_e = explicitHeader.data) === null || _e === void 0 ? void 0 : _e.title,
+                        subtitle: (_g = (_f = slideConfig.subtitle) !== null && _f !== void 0 ? _f : slideConfig.description) !== null && _g !== void 0 ? _g : (_h = explicitHeader.data) === null || _h === void 0 ? void 0 : _h.subtitle
                     }
                 };
                 this.addItemToSlide(slide, mergedExplicitHeader, gridCols);
@@ -212,8 +212,8 @@ class DeckExporter {
                     h: headerHeightRows,
                     type: 'header',
                     data: {
-                        title: (_f = slideConfig.title) !== null && _f !== void 0 ? _f : this.formatLayoutName(slideConfig.layout),
-                        subtitle: ((_g = slideConfig.layoutConfig) === null || _g === void 0 ? void 0 : _g.description) || '',
+                        title: (_j = slideConfig.title) !== null && _j !== void 0 ? _j : this.formatLayoutName(slideConfig.layout),
+                        subtitle: (_o = (_l = (_k = slideConfig.subtitle) !== null && _k !== void 0 ? _k : slideConfig.description) !== null && _l !== void 0 ? _l : (_m = slideConfig.layoutConfig) === null || _m === void 0 ? void 0 : _m.description) !== null && _o !== void 0 ? _o : '',
                         showDivider: true
                     }
                 };
@@ -233,7 +233,7 @@ class DeckExporter {
                     align: 'center'
                 });
             }
-            const itemsWithOverrides = this.applyItemOverrides(slideConfig.layoutConfig.items, slideConfig);
+            const itemsWithOverrides = this.applyItemOverrides(slideConfig.layoutConfig.items, slideConfig.items);
             itemsWithOverrides.forEach((item) => {
                 // If explicit header exists, keep its own grid position; otherwise, offset items under auto header
                 if (explicitHeader && item.i === explicitHeader.i) {
@@ -254,12 +254,15 @@ class DeckExporter {
         else {
             console.log(`    ⚠️  No layout config found for ${slideConfig.layout}`);
         }
+        if (slideConfig.notes && typeof slide.addNotes === 'function') {
+            slide.addNotes(slideConfig.notes);
+        }
     }
-    applyItemOverrides(baseItems, slideConfig) {
-        if (!Array.isArray(slideConfig.items) || slideConfig.items.length === 0)
+    applyItemOverrides(baseItems, overrides) {
+        if (!Array.isArray(overrides) || overrides.length === 0)
             return baseItems;
         const overridesMap = new Map();
-        for (const ov of slideConfig.items) {
+        for (const ov of overrides) {
             if (ov && typeof ov.i === 'string') {
                 overridesMap.set(ov.i, ov);
             }
@@ -379,19 +382,24 @@ class DeckExporter {
         const fontFamily = textData.fontFamily || ((_b = (_a = this.theme.typography) === null || _a === void 0 ? void 0 : _a.fontFamily) === null || _b === void 0 ? void 0 : _b.body) || 'Inter';
         const letterSpacing = this.getLetterSpacingValue(textData.letterSpacing);
         const lineHeight = textData.lineHeight ? this.getLineHeightValue(textData.lineHeight) : undefined;
-        // Handle rich text segments
-        if (Array.isArray(textData.text)) {
-            const richTextSegments = textData.text.map((segment) => {
-                var _a, _b, _c, _d, _e;
+        // Use theme-aware shadow color instead of hardcoded black
+        const shadowColor = textData.textShadow ? (this.theme.colors.primary.replace('#', '') || '000000') : undefined;
+        const textShadow = textData.textShadow ? { type: 'outer', color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
+        // Handle rich text segments - check both content (rich-text) and text (text items with segments)
+        const content = textData.content || textData.text;
+        if (Array.isArray(content)) {
+            const richTextSegments = content.map((segment) => {
+                var _a, _b, _c, _d, _e, _f;
                 const segmentOptions = {
                     text: segment.text,
                     options: {
                         color: this.validateColor((_a = segment.formatting) === null || _a === void 0 ? void 0 : _a.color) || color,
                         fontSize: ((_b = segment.formatting) === null || _b === void 0 ? void 0 : _b.fontSize) || fontSize,
-                        bold: ((_c = segment.formatting) === null || _c === void 0 ? void 0 : _c.bold) || textData.weight === 'bold',
+                        bold: ((_c = segment.formatting) === null || _c === void 0 ? void 0 : _c.bold) || textData.weight === 'bold' || textData.weight === 'extrabold',
                         italic: ((_d = segment.formatting) === null || _d === void 0 ? void 0 : _d.italic) || textData.weight === 'italic',
                         underline: ((_e = segment.formatting) === null || _e === void 0 ? void 0 : _e.underline) ? { style: 'single' } : undefined,
                         fontFace: fontFamily,
+                        shadow: ((_f = segment.formatting) === null || _f === void 0 ? void 0 : _f.textShadow) ? { type: 'outer', color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : textShadow,
                     }
                 };
                 return segmentOptions;
@@ -403,23 +411,27 @@ class DeckExporter {
                 fontFace: fontFamily,
                 wrap: true,
                 lineSpacing: lineHeight,
-                charSpacing: letterSpacing
+                charSpacing: letterSpacing,
+                shadow: textShadow
             });
         }
         else {
-            // Simple text
-            slide.addText(textData.text, {
+            // Simple text - handle both text and content properties
+            const textContent = typeof content === 'string' ? content : (textData.text || textData.content || '');
+            const weight = textData.weight || 'normal';
+            slide.addText(textContent, {
                 x, y, w, h,
                 fontSize,
                 color,
                 align: align,
                 valign: 'middle',
                 fontFace: fontFamily,
-                bold: textData.weight === 'bold',
-                italic: textData.weight === 'italic',
+                bold: weight === 'bold' || weight === 'semibold' || weight === 'extrabold',
+                italic: weight === 'italic',
                 wrap: true,
                 lineSpacing: lineHeight,
-                charSpacing: letterSpacing
+                charSpacing: letterSpacing,
+                shadow: textShadow
             });
         }
     }
@@ -544,24 +556,57 @@ class DeckExporter {
     addChartToSlide(slide, item, x, y, w, h) {
         const chartData = item.data || { type: 'bar', data: [] };
         const addChart = slide.addChart;
-        if (typeof addChart === 'function' && Array.isArray(chartData.data) && chartData.data.length > 0) {
-            try {
-                const categories = chartData.data.map((d) => d.name || '');
-                const values = chartData.data.map((d) => Number(d.value) || 0);
-                const series = [{ name: chartData.label || 'Series', labels: categories, values }];
-                const type = String(chartData.type || 'bar').toUpperCase();
-                addChart.call(slide, type, series, {
-                    x, y, w, h,
-                    showLegend: false,
-                    dataLabelPosition: 'bestFit',
-                    valAxisLabelColor: this.theme.colors.foreground,
-                    catAxisLabelColor: this.theme.colors.foreground,
-                    chartColors: [this.theme.colors.primary]
-                });
-                return;
+        if (typeof addChart === 'function') {
+            if (Array.isArray(chartData.series) && chartData.series.length > 0 && Array.isArray(chartData.categories)) {
+                try {
+                    const categories = chartData.categories;
+                    const palette = [this.theme.colors.primary, this.theme.colors.secondary, this.theme.colors.accent, this.theme.colors.foreground, '#6366F1', '#14B8A6', '#F97316'].filter(Boolean);
+                    const pptxSeries = chartData.series.map((seriesEntry, index) => ({
+                        name: seriesEntry.name || `Series ${index + 1}`,
+                        labels: categories,
+                        values: categories.map((_, idx) => {
+                            const value = Array.isArray(seriesEntry.values) ? seriesEntry.values[idx] : undefined;
+                            return typeof value === 'number' ? value : Number(value !== null && value !== void 0 ? value : 0);
+                        })
+                    }));
+                    const chartType = String(chartData.type || 'bar').toUpperCase();
+                    addChart.call(slide, chartType, pptxSeries, {
+                        x, y, w, h,
+                        showLegend: chartData.series.length > 1,
+                        dataLabelPosition: 'bestFit',
+                        valAxisLabelColor: this.theme.colors.foreground,
+                        catAxisLabelColor: this.theme.colors.foreground,
+                        chartColors: pptxSeries.map((_, idx) => {
+                            var _a;
+                            const override = this.validateColor((_a = chartData.series[idx]) === null || _a === void 0 ? void 0 : _a.colorHex);
+                            return override || palette[idx % palette.length];
+                        })
+                    });
+                    return;
+                }
+                catch (_) {
+                    // fall through to legacy handling
+                }
             }
-            catch (_) {
-                // fall through to placeholder
+            if (Array.isArray(chartData.data) && chartData.data.length > 0) {
+                try {
+                    const categories = chartData.data.map((d) => d.name || '');
+                    const values = chartData.data.map((d) => Number(d.value) || 0);
+                    const series = [{ name: chartData.label || 'Series', labels: categories, values }];
+                    const type = String(chartData.type || 'bar').toUpperCase();
+                    addChart.call(slide, type, series, {
+                        x, y, w, h,
+                        showLegend: false,
+                        dataLabelPosition: 'bestFit',
+                        valAxisLabelColor: this.theme.colors.foreground,
+                        catAxisLabelColor: this.theme.colors.foreground,
+                        chartColors: [this.theme.colors.primary]
+                    });
+                    return;
+                }
+                catch (_) {
+                    // fall through to placeholder
+                }
             }
         }
         // Fallback placeholder
@@ -878,10 +923,11 @@ class DeckExporter {
                 : ((_d = (_c = this.theme.typography) === null || _c === void 0 ? void 0 : _c.fontFamily) === null || _d === void 0 ? void 0 : _d.body) || 'Inter');
         const letterSpacing = this.getLetterSpacingValue(richTextData.letterSpacing);
         const lineHeight = richTextData.lineHeight ? this.getLineHeightValue(richTextData.lineHeight) : undefined;
+        const textShadow = richTextData.textShadow ? { type: 'outer', color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
         // Handle rich text segments
         if (Array.isArray(richTextData.content)) {
             const richTextSegments = richTextData.content.map((segment) => {
-                var _a, _b, _c, _d, _e;
+                var _a, _b, _c, _d, _e, _f;
                 const segmentOptions = {
                     text: segment.text,
                     options: {
@@ -891,6 +937,7 @@ class DeckExporter {
                         italic: ((_d = segment.formatting) === null || _d === void 0 ? void 0 : _d.italic) || (richTextData.type === 'blockquote'),
                         underline: ((_e = segment.formatting) === null || _e === void 0 ? void 0 : _e.underline) ? { style: 'single' } : undefined,
                         fontFace: fontFamily,
+                        shadow: ((_f = segment.formatting) === null || _f === void 0 ? void 0 : _f.textShadow) || textShadow,
                     }
                 };
                 return segmentOptions;
@@ -901,7 +948,8 @@ class DeckExporter {
                 valign: 'top',
                 wrap: true,
                 lineSpacing: lineHeight,
-                charSpacing: letterSpacing
+                charSpacing: letterSpacing,
+                shadow: textShadow
             });
         }
         else {
@@ -917,7 +965,8 @@ class DeckExporter {
                 bold: richTextData.type === 'header' || richTextData.type === 'subheader',
                 italic: richTextData.type === 'blockquote',
                 lineSpacing: lineHeight,
-                charSpacing: letterSpacing
+                charSpacing: letterSpacing,
+                shadow: textShadow
             });
         }
     }
@@ -1157,14 +1206,30 @@ class DeckExporter {
     computeBackgroundColor(theme) {
         var _a;
         const gradient = ((_a = theme.gradients) === null || _a === void 0 ? void 0 : _a.background) || '';
-        const match = gradient.match(/linear-gradient\([^,]+,\s*([^\s,]+)\s*\d+%/i);
+        // Try to extract first color from gradient (most common case)
+        // Pattern: linear-gradient(direction, color1 percentage, color2 percentage)
+        const match = gradient.match(/linear-gradient\([^,]+,\s*([^\s,]+)\s*(?:\d+%|to)/i);
         if (match && match[1]) {
-            const color = match[1];
-            if (typeof color === 'string' && color.startsWith('#') && (color.length === 7 || color.length === 4)) {
+            let color = match[1].trim();
+            // Remove parentheses if present
+            color = color.replace(/[()]/g, '');
+            if (color.startsWith('#') && (color.length === 7 || color.length === 4)) {
+                return color;
+            }
+            // Try hex without #
+            if (/^[0-9A-Fa-f]{6}$/.test(color)) {
+                return `#${color}`;
+            }
+        }
+        // Try radial gradient pattern
+        const radialMatch = gradient.match(/radial-gradient\([^,]+,\s*([^\s,]+)\s*(?:\d+%|at)/i);
+        if (radialMatch && radialMatch[1]) {
+            let color = radialMatch[1].trim().replace(/[()]/g, '');
+            if (color.startsWith('#') && (color.length === 7 || color.length === 4)) {
                 return color;
             }
         }
-        // fallback to solid background color
+        // Fallback to solid background color
         return theme.colors.background;
     }
     async save(outputPath = 'output/deck.pptx') {

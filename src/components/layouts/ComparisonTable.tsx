@@ -1,13 +1,14 @@
 "use client";
 
 import React from 'react';
-import { SlideGrid } from '@/grid/SlideGrid';
-import { DeckItem, ThemeConfig } from '@/lib/deck-types';
-import { cn } from '@/lib/utils';
+import { DeckItem, ThemeConfig, LayoutConfig } from '@/lib/deck-types';
+import { BaseLayout } from './BaseLayout';
+import { mergeLayoutItems } from './utils/layout-helpers';
 
 interface ComparisonTableProps {
   headers?: string[];
   rows?: string[][];
+  layout?: LayoutConfig;
   theme: ThemeConfig;
   className?: string;
 }
@@ -20,10 +21,11 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
     ["Cost", "$29/month", "$49/month", "$39/month"],
     ["Support", "24/7 Premium", "Business Hours", "Email Only"]
   ],
+  layout,
   theme,
   className
 }) => {
-  const items: DeckItem[] = [
+  const defaultItems: DeckItem[] = [
     {
       i: 'table',
       x: 0,
@@ -38,27 +40,16 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
     }
   ];
 
-  return (
-    <div
-      className={cn("w-full h-full relative", className)}
-      style={{
-        background: theme.gradients.background,
-      }}
-    >
-      {/* Table-focused clean background */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `linear-gradient(${theme.colors.border} 1px, transparent 1px)`,
-          backgroundSize: '0 50px',
-        }}
-      />
+  const { items } = mergeLayoutItems(layout, defaultItems);
 
-      <SlideGrid
-        items={items}
-        theme={theme}
-        className="relative z-10"
-      />
-    </div>
+  return (
+    <BaseLayout
+      items={items}
+      theme={theme}
+      layout={layout}
+      backgroundPattern="minimal-grid"
+      patternIntensity="subtle"
+      className={className}
+    />
   );
 };

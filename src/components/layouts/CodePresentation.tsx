@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { SlideGrid } from '@/grid/SlideGrid';
-import { DeckItem, ThemeConfig } from '@/lib/deck-types';
-import { cn } from '@/lib/utils';
+import { DeckItem, ThemeConfig, LayoutConfig } from '@/lib/deck-types';
+import { BaseLayout } from './BaseLayout';
+import { createDefaultHeader, createRichTextItem, mergeLayoutItems } from './utils/layout-helpers';
 
 interface CodePresentationProps {
   title?: string;
@@ -11,6 +11,7 @@ interface CodePresentationProps {
   code?: string;
   language?: string;
   explanation?: string;
+  layout?: LayoutConfig;
   theme: ThemeConfig;
   className?: string;
 }
@@ -24,22 +25,13 @@ export const CodePresentation: React.FC<CodePresentationProps> = ({
 }`,
   language = "javascript",
   explanation = "This function demonstrates a basic greeting pattern. It logs a message to the console and returns a success status.",
+  layout,
   theme,
   className
 }) => {
-  const items: DeckItem[] = [
-    {
-      i: 'header',
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 3,
-      type: 'header',
-      data: {
-        title: title,
-        subtitle: description
-      }
-    },
+  const defaultHeader = createDefaultHeader(title, description);
+
+  const defaultItems: DeckItem[] = [
     {
       i: 'code',
       x: 0,
@@ -54,46 +46,26 @@ export const CodePresentation: React.FC<CodePresentationProps> = ({
         theme: 'auto'
       }
     },
-    {
-      i: 'explanation',
-      x: 8,
-      y: 3,
-      w: 4,
-      h: 8,
-      type: 'rich-text',
-      data: {
-        content: explanation,
-        type: 'paragraph',
-        size: 'sm',
-        align: 'left',
-        variant: 'default'
-      }
-    }
+    createRichTextItem('explanation', explanation, 8, 3, 4, 8, {
+      type: 'paragraph',
+      size: 'sm',
+      align: 'left',
+      variant: 'default'
+    })
   ];
 
-  return (
-    <div
-      className={cn("w-full h-full relative", className)}
-      style={{
-        background: theme.gradients.background,
-      }}
-    >
-      {/* Terminal-inspired background */}
-      <div
-        className="absolute inset-0 opacity-3"
-        style={{
-          backgroundImage: `radial-gradient(circle at 20% 80%, ${theme.colors.primary} 0%, transparent 50%),
-                           radial-gradient(circle at 80% 20%, ${theme.colors.accent} 0%, transparent 50%)`,
-        }}
-      />
+  const { items, header } = mergeLayoutItems(layout, defaultItems, defaultHeader);
 
-      <SlideGrid
-        items={items}
-        header={items[0]}
-        theme={theme}
-        className="relative z-10"
-      />
-    </div>
+  return (
+    <BaseLayout
+      items={items}
+      theme={theme}
+      layout={layout}
+      header={header}
+      backgroundPattern="radial"
+      patternIntensity="subtle"
+      className={className}
+    />
   );
 };
 

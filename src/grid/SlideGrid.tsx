@@ -40,22 +40,32 @@ const GridItem: React.FC<GridItemProps> = ({ item, theme, isEditable, onItemChan
     }
   };
 
+  const isHeader = item.type === 'header';
+
   return (
     <motion.div
       layout
       className={cn(
         "grid-item relative group cursor-pointer overflow-hidden",
-        "border border-border/30 rounded-xl shadow-sm",
-        "hover:border-border/60 hover:shadow-md hover:shadow-primary/5 transition-all duration-300",
-        theme.colors.background === '#FFFFFF' ? 'bg-white/95 backdrop-blur-sm' : 'bg-gray-900/95 backdrop-blur-sm'
+        "border border-border/20 rounded-xl",
+        "shadow-sm shadow-black/5",
+        "hover:border-border/40 hover:shadow-lg hover:shadow-primary/10",
+        "transition-all duration-300 ease-out",
+        "backdrop-blur-sm",
+        isHeader && "z-10", // Ensure header appears on top
+        theme.colors.background === '#FFFFFF' || theme.colors.background === '#ffffff' 
+          ? 'bg-white/98' 
+          : 'bg-gray-900/98'
       )}
       onClick={handleClick}
-      whileHover={{ scale: isEditable ? 1.02 : 1 }}
-      transition={{ duration: 0.2 }}
+      whileHover={{ scale: isEditable ? 1.01 : 1 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       style={{
-        backgroundColor: theme.colors.background,
+        backgroundColor: `${theme.colors.background}FA`,
         color: theme.colors.foreground,
-        borderColor: theme.colors.border,
+        borderColor: `${theme.colors.border}33`,
+        boxShadow: `0 1px 3px 0 ${theme.colors.primary}08, 0 1px 2px -1px ${theme.colors.primary}08`,
+        zIndex: isHeader ? 10 : 1, // Header on top visually
       }}
     >
       {/* Render different item types using shared components */}
@@ -163,8 +173,46 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
   onItemChange,
   className
 }) => {
+  // Calculate header height in grid units if header exists
+  const headerHeight = header?.h || 0;
+  
+  // Combine header and items, ensuring header is first and items are offset
+  const allItems: DeckItem[] = [];
+  
+  // Add header as first item in grid if provided
+  if (header) {
+    allItems.push({
+      ...header,
+      // Ensure header is at the top (y: 0) and spans full width
+      x: header.x ?? 0,
+      y: header.y ?? 0,
+      w: header.w ?? 12,
+      h: header.h ?? 3,
+      // Make header static (non-draggable) by default
+      static: header.static !== false,
+    });
+  }
+  
+  // Add regular items, offsetting their y position if header exists
+  items.forEach(item => {
+    // Skip if this item is the header (already added)
+    if (header && item.i === header.i) {
+      return;
+    }
+    
+    // Always offset items by header height if header exists
+    // This ensures header has space at the top and items don't overlap
+    const offsetY = header ? item.y + headerHeight : item.y;
+    
+    allItems.push({
+      ...item,
+      y: offsetY,
+    });
+  });
+
+  // Create layouts for all items including header
   const layouts = {
-    lg: items.map(item => ({
+    lg: allItems.map(item => ({
       i: item.i,
       x: item.x,
       y: item.y,
@@ -174,9 +222,9 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
       minH: item.minH || 1,
       maxW: item.maxW,
       maxH: item.maxH,
-      static: item.static || !isEditable,
+      static: item.static !== undefined ? item.static : (!isEditable || item.i === header?.i),
     })),
-    md: items.map(item => ({
+    md: allItems.map(item => ({
       i: item.i,
       x: item.x,
       y: item.y,
@@ -186,9 +234,9 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
       minH: item.minH || 1,
       maxW: item.maxW,
       maxH: item.maxH,
-      static: item.static || !isEditable,
+      static: item.static !== undefined ? item.static : (!isEditable || item.i === header?.i),
     })),
-    sm: items.map(item => ({
+    sm: allItems.map(item => ({
       i: item.i,
       x: item.x,
       y: item.y,
@@ -198,7 +246,7 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
       minH: item.minH || 1,
       maxW: item.maxW,
       maxH: item.maxH,
-      static: item.static || !isEditable,
+      static: item.static !== undefined ? item.static : (!isEditable || item.i === header?.i),
     })),
   };
 
@@ -210,18 +258,6 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
 
   return (
     <div className={cn("w-full h-full relative", className)}>
-      {/* Fixed Header - positioned outside grid */}
-      {header && (
-        <div className="absolute top-6 left-6 right-6 z-20">
-          <GridItem
-            item={header}
-            theme={theme}
-            isEditable={isEditable}
-            onItemChange={onItemChange}
-          />
-        </div>
-      )}
-
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
@@ -237,7 +273,7 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
         preventCollision={false}
         compactType={null}
       >
-        {items.map(item => (
+        {allItems.map(item => (
           <div key={item.i}>
             <GridItem
               item={item}

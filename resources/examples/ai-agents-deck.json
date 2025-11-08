@@ -1,0 +1,127 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "AI Agents: The Future of Autonomous Intelligence",
+    "subtitle": "Comprehensive Overview | 2025",
+    "author": "AI Research Team",
+    "company": "Tech Innovation Labs",
+    "date": "2025-11-08"
+  },
+  "deckRequest": {
+    "topic": "AI Agents: The Future of Autonomous Intelligence",
+    "audience": "Technology Leaders and Innovators",
+    "tone": "visionary",
+    "goals": [
+      "Explain what AI agents are and how they work",
+      "Showcase real-world applications and use cases",
+      "Demonstrate the transformative potential of AI agents",
+      "Discuss challenges and future opportunities"
+    ],
+    "sections": [
+      {
+        "focus": "metrics",
+        "title": "AI Agents Market Growth",
+        "metrics": [
+          {
+            "label": "Market Size",
+            "value": "$126B",
+            "change": 45,
+            "changeLabel": "by 2030"
+          },
+          {
+            "label": "Enterprise Adoption",
+            "value": "68%",
+            "change": 23,
+            "changeLabel": "YoY growth"
+          },
+          {
+            "label": "Agent Deployments",
+            "value": "2.4M",
+            "change": 180,
+            "changeLabel": "active agents"
+          },
+          {
+            "label": "Cost Reduction",
+            "value": "42%",
+            "change": 15,
+            "changeLabel": "operational savings"
+          }
+        ]
+      },
+      {
+        "focus": "chart",
+        "title": "AI Agent Adoption Timeline",
+        "chart": {
+          "type": "area",
+          "categories": ["2020", "2021", "2022", "2023", "2024", "2025"],
+          "series": [
+            {
+              "name": "Enterprise Agents",
+              "values": [0.5, 1.2, 3.5, 8.1, 15.3, 28.7]
+            },
+            {
+              "name": "Consumer Agents",
+              "values": [2.1, 5.4, 12.8, 24.6, 42.1, 68.9]
+            }
+          ]
+        }
+      },
+      {
+        "focus": "metrics",
+        "title": "Agent Capabilities",
+        "metrics": [
+          {
+            "label": "Task Completion Rate",
+            "value": "94%",
+            "change": 12,
+            "changeLabel": "accuracy improvement"
+          },
+          {
+            "label": "Response Time",
+            "value": "0.8s",
+            "change": -65,
+            "changeLabel": "average latency"
+          },
+          {
+            "label": "Multi-Step Tasks",
+            "value": "87%",
+            "change": 34,
+            "changeLabel": "success rate"
+          },
+          {
+            "label": "Autonomous Decisions",
+            "value": "92%",
+            "change": 28,
+            "changeLabel": "correct decisions"
+          }
+        ]
+      },
+      {
+        "focus": "testimonials",
+        "title": "Industry Leaders on AI Agents",
+        "testimonials": [
+          {
+            "quote": "AI agents are transforming how we work. They're not replacing humans, they're amplifying our capabilities.",
+            "author": "Sarah Chen",
+            "role": "CTO",
+            "company": "Innovation Corp"
+          },
+          {
+            "quote": "The autonomous decision-making capabilities of modern AI agents have revolutionized our customer service operations.",
+            "author": "Michael Rodriguez",
+            "role": "VP of Operations",
+            "company": "Global Services Inc"
+          }
+        ]
+      },
+      {
+        "focus": "cta",
+        "callToAction": {
+          "headline": "Ready to Deploy AI Agents?",
+          "buttonLabel": "Start Your AI Agent Journey"
+        }
+      }
+    ]
+  }
+}
+

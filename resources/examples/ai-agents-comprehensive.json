@@ -1,0 +1,300 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "AI Agents: The Future of Autonomous Intelligence",
+    "subtitle": "Comprehensive Guide to AI Agents | 2025",
+    "author": "AI Research Team",
+    "company": "Tech Innovation Labs",
+    "date": "2025-11-08"
+  },
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "What Are AI Agents?",
+      "items": [
+        {
+          "i": "title",
+          "data": {
+            "text": "AI Agents: Autonomous Intelligence Systems"
+          }
+        },
+        {
+          "i": "subtitle",
+          "data": {
+            "text": "Intelligent systems that perceive, reason, and act autonomously"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "AI Agents Market Overview",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": "$126B",
+            "label": "Market Size by 2030",
+            "icon": "trending-up"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": "68%",
+            "label": "Enterprise Adoption",
+            "icon": "users"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": "2.4M",
+            "label": "Active Deployments",
+            "icon": "zap"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": "42%",
+            "label": "Cost Reduction",
+            "icon": "dollar-sign"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "AI Agent Adoption Growth",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "area",
+            "categories": ["2020", "2021", "2022", "2023", "2024", "2025"],
+            "series": [
+              {
+                "name": "Enterprise Agents",
+                "values": [0.5, 1.2, 3.5, 8.1, 15.3, 28.7]
+              },
+              {
+                "name": "Consumer Agents",
+                "values": [2.1, 5.4, 12.8, 24.6, 42.1, 68.9]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Agent Performance Metrics",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": "94%",
+            "label": "Task Completion Rate",
+            "icon": "check-circle"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": "0.8s",
+            "label": "Average Response Time",
+            "icon": "clock"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": "87%",
+            "label": "Multi-Step Success",
+            "icon": "layers"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": "92%",
+            "label": "Decision Accuracy",
+            "icon": "target"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Evolution of AI Agents",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "2020",
+                "title": "Early Prototypes",
+                "description": "Basic rule-based agents and simple chatbots"
+              },
+              {
+                "date": "2022",
+                "title": "LLM Integration",
+                "description": "Large language models enable natural language understanding"
+              },
+              {
+                "date": "2023",
+                "title": "Multi-Agent Systems",
+                "description": "Agents collaborate and coordinate complex tasks"
+              },
+              {
+                "date": "2024",
+                "title": "Autonomous Agents",
+                "description": "Self-directed agents with planning and tool use"
+              },
+              {
+                "date": "2025",
+                "title": "Agentic AI",
+                "description": "Advanced reasoning, memory, and long-term planning"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Types of AI Agents",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Agent Type", "Capabilities", "Use Cases"],
+            "rows": [
+              ["Reactive Agents", "Respond to current state", "Gaming, real-time systems"],
+              ["Deliberative Agents", "Plan before acting", "Robotics, autonomous vehicles"],
+              ["Hybrid Agents", "Combine reactive and planning", "Enterprise automation"],
+              ["Multi-Agent Systems", "Collaborate with other agents", "Complex workflows"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Industry Leaders on AI Agents",
+      "items": [
+        {
+          "i": "testimonial1",
+          "data": {
+            "quote": "AI agents are transforming how we work. They're not replacing humans, they're amplifying our capabilities and enabling us to focus on strategic thinking.",
+            "author": "Sarah Chen",
+            "role": "Chief Technology Officer",
+            "company": "Innovation Corp"
+          }
+        },
+        {
+          "i": "testimonial2",
+          "data": {
+            "quote": "The autonomous decision-making capabilities of modern AI agents have revolutionized our customer service operations, reducing response times by 75%.",
+            "author": "Michael Rodriguez",
+            "role": "VP of Operations",
+            "company": "Global Services Inc"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "metrics-breakdown",
+      "title": "Key Capabilities Breakdown",
+      "items": [
+        {
+          "i": "metric1",
+          "data": {
+            "value": "Natural Language",
+            "unit": "Understanding",
+            "label": "Processes human language with 95% accuracy",
+            "change": 12,
+            "changeLabel": "improvement"
+          }
+        },
+        {
+          "i": "metric2",
+          "data": {
+            "value": "Tool Usage",
+            "unit": "Integration",
+            "label": "Connects to 200+ tools and APIs",
+            "change": 45,
+            "changeLabel": "new integrations"
+          }
+        },
+        {
+          "i": "metric3",
+          "data": {
+            "value": "Memory",
+            "unit": "Context",
+            "label": "Maintains context across 100K+ tokens",
+            "change": 300,
+            "changeLabel": "context window growth"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "AI Agent Architecture",
+      "items": [
+        {
+          "i": "text1",
+          "data": {
+            "content": "Modern AI agents consist of several key components:\n\n• **Perception Layer**: Processes inputs from environment\n• **Reasoning Engine**: Uses LLMs for decision-making\n• **Action Module**: Executes tasks via tools and APIs\n• **Memory System**: Maintains context and learns from interactions\n• **Planning System**: Breaks down complex goals into steps"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Agent Performance by Industry",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "categories": ["Healthcare", "Finance", "Retail", "Manufacturing", "Education"],
+            "series": [
+              {
+                "name": "Adoption Rate",
+                "values": [72, 68, 65, 58, 54]
+              },
+              {
+                "name": "ROI",
+                "values": [45, 52, 38, 41, 35]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Get Started with AI Agents",
+      "items": [
+        {
+          "i": "cta-text",
+          "data": {
+            "text": "Ready to transform your business with AI agents? Start your journey today and unlock the power of autonomous intelligence."
+          }
+        },
+        {
+          "i": "cta-button",
+          "data": {
+            "text": "Begin Your AI Agent Journey",
+            "variant": "primary"
+          }
+        }
+      ]
+    }
+  ]
+}
+

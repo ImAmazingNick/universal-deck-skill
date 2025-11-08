@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { SlideGrid } from '@/grid/SlideGrid';
 import { DeckItem, ThemeConfig, LayoutConfig } from '@/lib/deck-types';
-import { cn } from '@/lib/utils';
+import { BaseLayout } from './BaseLayout';
+import { createDefaultHeader, mergeLayoutItems, createTextItem } from './utils/layout-helpers';
 
 interface ChartShowcaseProps {
   layout?: LayoutConfig;
@@ -16,7 +16,6 @@ export const ChartShowcase: React.FC<ChartShowcaseProps> = ({
   theme,
   className
 }) => {
-  // Use layout configuration if provided, otherwise use default items
   const defaultItems: DeckItem[] = [
     {
       i: 'chart',
@@ -36,52 +35,29 @@ export const ChartShowcase: React.FC<ChartShowcaseProps> = ({
         ]
       }
     },
-    {
-      i: 'legend',
-      x: 8,
-      y: 0,
-      w: 4,
-      h: 6,
-      type: 'text',
-      data: {
-        text: "This chart shows our growth trajectory over the past 5 months, demonstrating consistent upward momentum and strong performance indicators.",
-        size: 'sm',
-        align: 'left'
-      }
-    }
+    createTextItem('legend', 
+      "This chart shows our growth trajectory over the past 5 months, demonstrating consistent upward momentum and strong performance indicators.",
+      8, 0, 4, 6,
+      { size: 'sm', align: 'left' }
+    )
   ];
 
-  const defaultHeader: DeckItem = { i: "header", x: 0, y: 0, w: 12, h: 3, type: "header", data: { title: "Data Visualization", subtitle: "Performance Analytics" } };
+  const defaultHeader = createDefaultHeader(
+    "Data Visualization",
+    "Performance Analytics"
+  );
 
-  // Use layout configuration if provided, otherwise use defaults
-  const gridItems = layout?.items || defaultItems;
-  const headerItem = layout?.header || defaultHeader;
+  const { items, header } = mergeLayoutItems(layout, defaultItems, defaultHeader);
 
   return (
-    <div
-      className={cn("w-full h-full relative", className)}
-      style={{
-        background: theme.gradients.background,
-      }}
-    >
-      {/* Clean grid background */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `linear-gradient(45deg, ${theme.colors.border} 25%, transparent 25%),
-                           linear-gradient(-45deg, ${theme.colors.border} 25%, transparent 25%),
-                           linear-gradient(45deg, transparent 75%, ${theme.colors.border} 75%),
-                           linear-gradient(-45deg, transparent 75%, ${theme.colors.border} 75%)`,
-          backgroundSize: '20px 20px',
-        }}
-      />
-
-      <SlideGrid
-        items={gridItems}
-        header={headerItem}
-        theme={theme}
-        className="relative z-10"
-      />
-    </div>
+    <BaseLayout
+      items={items}
+      theme={theme}
+      layout={layout}
+      header={header}
+      backgroundPattern="diagonal"
+      patternIntensity="subtle"
+      className={className}
+    />
   );
 };

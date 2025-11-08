@@ -11,6 +11,7 @@ A React/TypeScript-powered, Shadcn/UI-enhanced deck generator for creating stunn
 - **🎨 5 Beautiful Themes**: Tech Purple, Corporate Blue, Startup Green, Metallic Earth, Warm Orange
 - **📊 PPTX Export**: High-quality PowerPoint with modern typography and layouts
 - **🧩 Component Library**: RichText, List, Quote, Code, Note cards with theme integration
+- **🧠 Context-Aware Generation**: Transform goals, metrics, timelines, and testimonials into full decks
 - **🤖 Claude Skills Compatible**: Headless operation for AI agent integration
 
 ## ⚡ Performance
@@ -75,7 +76,20 @@ npm run export generate --layout data-grid-dashboard --theme metallic-earth
 node scripts/cli.js generate --slides "bold-minimalist-hero,data-grid-dashboard,chart-showcase,testimonial-gallery,comparison-table,photo-narrative-flow,timeline-roadmap,metrics-breakdown,call-to-action" --theme tech-purple --output complete-all-layouts.pptx
 
 # Generate from input JSON (supports titleSlide, item overrides, assetsBasePath)
-node scripts/cli.js generate --input resources/sample-input.json --output complete-all-layouts-customized.pptx
+node scripts/cli.js generate --input resources/examples/sample-input.json --output complete-all-layouts-customized.pptx
+
+# Generate a narrative-driven deck from context (new!)
+node scripts/cli.js generate --input resources/examples/sample-context-request.json --output output/aurora-launch.pptx
+```
+
+### 🤖 Context-Driven Decks (Agents & QA)
+```bash
+# Summarize the deck that will be generated from sample context
+npm run qa:context
+
+# Or provide your own context payload
+npm run build:exporter
+node scripts/context-preview.js path/to/your-context.json
 ```
 
 ## 📋 Available Layouts
@@ -146,7 +160,8 @@ marketing-deck-skill/
 │   ├── themes.json          # Theme definitions
 │   └── assets/              # Static assets
 ├── output/                  # Generated PPTX files (auto-created)
-└── SKILL.md                 # Claude Skills metadata
+└── .claude/
+    └── SKILL.md             # Claude Skills metadata
 ```
 
 ## 🧩 Input JSON Schema (Advanced)
@@ -182,6 +197,55 @@ Notes:
 - Item overrides are shallow-merged into the base item; nested `data` is merged.
 - Auto-headers are injected except when `autoHeader` is false or an explicit `header` item exists.
 - `assetsBasePath` is used to resolve image paths for `photo-card` items.
+
+### Context-Driven Input (`deckRequest`)
+
+Provide strategic context instead of hand-authoring every slide. The generator maps goals, metrics, charts, timelines, testimonials, and CTA instructions into full layouts.
+
+```json
+{
+  "theme": "tech-purple",
+  "deckRequest": {
+    "topic": "Aurora AI Launch Blueprint",
+    "audience": "Executive Stakeholders",
+    "tone": "visionary",
+    "goals": [
+      "Highlight launch readiness",
+      "Demonstrate market momentum"
+    ],
+    "sections": [
+      {
+        "focus": "metrics",
+        "title": "Pilot Performance Snapshot",
+        "metrics": [
+          { "label": "Pilot Conversion", "value": "92%", "change": 14, "changeLabel": "QoQ uplift" }
+        ]
+      },
+      {
+        "focus": "chart",
+        "title": "Revenue Trajectory",
+        "chart": {
+          "type": "area",
+          "categories": ["Q1","Q2","Q3","Q4"],
+          "series": [
+            { "name": "Core ARR", "values": [4.2, 6.1, 9.3, 13.8] },
+            { "name": "Expansion ARR", "values": [0.8, 2.4, 5.1, 8.6] }
+          ]
+        }
+      },
+      {
+        "focus": "cta",
+        "callToAction": {
+          "headline": "Greenlight Launch",
+          "buttonLabel": "Approve Launch Plan"
+        }
+      }
+    ]
+  }
+}
+```
+
+👉 See `resources/examples/sample-context-request.json` for a comprehensive example and run `npm run qa:context` to preview the generated slide breakdown without producing a PPTX.
 
 ## 🔧 Development
 

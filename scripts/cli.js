@@ -24,6 +24,7 @@ function generateDeck() {
 
   // Load optional input JSON if provided
   let inputData = null;
+  let generatedDeck = null;
   if (options.input) {
     try {
       const inputPath = path.isAbsolute(options.input)
@@ -42,6 +43,52 @@ function generateDeck() {
     if (Array.isArray(inputData.slides)) options.slides = inputData.slides;
     // If slides provided via input, clear single-layout to avoid ambiguity
     if (options.slides && options.slides.length > 0) options.layout = undefined;
+
+    if (shouldUseDeckRequest(inputData)) {
+      try {
+        const generatorModule = loadContentGenerator();
+        const deckRequest = generatorModule.extractDeckRequestFromPayload(inputData);
+        if (!deckRequest) {
+          console.warn('⚠️  Deck request data detected but could not be parsed. Falling back to default slides.');
+        }
+        if (deckRequest) {
+          generatedDeck = generatorModule.generateDeckFromRequest(deckRequest);
+          if (generatedDeck.theme && !options.theme) {
+            options.theme = generatedDeck.theme;
+          }
+          if (generatedDeck.slides?.length) {
+            options.slides = generatedDeck.slides.map(slide => ({
+              layout: slide.layout,
+              title: slide.title,
+              subtitle: slide.subtitle,
+              description: slide.description,
+              items: slide.items,
+              notes: slide.notes,
+            }));
+            options.layout = undefined;
+          }
+          if (generatedDeck?.warnings?.length) {
+            generatedDeck.warnings.forEach(warning => {
+              console.warn(`⚠️  ${warning}`);
+            });
+          }
+        }
+      } catch (error) {
+        console.error('❌ Failed to generate deck from context:', error.message);
+        if (error.details?.errors) {
+          error.details.errors.forEach(err => console.error(`   • ${err}`));
+        }
+        process.exit(1);
+      }
+    }
+
+    // Fall back to generated metadata if not explicitly set
+    if (!inputData.titleSlide && generatedDeck?.titleSlide) {
+      inputData.titleSlide = generatedDeck.titleSlide;
+    }
+    if (!inputData.assetsBasePath && generatedDeck?.assetsBasePath) {
+      inputData.assetsBasePath = generatedDeck.assetsBasePath;
+    }
   }
 
   console.log('🎨 Marketing Deck Generator');
@@ -77,8 +124,8 @@ function generateDeck() {
       theme: options.theme,
       outputPath: options.output,
       // Pass through optional input fields for richer customization
-      titleSlide: inputData && inputData.titleSlide ? inputData.titleSlide : undefined,
-      assetsBasePath: inputData && inputData.assetsBasePath ? inputData.assetsBasePath : undefined
+      titleSlide: inputData && inputData.titleSlide ? inputData.titleSlide : generatedDeck?.titleSlide,
+      assetsBasePath: inputData && inputData.assetsBasePath ? inputData.assetsBasePath : generatedDeck?.assetsBasePath
     }).then(() => {
       console.log(`✅ Deck generated successfully: ${options.output}`);
     }).catch((error) => {
@@ -158,6 +205,43 @@ function parseGenerateArgs() {
   }
 
   return options;
+}
+
+const DECK_REQUEST_KEYS = [
+  'topic',
+  'subtitle',
+  'audience',
+  'tone',
+  'goals',
+  'keyMessages',
+  'takeaways',
+  'context',
+  'sections',
+  'metrics',
+  'timeline',
+  'testimonials',
+  'callToAction'
+];
+
+function shouldUseDeckRequest(payload) {
+  if (!payload || typeof payload !== 'object') return false;
+  if (Array.isArray(payload.slides) && payload.slides.length) return false;
+  if (payload.deckRequest && typeof payload.deckRequest === 'object') return true;
+  return DECK_REQUEST_KEYS.some((key) => key in payload);
+}
+
+function loadContentGenerator() {
+  const possiblePaths = [
+    path.join(__dirname, 'dist', 'src', 'lib', 'content-generator.js')
+  ];
+
+  for (const generatorPath of possiblePaths) {
+    if (fs.existsSync(generatorPath)) {
+      return require(generatorPath);
+    }
+  }
+
+  throw new Error('Context generator not found. Run "npm run build:exporter" to compile support files.');
 }
 
 function listLayouts() {

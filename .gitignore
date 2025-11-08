@@ -42,3 +42,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# build artifacts
+scripts/dist/
+scripts/**/*.js
+!scripts/cli.js
+!scripts/context-preview.js

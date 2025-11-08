@@ -14,6 +14,8 @@
     "isolatedModules": false
   },
   "include": [
-    "./exportPptx.ts"
+    "./exportPptx.ts",
+    "../src/lib/content-generator.ts",
+    "../src/lib/deck-request.ts"
   ]
 }

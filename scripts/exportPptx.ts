@@ -33,9 +33,19 @@ function readJsonResource(relativePathFromResources: string): any {
 const themesData: any = readJsonResource('themes.json');
 const layoutsData: any = readJsonResource('layouts.json');
 
+interface SlideInput {
+  layout: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  items?: Array<Partial<DeckItem> & { i: string }>;
+  data?: any;
+  notes?: string;
+}
+
 interface ExportOptions {
   layout?: string;
-  slides?: Array<{ layout: string; title?: string; items?: Array<Partial<DeckItem> & { i: string }>; data?: any }>;
+  slides?: SlideInput[];
   theme: string;
   items?: DeckItem[];
   outputPath?: string;
@@ -48,7 +58,7 @@ export class DeckExporter {
   private theme: ThemeConfig;
   private slideBgColor: string;
   private layout?: LayoutConfig;
-  private slides?: Array<{ layout: string; title?: string; data?: any; layoutConfig?: LayoutConfig }>;
+  private slides?: Array<{ layout: string; title?: string; subtitle?: string; description?: string; items?: Array<Partial<DeckItem> & { i: string }>; notes?: string; data?: any; layoutConfig?: LayoutConfig }>;
   private titleSlide?: { title?: string; subtitle?: string; logo?: string; date?: string; author?: string; company?: string };
   private assetsBasePath?: string;
   // Per-slide computed mapping derived from layout.grid
@@ -212,7 +222,7 @@ export class DeckExporter {
     }
   }
 
-  private createContentSlideFromConfig(slideConfig: { layout: string; title?: string; data?: any; layoutConfig?: LayoutConfig }, slideIndex: number): void {
+  private createContentSlideFromConfig(slideConfig: { layout: string; title?: string; subtitle?: string; description?: string; items?: Array<Partial<DeckItem> & { i: string }>; notes?: string; data?: any; layoutConfig?: LayoutConfig }, slideIndex: number): void {
     console.log(`  📊 Creating slide ${slideIndex + 1} with layout: ${slideConfig.layout}`);
 
     const slide = this.pptx.addSlide();
@@ -236,8 +246,8 @@ export class DeckExporter {
           ...(explicitHeader as DeckItem),
           data: {
             ...(explicitHeader as any).data,
-            // If slide provides a custom title, prefer it over layout header title
-            title: slideConfig.title ?? (explicitHeader as any).data?.title
+            title: slideConfig.title ?? (explicitHeader as any).data?.title,
+            subtitle: slideConfig.subtitle ?? slideConfig.description ?? (explicitHeader as any).data?.subtitle
           }
         } as DeckItem;
         this.addItemToSlide(slide, mergedExplicitHeader, gridCols);
@@ -251,7 +261,7 @@ export class DeckExporter {
           type: 'header',
           data: {
             title: slideConfig.title ?? this.formatLayoutName(slideConfig.layout),
-            subtitle: slideConfig.layoutConfig?.description || '',
+            subtitle: slideConfig.subtitle ?? slideConfig.description ?? slideConfig.layoutConfig?.description ?? '',
             showDivider: true
           }
         } as DeckItem;
@@ -273,7 +283,7 @@ export class DeckExporter {
         });
       }
 
-      const itemsWithOverrides = this.applyItemOverrides(slideConfig.layoutConfig.items, slideConfig as any);
+      const itemsWithOverrides = this.applyItemOverrides(slideConfig.layoutConfig.items, slideConfig.items);
       itemsWithOverrides.forEach((item) => {
         // If explicit header exists, keep its own grid position; otherwise, offset items under auto header
         if (explicitHeader && item.i === explicitHeader.i) {
@@ -293,12 +303,16 @@ export class DeckExporter {
     } else {
       console.log(`    ⚠️  No layout config found for ${slideConfig.layout}`);
     }
+
+    if (slideConfig.notes && typeof (slide as any).addNotes === 'function') {
+      (slide as any).addNotes(slideConfig.notes);
+    }
   }
 
-  private applyItemOverrides(baseItems: DeckItem[], slideConfig: { items?: Array<Partial<DeckItem> & { i: string }> }): DeckItem[] {
-    if (!Array.isArray(slideConfig.items) || slideConfig.items.length === 0) return baseItems;
+  private applyItemOverrides(baseItems: DeckItem[], overrides?: Array<Partial<DeckItem> & { i: string }>): DeckItem[] {
+    if (!Array.isArray(overrides) || overrides.length === 0) return baseItems;
     const overridesMap = new Map<string, Partial<DeckItem>>();
-    for (const ov of slideConfig.items) {
+    for (const ov of overrides) {
       if (ov && typeof ov.i === 'string') {
         overridesMap.set(ov.i, ov);
       }
@@ -424,21 +438,24 @@ export class DeckExporter {
     const fontFamily = textData.fontFamily || this.theme.typography?.fontFamily?.body || 'Inter';
     const letterSpacing = this.getLetterSpacingValue(textData.letterSpacing);
     const lineHeight = textData.lineHeight ? this.getLineHeightValue(textData.lineHeight) : undefined;
-    const textShadow = textData.textShadow ? { type: 'outer', color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
+    // Use theme-aware shadow color instead of hardcoded black
+    const shadowColor = textData.textShadow ? (this.theme.colors.primary.replace('#', '') || '000000') : undefined;
+    const textShadow = textData.textShadow ? { type: 'outer' as const, color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
 
-    // Handle rich text segments
-    if (Array.isArray(textData.content)) {
-      const richTextSegments = textData.content.map((segment: any) => {
+    // Handle rich text segments - check both content (rich-text) and text (text items with segments)
+    const content = textData.content || textData.text;
+    if (Array.isArray(content)) {
+      const richTextSegments = content.map((segment: any) => {
         const segmentOptions: any = {
           text: segment.text,
           options: {
             color: this.validateColor(segment.formatting?.color) || color,
             fontSize: segment.formatting?.fontSize || fontSize,
-            bold: segment.formatting?.bold || textData.weight === 'bold',
+            bold: segment.formatting?.bold || textData.weight === 'bold' || textData.weight === 'extrabold',
             italic: segment.formatting?.italic || textData.weight === 'italic',
-            underline: segment.formatting?.underline ? { style: 'single' } : undefined,
+            underline: segment.formatting?.underline ? { style: 'single' as const } : undefined,
             fontFace: fontFamily,
-            shadow: segment.formatting?.textShadow || textShadow,
+            shadow: segment.formatting?.textShadow ? { type: 'outer' as const, color: shadowColor, opacity: 0.25, blur: 2, angle: 45, offset: 2 } : textShadow,
           }
         };
         return segmentOptions;
@@ -455,16 +472,18 @@ export class DeckExporter {
         shadow: textShadow
       });
     } else {
-      // Simple text
-      slide.addText(textData.content || textData.text || '', {
+      // Simple text - handle both text and content properties
+      const textContent = typeof content === 'string' ? content : (textData.text || textData.content || '');
+      const weight = textData.weight || 'normal';
+      slide.addText(textContent, {
         x, y, w, h,
         fontSize,
         color,
         align: align as 'left' | 'center' | 'right' | 'justify',
         valign: 'middle',
         fontFace: fontFamily,
-        bold: textData.weight === 'bold',
-        italic: textData.weight === 'italic',
+        bold: weight === 'bold' || weight === 'semibold' || weight === 'extrabold',
+        italic: weight === 'italic',
         wrap: true,
         lineSpacing: lineHeight,
         charSpacing: letterSpacing,
@@ -601,7 +620,39 @@ export class DeckExporter {
     const chartData = (item.data as any) || { type: 'bar', data: [] };
     const addChart = (slide as any).addChart;
 
-    if (typeof addChart === 'function' && Array.isArray(chartData.data) && chartData.data.length > 0) {
+    if (typeof addChart === 'function') {
+      if (Array.isArray(chartData.series) && chartData.series.length > 0 && Array.isArray(chartData.categories)) {
+        try {
+          const categories: string[] = chartData.categories;
+          const palette = [this.theme.colors.primary, this.theme.colors.secondary, this.theme.colors.accent, this.theme.colors.foreground, '#6366F1', '#14B8A6', '#F97316'].filter(Boolean);
+          const pptxSeries = chartData.series.map((seriesEntry: any, index: number) => ({
+            name: seriesEntry.name || `Series ${index + 1}`,
+            labels: categories,
+            values: categories.map((_, idx) => {
+              const value = Array.isArray(seriesEntry.values) ? seriesEntry.values[idx] : undefined;
+              return typeof value === 'number' ? value : Number(value ?? 0);
+            })
+          }));
+
+          const chartType = String(chartData.type || 'bar').toUpperCase();
+          addChart.call(slide, chartType, pptxSeries, {
+            x, y, w, h,
+            showLegend: chartData.series.length > 1,
+            dataLabelPosition: 'bestFit',
+            valAxisLabelColor: this.theme.colors.foreground,
+            catAxisLabelColor: this.theme.colors.foreground,
+            chartColors: pptxSeries.map((_: { name: string; labels: string[]; values: number[] }, idx: number) => {
+              const override = this.validateColor(chartData.series[idx]?.colorHex);
+              return override || palette[idx % palette.length];
+            })
+          });
+          return;
+        } catch (_) {
+          // fall through to legacy handling
+        }
+      }
+
+      if (Array.isArray(chartData.data) && chartData.data.length > 0) {
       try {
         const categories = chartData.data.map((d: any) => d.name || '');
         const values = chartData.data.map((d: any) => Number(d.value) || 0);
@@ -620,6 +671,7 @@ export class DeckExporter {
         // fall through to placeholder
       }
     }
+  }
 
     // Fallback placeholder
     slide.addShape('rect', {
@@ -945,7 +997,7 @@ export class DeckExporter {
         : this.theme.typography?.fontFamily?.body || 'Inter');
     const letterSpacing = this.getLetterSpacingValue(richTextData.letterSpacing);
     const lineHeight = richTextData.lineHeight ? this.getLineHeightValue(richTextData.lineHeight) : undefined;
-    const textShadow = richTextData.textShadow ? { type: 'outer', color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
+    const textShadow = richTextData.textShadow ? { type: 'outer' as const, color: '000000', opacity: 0.25, blur: 2, angle: 45, offset: 2 } : undefined;
 
     // Handle rich text segments
     if (Array.isArray(richTextData.content)) {
@@ -1259,14 +1311,34 @@ export class DeckExporter {
   // Theme → PPTX helpers
   private computeBackgroundColor(theme: ThemeConfig): string {
     const gradient = theme.gradients?.background || '';
-    const match = gradient.match(/linear-gradient\([^,]+,\s*([^\s,]+)\s*\d+%/i);
+    
+    // Try to extract first color from gradient (most common case)
+    // Pattern: linear-gradient(direction, color1 percentage, color2 percentage)
+    const match = gradient.match(/linear-gradient\([^,]+,\s*([^\s,]+)\s*(?:\d+%|to)/i);
     if (match && match[1]) {
-      const color = match[1];
-      if (typeof color === 'string' && color.startsWith('#') && (color.length === 7 || color.length === 4)) {
+      let color = match[1].trim();
+      // Remove parentheses if present
+      color = color.replace(/[()]/g, '');
+      
+      if (color.startsWith('#') && (color.length === 7 || color.length === 4)) {
+        return color;
+      }
+      // Try hex without #
+      if (/^[0-9A-Fa-f]{6}$/.test(color)) {
+        return `#${color}`;
+      }
+    }
+    
+    // Try radial gradient pattern
+    const radialMatch = gradient.match(/radial-gradient\([^,]+,\s*([^\s,]+)\s*(?:\d+%|at)/i);
+    if (radialMatch && radialMatch[1]) {
+      let color = radialMatch[1].trim().replace(/[()]/g, '');
+      if (color.startsWith('#') && (color.length === 7 || color.length === 4)) {
         return color;
       }
     }
-    // fallback to solid background color
+    
+    // Fallback to solid background color
     return theme.colors.background;
   }
 
