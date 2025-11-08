@@ -1,0 +1,354 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Typography Excellence Showcase",
+    "subtitle": "Advanced Text Formatting & Layout Mastery",
+    "date": "2025-10-23",
+    "author": "Deck Skills AI",
+    "company": "Typography Masters"
+  },
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Typography Mastery",
+      "items": [
+        {
+          "i": "title",
+          "data": {
+            "content": [
+              {"text": "Typography", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": " ", "formatting": {}},
+              {"text": "Excellence", "formatting": {"bold": true, "color": "#A78BFA"}},
+              {"text": "\nMastery", "formatting": {"bold": true, "color": "#C4B5FD"}}
+            ],
+            "type": "header",
+            "size": "5xl",
+            "align": "center",
+            "fontFamily": "Inter, sans-serif",
+            "textShadow": true
+          }
+        },
+        {
+          "i": "subtitle",
+          "data": {
+            "content": "Advanced formatting, rich text segments, and professional typography",
+            "type": "subheader",
+            "size": "xl",
+            "align": "center",
+            "variant": "muted",
+            "letterSpacing": "wide",
+            "lineHeight": "relaxed"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Rich Text Segments",
+      "items": [
+        {
+          "i": "rich-text-demo",
+          "data": {
+            "content": [
+              {"text": "Welcome to the future of ", "formatting": {"color": "#374151"}},
+              {"text": "typography design", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": ". Our advanced text formatting system supports ", "formatting": {"color": "#374151"}},
+              {"text": "bold", "formatting": {"bold": true, "color": "#DC2626"}},
+              {"text": ", ", "formatting": {}},
+              {"text": "italic", "formatting": {"italic": true, "color": "#059669"}},
+              {"text": ", ", "formatting": {}},
+              {"text": "underline", "formatting": {"underline": true, "color": "#D97706"}},
+              {"text": ", and ", "formatting": {}},
+              {"text": "custom colors", "formatting": {"color": "#7C3AED", "bold": true}},
+              {"text": " within a single text block. This enables sophisticated narrative design and visual hierarchy.", "formatting": {"color": "#374151"}}
+            ],
+            "type": "paragraph",
+            "size": "lg",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal",
+            "fontFamily": "Inter, sans-serif"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Typography Variants",
+      "items": [
+        {
+          "i": "header-demo",
+          "data": {
+            "content": "Stunning Header Typography",
+            "type": "header",
+            "size": "3xl",
+            "align": "center",
+            "variant": "accent",
+            "fontFamily": "Inter, sans-serif",
+            "letterSpacing": "tight",
+            "textShadow": true
+          }
+        },
+        {
+          "i": "subheader-demo",
+          "data": {
+            "content": "Clean subheaders with perfect hierarchy and spacing",
+            "type": "subheader",
+            "size": "xl",
+            "align": "center",
+            "variant": "muted",
+            "lineHeight": "relaxed"
+          }
+        },
+        {
+          "i": "lead-demo",
+          "data": {
+            "content": "Lead text creates an elegant introduction with wider letter spacing for improved readability and visual impact. This typography style works perfectly for opening statements and key messages.",
+            "type": "lead",
+            "size": "lg",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "wide",
+            "fontFamily": "Inter, sans-serif"
+          }
+        },
+        {
+          "i": "paragraph-demo",
+          "data": {
+            "content": "Standard paragraph text provides excellent readability with balanced line heights and appropriate letter spacing. This is the workhorse of typography - clean, professional, and highly readable across all devices and formats.",
+            "type": "paragraph",
+            "size": "base",
+            "align": "left",
+            "lineHeight": "normal",
+            "letterSpacing": "normal"
+          }
+        },
+        {
+          "i": "blockquote-demo",
+          "data": {
+            "content": "Blockquotes receive special treatment with italic styling and distinct visual separation, making important quotes and testimonials stand out beautifully in your presentation design.",
+            "type": "blockquote",
+            "size": "lg",
+            "align": "left",
+            "variant": "highlight",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Typography in Data Dashboards",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": [
+              {"text": "42", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": "%", "formatting": {"bold": true, "color": "#A78BFA"}}
+            ],
+            "label": "Growth Rate",
+            "icon": "trending-up"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": [
+              {"text": "$3.2", "formatting": {"bold": true, "color": "#059669"}},
+              {"text": "M", "formatting": {"bold": true, "color": "#10B981"}}
+            ],
+            "label": "Revenue",
+            "icon": "dollar-sign"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": [
+              {"text": "150", "formatting": {"bold": true, "color": "#DC2626"}},
+              {"text": "K", "formatting": {"bold": true, "color": "#EF4444"}}
+            ],
+            "label": "Active Users",
+            "icon": "users"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": [
+              {"text": "4.9", "formatting": {"bold": true, "color": "#D97706"}},
+              {"text": "/5", "formatting": {"bold": true, "color": "#F59E0B"}}
+            ],
+            "label": "Satisfaction",
+            "icon": "smile"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "Typography with Visual Elements",
+      "items": [
+        {
+          "i": "text1",
+          "data": {
+            "content": [
+              {"text": "Typography and imagery work together seamlessly", "formatting": {"bold": true}},
+              {"text": " in modern presentation design. The rich text formatting capabilities allow you to create compelling narratives that combine visual storytelling with sophisticated text treatment.\n\n", "formatting": {}},
+              {"text": "• Professional typography hierarchy", "formatting": {"color": "#8B5CF6"}},
+              {"text": "\n• Rich text segments with mixed formatting", "formatting": {"color": "#059669"}},
+              {"text": "\n• Perfect alignment and spacing", "formatting": {"color": "#DC2626"}},
+              {"text": "\n• Theme-aware color schemes", "formatting": {"color": "#D97706"}}
+            ],
+            "type": "paragraph",
+            "size": "base",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal",
+            "fontFamily": "Inter, sans-serif"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Typography in Testimonials",
+      "items": [
+        {
+          "i": "testimonial1",
+          "data": {
+            "quote": [
+              {"text": "\"The typography system is absolutely ", "formatting": {}},
+              {"text": "revolutionary", "formatting": {"bold": true, "italic": true, "color": "#8B5CF6"}},
+              {"text": ". It transforms how we communicate complex ideas with elegance and clarity.\"", "formatting": {}}
+            ],
+            "author": "Sarah Chen",
+            "role": "Design Director",
+            "company": "Creative Studio"
+          }
+        },
+        {
+          "i": "testimonial2",
+          "data": {
+            "quote": [
+              {"text": "\"Professional presentations now have ", "formatting": {}},
+              {"text": "typography that matches the quality", "formatting": {"bold": true, "color": "#059669"}},
+              {"text": " of our best design work. Simply outstanding.\"", "formatting": {}}
+            ],
+            "author": "Marcus Rodriguez",
+            "role": "VP Marketing",
+            "company": "Tech Innovations"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Typography Feature Comparison",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": [
+              {"text": "Feature", "formatting": {"bold": true}},
+              {"text": "Basic", "formatting": {"bold": true, "color": "#DC2626"}},
+              {"text": "Advanced", "formatting": {"bold": true, "color": "#059669"}}
+            ],
+            "rows": [
+              [
+                {"text": "Rich Text Segments", "formatting": {}},
+                {"text": "✗", "formatting": {"color": "#DC2626"}},
+                {"text": "✓ Full Support", "formatting": {"color": "#059669", "bold": true}}
+              ],
+              [
+                {"text": "Font Families", "formatting": {}},
+                {"text": "Limited", "formatting": {"color": "#D97706"}},
+                {"text": "Theme-Based", "formatting": {"color": "#059669", "bold": true}}
+              ],
+              [
+                {"text": "Typography Scale", "formatting": {}},
+                {"text": "Basic", "formatting": {"color": "#D97706"}},
+                {"text": "Professional", "formatting": {"color": "#059669", "bold": true}}
+              ],
+              [
+                {"text": "Color Control", "formatting": {}},
+                {"text": "Theme Only", "formatting": {"color": "#D97706"}},
+                {"text": "Custom + Theme", "formatting": {"color": "#059669", "bold": true}}
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Typography in Data Visualization",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "data": [
+              {"name": "Typography", "value": 95},
+              {"name": "Design", "value": 87},
+              {"name": "UX", "value": 92},
+              {"name": "Performance", "value": 89}
+            ]
+          }
+        },
+        {
+          "i": "legend",
+          "data": {
+            "content": [
+              {"text": "Typography Excellence Score: ", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": "95/100\n\n", "formatting": {"bold": true, "color": "#059669"}},
+              {"text": "Key Achievements:", "formatting": {"bold": true}},
+              {"text": "\n• Rich text formatting", "formatting": {"color": "#374151"}},
+              {"text": "\n• Professional typography", "formatting": {"color": "#374151"}},
+              {"text": "\n• Cross-platform consistency", "formatting": {"color": "#374151"}},
+              {"text": "\n• Theme integration", "formatting": {"color": "#374151"}}
+            ],
+            "type": "paragraph",
+            "size": "sm",
+            "align": "left",
+            "lineHeight": "normal"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Experience Typography Excellence",
+      "items": [
+        {
+          "i": "cta-text",
+          "data": {
+            "content": [
+              {"text": "Ready to transform your presentations with ", "formatting": {"color": "#374151"}},
+              {"text": "professional typography", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": "?\n\nExperience the difference that sophisticated text formatting makes in communicating your message effectively.", "formatting": {"color": "#374151"}}
+            ],
+            "type": "header",
+            "size": "3xl",
+            "align": "center",
+            "lineHeight": "relaxed",
+            "fontFamily": "Inter, sans-serif"
+          }
+        },
+        {
+          "i": "cta-button",
+          "data": {
+            "text": [
+              {"text": "Get Started", "formatting": {"bold": true}}
+            ],
+            "variant": "primary"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

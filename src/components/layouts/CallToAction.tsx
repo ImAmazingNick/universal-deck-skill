@@ -23,14 +23,14 @@ export const CallToAction: React.FC<CallToActionProps> = ({
   const items: DeckItem[] = [
     {
       i: 'headline',
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 4,
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 5,
       type: 'text',
       data: {
         text: headline,
-        size: '3xl',
+        size: '4xl',
         align: 'center',
         weight: 'bold'
       }
@@ -38,9 +38,9 @@ export const CallToAction: React.FC<CallToActionProps> = ({
     {
       i: 'button',
       x: 4,
-      y: 4,
+      y: 7,
       w: 4,
-      h: 2,
+      h: 3,
       type: 'button',
       data: {
         text: buttonText,

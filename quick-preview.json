@@ -1,0 +1,91 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Quick Preview",
+    "subtitle": "Modern Typography Showcase",
+    "author": "Deck Generator"
+  },
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Typography Upgrade"
+    },
+    {
+      "layout": "content-slide",
+      "title": "Rich Text",
+      "items": [
+        {
+          "i": "content",
+          "data": {
+            "content": "Experience modern typography with improved spacing, hierarchy, and readability. Our upgraded components provide professional presentation quality.",
+            "type": "paragraph",
+            "size": "base"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "code-presentation",
+      "title": "Code Blocks",
+      "items": [
+        {
+          "i": "code",
+          "data": {
+            "code": "function generateDeck() {\n  return new Deck({\n    theme: 'modern',\n    layouts: ['hero', 'content']\n  });\n}",
+            "language": "javascript",
+            "showLineNumbers": true
+          }
+        },
+        {
+          "i": "explanation",
+          "data": {
+            "content": "Syntax highlighting with line numbers and automatic theme detection.",
+            "type": "paragraph",
+            "size": "sm"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "documentation-slide",
+      "title": "Documentation",
+      "items": [
+        {
+          "i": "lead",
+          "data": {
+            "content": "Complete documentation with integrated examples and contextual tips.",
+            "type": "lead"
+          }
+        },
+        {
+          "i": "features",
+          "data": {
+            "items": [
+              "Modern typography system",
+              "Rich text components",
+              "Code syntax highlighting",
+              "Responsive layouts"
+            ],
+            "type": "bullet"
+          }
+        },
+        {
+          "i": "code",
+          "data": {
+            "code": "npm run generate -- --input preview.json",
+            "language": "bash"
+          }
+        },
+        {
+          "i": "note",
+          "data": {
+            "content": "Fast generation with optimized performance.",
+            "type": "tip"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

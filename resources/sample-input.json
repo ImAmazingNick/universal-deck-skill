@@ -1,0 +1,123 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Q4 Performance Overview",
+    "subtitle": "North America | 2025",
+    "date": "2025-10-21",
+    "author": "Marketing Team",
+    "company": "Acme Inc."
+  },
+  "assetsBasePath": "./public",
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Welcome",
+      "items": [
+        { "i": "title", "data": { "text": "Acme Marketing", "size": "4xl", "align": "center" } },
+        { "i": "subtitle", "data": { "text": "Modern Growth Platform", "size": "xl", "align": "center" } }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "KPIs",
+      "items": [
+        { "i": "kpi1", "data": { "metric": "+32%", "label": "Growth" } },
+        { "i": "kpi2", "data": { "metric": "$3.1M", "label": "Revenue" } },
+        { "i": "kpi3", "data": { "metric": "180k", "label": "Users" } },
+        { "i": "kpi4", "data": { "metric": "97%", "label": "Satisfaction" } }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Revenue",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "label": "2025",
+            "data": [
+              { "name": "Jan", "value": 400 },
+              { "name": "Feb", "value": 300 },
+              { "name": "Mar", "value": 600 },
+              { "name": "Apr", "value": 800 },
+              { "name": "May", "value": 500 },
+              { "name": "Jun", "value": 900 }
+            ]
+          }
+        },
+        { "i": "legend", "data": { "text": "Revenue accelerated in Q2 driven by enterprise wins.", "size": "sm" } }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Customer Love",
+      "items": [
+        { "i": "testimonial1", "data": { "quote": "Acme helped us 3x our pipeline.", "author": "Jane Smith" } },
+        { "i": "testimonial2", "data": { "quote": "The dashboard is game-changing.", "author": "John Doe" } }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Feature Comparison",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Feature", "Acme", "Competitor"],
+            "rows": [
+              ["Speed", "Fast", "Slow"],
+              ["AI Assistance", "Built-in", "Add-on"],
+              ["Security", "SOC2", "Unknown"],
+              ["Pricing", "Flexible", "Rigid"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "Product",
+      "items": [
+        { "i": "image1", "data": { "src": "window.svg", "caption": "Platform UI" } },
+        { "i": "text1", "data": { "text": "Tell a strong story with visuals and concise copy.", "size": "lg", "align": "left" } }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Roadmap",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              { "date": "Q1", "title": "MVP" },
+              { "date": "Q2", "title": "GA" },
+              { "date": "Q3", "title": "Enterprise" },
+              { "date": "Q4", "title": "Global" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "metrics-breakdown",
+      "title": "Metrics",
+      "items": [
+        { "i": "metric1", "data": { "value": 88, "unit": "%", "label": "Conversion", "change": 6 } },
+        { "i": "metric2", "data": { "value": 125, "unit": "days", "label": "Retention", "change": 12 } },
+        { "i": "metric3", "data": { "value": 4.9, "unit": "/5", "label": "Rating", "change": 0.2 } }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Get Started",
+      "items": [
+        { "i": "cta-text", "data": { "text": "Start Your Trial Today", "size": "3xl", "align": "center" } },
+        { "i": "cta-button", "data": { "text": "Get Started" } }
+      ]
+    }
+  ]
+}
+
+

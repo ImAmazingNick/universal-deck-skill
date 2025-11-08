@@ -1,0 +1,314 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Modern Deck Generator Showcase",
+    "subtitle": "Typography & Layout Upgrades",
+    "date": "2025-10-23",
+    "author": "AI Assistant",
+    "company": "Deck Skills"
+  },
+  "assetsBasePath": "./",
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Welcome to Modern Typography"
+    },
+    {
+      "layout": "content-slide",
+      "title": "Content Excellence",
+      "items": [
+        {
+          "i": "content",
+          "data": {
+            "content": "Experience the power of modern typography with our upgraded deck generator. We've completely redesigned the text components with developer-style aesthetics, proper hierarchy, and elegant spacing that rivals the best design tools.",
+            "type": "paragraph",
+            "size": "base",
+            "align": "left"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Performance Metrics",
+      "items": [
+        {
+          "i": "kpi1",
+          "data": {
+            "metric": "42%",
+            "label": "Growth",
+            "icon": "trending-up"
+          }
+        },
+        {
+          "i": "kpi2",
+          "data": {
+            "metric": "$3.2M",
+            "label": "Revenue",
+            "icon": "dollar-sign"
+          }
+        },
+        {
+          "i": "kpi3",
+          "data": {
+            "metric": "89k",
+            "label": "Users",
+            "icon": "users"
+          }
+        },
+        {
+          "i": "kpi4",
+          "data": {
+            "metric": "4.8/5",
+            "label": "Rating",
+            "icon": "smile"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "code-presentation",
+      "title": "Code Examples",
+      "items": [
+        {
+          "i": "code",
+          "data": {
+            "code": "function createModernDeck() {\n  const generator = new DeckGenerator({\n    theme: 'tech-purple',\n    typography: 'modern'\n  });\n\n  return generator.generate({\n    title: 'Showcase Deck',\n    layouts: ['hero', 'content', 'code']\n  });\n}",
+            "language": "javascript",
+            "showLineNumbers": true,
+            "theme": "auto"
+          }
+        },
+        {
+          "i": "explanation",
+          "data": {
+            "content": "Our code presentation component features syntax highlighting, line numbers, and automatic theme detection. Perfect for technical demonstrations and developer-focused content.",
+            "type": "paragraph",
+            "size": "sm"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "documentation-slide",
+      "title": "API Documentation",
+      "items": [
+        {
+          "i": "lead",
+          "data": {
+            "content": "Comprehensive API documentation with integrated code examples, feature lists, and contextual tips for developers.",
+            "type": "lead",
+            "size": "base"
+          }
+        },
+        {
+          "i": "features",
+          "data": {
+            "items": [
+              "RESTful API endpoints with JSON responses",
+              "OAuth 2.0 authentication flow",
+              "Rate limiting and error handling",
+              "Comprehensive TypeScript definitions",
+              "Real-time webhook notifications",
+              "Multi-language SDK libraries"
+            ],
+            "type": "bullet",
+            "variant": "default"
+          }
+        },
+        {
+          "i": "code",
+          "data": {
+            "code": "import { DeckAPI } from '@deck-skills/api';\n\nconst client = new DeckAPI({\n  apiKey: process.env.DECK_API_KEY\n});\n\nconst deck = await client.generate({\n  theme: 'modern',\n  slides: ['hero', 'content']\n});",
+            "language": "typescript",
+            "showLineNumbers": true
+          }
+        },
+        {
+          "i": "note",
+          "data": {
+            "content": "Remember to handle API rate limits gracefully in production applications. Consider implementing exponential backoff for failed requests.",
+            "type": "tip",
+            "variant": "bordered"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "Visual Storytelling",
+      "items": [
+        {
+          "i": "image1",
+          "data": {
+            "src": "placeholder-image.jpg",
+            "alt": "Product Image"
+          }
+        },
+        {
+          "i": "text1",
+          "data": {
+            "content": "Combine compelling visuals with rich typography to create engaging narratives. Our photo-narrative layout seamlessly integrates images with text content.",
+            "type": "paragraph",
+            "size": "lg",
+            "align": "left"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Customer Success Stories",
+      "items": [
+        {
+          "i": "testimonial1",
+          "data": {
+            "quote": "The modern typography and clean design have transformed how we present our technical documentation. The code examples are now much more readable and professional.",
+            "author": "Sarah Chen",
+            "role": "Senior Developer",
+            "company": "TechCorp"
+          }
+        },
+        {
+          "i": "testimonial2",
+          "data": {
+            "quote": "Finally, a deck generator that understands developer needs! The syntax highlighting and component system make creating beautiful presentations effortless.",
+            "author": "Marcus Rodriguez",
+            "role": "Tech Lead",
+            "company": "StartupXYZ"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Data Visualization",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "data": [
+              { "name": "Q1", "value": 1200 },
+              { "name": "Q2", "value": 1800 },
+              { "name": "Q3", "value": 2400 },
+              { "name": "Q4", "value": 3100 }
+            ]
+          }
+        },
+        {
+          "i": "legend",
+          "data": {
+            "content": "Quarterly growth showing 150% increase year-over-year. Modern charts with clean typography and consistent spacing.",
+            "type": "paragraph",
+            "size": "sm"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Feature Comparison",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Feature", "Traditional", "Modern Deck"],
+            "rows": [
+              ["Typography", "Basic fonts", "Advanced hierarchy"],
+              ["Components", "Limited", "Rich text types"],
+              ["Themes", "Basic", "Developer-focused"],
+              ["Export", "Standard", "Professional quality"],
+              ["UX", "Generic", "Modern aesthetics"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Product Roadmap",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              {
+                "date": "Q1 2025",
+                "title": "Typography Upgrade",
+                "description": "Complete redesign of text components with modern hierarchy"
+              },
+              {
+                "date": "Q2 2025",
+                "title": "Component System",
+                "description": "Rich text, lists, quotes, code blocks, and notes"
+              },
+              {
+                "date": "Q3 2025",
+                "title": "Layout Expansion",
+                "description": "New content-focused layouts for documentation"
+              },
+              {
+                "date": "Q4 2025",
+                "title": "Advanced Features",
+                "description": "Animations, themes, and export optimizations"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "metrics-breakdown",
+      "title": "Detailed Analytics",
+      "items": [
+        {
+          "i": "metric1",
+          "data": {
+            "value": 95,
+            "unit": "%",
+            "label": "User Satisfaction"
+          }
+        },
+        {
+          "i": "metric2",
+          "data": {
+            "value": 2.4,
+            "unit": "s",
+            "label": "Load Time"
+          }
+        },
+        {
+          "i": "metric3",
+          "data": {
+            "value": 99.9,
+            "unit": "%",
+            "label": "Uptime"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Get Started Today",
+      "items": [
+        {
+          "i": "cta-text",
+          "data": {
+            "content": "Experience the future of deck generation with modern typography and professional layouts.",
+            "type": "header",
+            "size": "4xl",
+            "align": "center"
+          }
+        },
+        {
+          "i": "cta-button",
+          "data": {
+            "text": "Generate Your Deck",
+            "variant": "primary"
+          }
+        }
+      ]
+    }
+  ]
+}

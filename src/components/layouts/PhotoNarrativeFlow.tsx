@@ -24,9 +24,9 @@ export const PhotoNarrativeFlow: React.FC<PhotoNarrativeFlowProps> = ({
     {
       i: 'image',
       x: 0,
-      y: 0,
+      y: 1,
       w: 7,
-      h: 8,
+      h: 10,
       type: 'photo-card',
       data: {
         src: imageSrc || '',
@@ -36,9 +36,9 @@ export const PhotoNarrativeFlow: React.FC<PhotoNarrativeFlowProps> = ({
     {
       i: 'text',
       x: 7,
-      y: 0,
+      y: 1,
       w: 5,
-      h: 8,
+      h: 10,
       type: 'text',
       data: {
         text: text,

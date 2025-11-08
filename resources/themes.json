@@ -14,6 +14,44 @@
       "gradients": {
         "primary": "linear-gradient(135deg, #00FFFF 0%, #FF6B35 100%)",
         "background": "linear-gradient(180deg, #0F0F0F 0%, #1A1A1A 100%)"
+      },
+      "typography": {
+        "fontFamily": {
+          "heading": "Space Grotesk",
+          "body": "Inter",
+          "mono": "JetBrains Mono"
+        },
+        "fontSize": {
+          "xs": 12,
+          "sm": 14,
+          "base": 16,
+          "lg": 18,
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 30,
+          "4xl": 36,
+          "5xl": 48,
+          "6xl": 60,
+          "7xl": 72,
+          "8xl": 96,
+          "9xl": 128
+        },
+        "lineHeight": {
+          "none": 1,
+          "tight": 1.25,
+          "snug": 1.375,
+          "normal": 1.5,
+          "relaxed": 1.625,
+          "loose": 2,
+          "stats": 1.1,
+          "heading": 1.2
+        },
+        "letterSpacing": {
+          "tight": "-0.025em",
+          "normal": "0em",
+          "wide": "0.025em",
+          "wider": "0.05em"
+        }
       }
     },
     "corporate-blue": {
@@ -30,6 +68,38 @@
       "gradients": {
         "primary": "linear-gradient(135deg, #0066CC 0%, #00A3FF 100%)",
         "background": "linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%)"
+      },
+      "typography": {
+        "fontFamily": {
+          "heading": "Source Sans Pro",
+          "body": "Inter",
+          "mono": "JetBrains Mono"
+        },
+        "fontSize": {
+          "xs": 11,
+          "sm": 13,
+          "base": 15,
+          "lg": 17,
+          "xl": 19,
+          "2xl": 21,
+          "3xl": 25,
+          "4xl": 31,
+          "5xl": 37
+        },
+        "lineHeight": {
+          "none": 1,
+          "tight": 1.25,
+          "snug": 1.375,
+          "normal": 1.5,
+          "relaxed": 1.625,
+          "loose": 2
+        },
+        "letterSpacing": {
+          "tight": "-0.025em",
+          "normal": "0em",
+          "wide": "0.025em",
+          "wider": "0.05em"
+        }
       }
     },
     "startup-green": {
@@ -46,6 +116,44 @@
       "gradients": {
         "primary": "linear-gradient(135deg, #00D4AA 0%, #00F5D4 100%)",
         "background": "linear-gradient(180deg, #FFFFFF 0%, #F0F9F6 100%)"
+      },
+      "typography": {
+        "fontFamily": {
+          "heading": "Space Grotesk",
+          "body": "Inter",
+          "mono": "JetBrains Mono"
+        },
+        "fontSize": {
+          "xs": 12,
+          "sm": 14,
+          "base": 16,
+          "lg": 18,
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 30,
+          "4xl": 36,
+          "5xl": 48,
+          "6xl": 60,
+          "7xl": 72,
+          "8xl": 96,
+          "9xl": 128
+        },
+        "lineHeight": {
+          "none": 1,
+          "tight": 1.25,
+          "snug": 1.375,
+          "normal": 1.5,
+          "relaxed": 1.625,
+          "loose": 2,
+          "stats": 1.1,
+          "heading": 1.2
+        },
+        "letterSpacing": {
+          "tight": "-0.025em",
+          "normal": "0em",
+          "wide": "0.025em",
+          "wider": "0.05em"
+        }
       }
     },
     "tech-purple": {
@@ -62,6 +170,44 @@
       "gradients": {
         "primary": "linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%)",
         "background": "linear-gradient(180deg, #0F0F0F 0%, #1A1A1A 100%)"
+      },
+      "typography": {
+        "fontFamily": {
+          "heading": "Space Grotesk",
+          "body": "Inter",
+          "mono": "JetBrains Mono"
+        },
+        "fontSize": {
+          "xs": 12,
+          "sm": 14,
+          "base": 16,
+          "lg": 18,
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 30,
+          "4xl": 36,
+          "5xl": 48,
+          "6xl": 60,
+          "7xl": 72,
+          "8xl": 96,
+          "9xl": 128
+        },
+        "lineHeight": {
+          "none": 1,
+          "tight": 1.25,
+          "snug": 1.375,
+          "normal": 1.5,
+          "relaxed": 1.625,
+          "loose": 2,
+          "stats": 1.1,
+          "heading": 1.2
+        },
+        "letterSpacing": {
+          "tight": "-0.025em",
+          "normal": "0em",
+          "wide": "0.025em",
+          "wider": "0.05em"
+        }
       }
     },
     "warm-orange": {
@@ -78,6 +224,44 @@
       "gradients": {
         "primary": "linear-gradient(135deg, #FF6B35 0%, #FF8A65 100%)",
         "background": "linear-gradient(180deg, #FFFFFF 0%, #FFF8F5 100%)"
+      },
+      "typography": {
+        "fontFamily": {
+          "heading": "Space Grotesk",
+          "body": "Inter",
+          "mono": "JetBrains Mono"
+        },
+        "fontSize": {
+          "xs": 12,
+          "sm": 14,
+          "base": 16,
+          "lg": 18,
+          "xl": 20,
+          "2xl": 24,
+          "3xl": 30,
+          "4xl": 36,
+          "5xl": 48,
+          "6xl": 60,
+          "7xl": 72,
+          "8xl": 96,
+          "9xl": 128
+        },
+        "lineHeight": {
+          "none": 1,
+          "tight": 1.25,
+          "snug": 1.375,
+          "normal": 1.5,
+          "relaxed": 1.625,
+          "loose": 2,
+          "stats": 1.1,
+          "heading": 1.2
+        },
+        "letterSpacing": {
+          "tight": "-0.025em",
+          "normal": "0em",
+          "wide": "0.025em",
+          "wider": "0.05em"
+        }
       }
     }
   }

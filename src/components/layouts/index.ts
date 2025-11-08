@@ -6,3 +6,6 @@ export { TestimonialGallery } from './TestimonialGallery';
 export { CallToAction } from './CallToAction';
 export { MetricsBreakdown } from './MetricsBreakdown';
 export { ComparisonTable } from './ComparisonTable';
+export { ContentSlide } from './ContentSlide';
+export { CodePresentation } from './CodePresentation';
+export { DocumentationSlide } from './DocumentationSlide';

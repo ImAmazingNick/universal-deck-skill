@@ -21,24 +21,24 @@ export const BoldMinimalistHero: React.FC<BoldMinimalistHeroProps> = ({
   const items: DeckItem[] = [
     {
       i: 'title',
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 4,
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 6,
       type: 'text',
       data: {
         text: title,
-        size: '4xl',
+        size: '5xl',
         align: 'center',
-        weight: 'bold'
+        weight: 'extrabold'
       }
     },
     {
       i: 'subtitle',
-      x: 0,
-      y: 4,
-      w: 12,
-      h: 2,
+      x: 1,
+      y: 8,
+      w: 10,
+      h: 3,
       type: 'text',
       data: {
         text: subtitle,

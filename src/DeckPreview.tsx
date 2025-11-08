@@ -19,13 +19,37 @@ import {
   SidebarProvider,
   SidebarTrigger
 } from "@/components/ui/sidebar";
-import { BoldMinimalistHero, DataGridDashboard, PhotoNarrativeFlow, ChartShowcase, TestimonialGallery, CallToAction, MetricsBreakdown, ComparisonTable } from '@/components/layouts';
-import { ThemeConfig } from '@/lib/deck-types';
+import { lazy, Suspense } from 'react';
+
+// Lazy load layout components for better performance
+const BoldMinimalistHero = lazy(() => import('@/components/layouts/BoldMinimalistHero').then(module => ({ default: module.BoldMinimalistHero })));
+const DataGridDashboard = lazy(() => import('@/components/layouts/DataGridDashboard').then(module => ({ default: module.DataGridDashboard })));
+const PhotoNarrativeFlow = lazy(() => import('@/components/layouts/PhotoNarrativeFlow').then(module => ({ default: module.PhotoNarrativeFlow })));
+const ChartShowcase = lazy(() => import('@/components/layouts/ChartShowcase').then(module => ({ default: module.ChartShowcase })));
+const TestimonialGallery = lazy(() => import('@/components/layouts/TestimonialGallery').then(module => ({ default: module.TestimonialGallery })));
+const CallToAction = lazy(() => import('@/components/layouts/CallToAction').then(module => ({ default: module.CallToAction })));
+const MetricsBreakdown = lazy(() => import('@/components/layouts/MetricsBreakdown').then(module => ({ default: module.MetricsBreakdown })));
+const ComparisonTable = lazy(() => import('@/components/layouts/ComparisonTable').then(module => ({ default: module.ComparisonTable })));
+const ContentSlide = lazy(() => import('@/components/layouts/ContentSlide').then(module => ({ default: module.ContentSlide })));
+const CodePresentation = lazy(() => import('@/components/layouts/CodePresentation').then(module => ({ default: module.CodePresentation })));
+const DocumentationSlide = lazy(() => import('@/components/layouts/DocumentationSlide').then(module => ({ default: module.DocumentationSlide })));
+
+import { ThemeConfig, LayoutConfig } from '@/lib/deck-types';
 import { exportDeckClient } from '@/lib/export-client';
 import layoutsData from '@/../resources/layouts.json';
 import themesData from '@/../resources/themes.json';
 import { cn } from '@/lib/utils';
-import { Palette, Layout, Download, Maximize2, Minimize2 } from 'lucide-react';
+import { Palette, Grid3X3, Download, Maximize2, Minimize2 } from 'lucide-react';
+
+// Loading component for lazy-loaded layouts
+const LayoutSkeleton = () => (
+  <div className="w-full h-full flex items-center justify-center bg-muted/20 rounded-lg">
+    <div className="text-center">
+      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+      <p className="text-sm text-muted-foreground">Loading layout...</p>
+    </div>
+  </div>
+);
 
 interface DeckPreviewProps {
   className?: string;
@@ -40,6 +64,9 @@ const layoutComponents = {
   'call-to-action': CallToAction,
   'metrics-breakdown': MetricsBreakdown,
   'comparison-table': ComparisonTable,
+  'content-slide': ContentSlide,
+  'code-presentation': CodePresentation,
+  'documentation-slide': DocumentationSlide,
 };
 
 export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
@@ -53,7 +80,7 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
   }, [selectedTheme]);
 
   const LayoutComponent = layoutComponents[selectedLayout as keyof typeof layoutComponents];
-  const currentLayout = layoutsData.layouts[selectedLayout as keyof typeof layoutsData.layouts];
+  const currentLayout = layoutsData.layouts[selectedLayout as keyof typeof layoutsData.layouts] as LayoutConfig;
 
   const handleExport = async () => {
     try {
@@ -70,16 +97,16 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
 
   const getLayoutIcon = (layoutKey: string) => {
     const icons: Record<string, React.ReactNode> = {
-      'bold-minimalist-hero': <Layout className="h-4 w-4" />,
-      'data-grid-dashboard': <Layout className="h-4 w-4" />,
-      'photo-narrative-flow': <Layout className="h-4 w-4" />,
-      'chart-showcase': <Layout className="h-4 w-4" />,
-      'testimonial-gallery': <Layout className="h-4 w-4" />,
-      'call-to-action': <Layout className="h-4 w-4" />,
-      'metrics-breakdown': <Layout className="h-4 w-4" />,
-      'comparison-table': <Layout className="h-4 w-4" />,
+      'bold-minimalist-hero': <Grid3X3 className="h-4 w-4" />,
+      'data-grid-dashboard': <Grid3X3 className="h-4 w-4" />,
+      'photo-narrative-flow': <Grid3X3 className="h-4 w-4" />,
+      'chart-showcase': <Grid3X3 className="h-4 w-4" />,
+      'testimonial-gallery': <Grid3X3 className="h-4 w-4" />,
+      'call-to-action': <Grid3X3 className="h-4 w-4" />,
+      'metrics-breakdown': <Grid3X3 className="h-4 w-4" />,
+      'comparison-table': <Grid3X3 className="h-4 w-4" />,
     };
-    return icons[layoutKey] || <Layout className="h-4 w-4" />;
+    return icons[layoutKey] || <Grid3X3 className="h-4 w-4" />;
   };
 
   return (
@@ -216,9 +243,11 @@ export const DeckPreview: React.FC<DeckPreviewProps> = ({ className }) => {
                   borderColor: currentTheme.colors.border,
                 }}
               >
-                {LayoutComponent && (
-                  <LayoutComponent layout={currentLayout} theme={currentTheme} />
-                )}
+                <Suspense fallback={<LayoutSkeleton />}>
+                  {LayoutComponent && (
+                    <LayoutComponent layout={currentLayout} theme={currentTheme} />
+                  )}
+                </Suspense>
               </motion.div>
             </div>
 

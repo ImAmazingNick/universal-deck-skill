@@ -3,26 +3,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { TextData, ThemeConfig } from '@/lib/deck-types';
+import { RichTextData, ThemeConfig } from '@/lib/deck-types';
 import { cn } from '@/lib/utils';
 
-interface TextCardProps {
-  data: TextData;
+interface RichTextCardProps {
+  data: RichTextData;
   theme: ThemeConfig;
   className?: string;
 }
 
-export const TextCard: React.FC<TextCardProps> = ({ data, theme, className }) => {
-  // Helper to render rich text segments
+export const RichTextCard: React.FC<RichTextCardProps> = ({ data, theme, className }) => {
+  // Helper to render rich text content
   const renderTextContent = () => {
-    if (typeof data.text === 'string') {
-      return data.text;
+    if (typeof data.content === 'string') {
+      return data.content;
     }
 
     // Handle rich text segments
-    return data.text.map((segment, index) => {
+    return data.content.map((segment, index) => {
       const segmentStyle: React.CSSProperties = {
-        color: segment.formatting?.color || data.color || theme.colors.foreground,
+        color: segment.formatting?.color,
         fontSize: segment.formatting?.fontSize ? `${segment.formatting.fontSize}px` : undefined,
       };
 
@@ -44,8 +44,20 @@ export const TextCard: React.FC<TextCardProps> = ({ data, theme, className }) =>
 
   // Get font size from theme typography
   const getFontSize = () => {
-    const themeFontSize = theme.typography?.fontSize?.[data.size] || 14;
-    return `${themeFontSize}px`;
+    const baseSize = data.size || 'base';
+    const themeFontSize = theme.typography?.fontSize?.[baseSize] || 14;
+
+    // Adjust based on type
+    switch (data.type) {
+      case 'header':
+        return `${Math.max(themeFontSize + 4, 18)}px`;
+      case 'subheader':
+        return `${Math.max(themeFontSize + 2, 16)}px`;
+      case 'lead':
+        return `${Math.max(themeFontSize + 2, 18)}px`;
+      default:
+        return `${themeFontSize}px`;
+    }
   };
 
   // Get line height from theme
@@ -56,6 +68,45 @@ export const TextCard: React.FC<TextCardProps> = ({ data, theme, className }) =>
   // Get letter spacing from theme
   const getLetterSpacing = () => {
     return theme.typography?.letterSpacing?.[data.letterSpacing || 'normal'] || '0em';
+  };
+
+  // Get font family based on type
+  const getFontFamily = () => {
+    if (data.fontFamily) return data.fontFamily;
+
+    switch (data.type) {
+      case 'header':
+      case 'subheader':
+        return theme.typography?.fontFamily?.heading;
+      default:
+        return theme.typography?.fontFamily?.body;
+    }
+  };
+
+  // Get text color based on variant
+  const getTextColor = () => {
+    if (data.variant === 'muted') {
+      return theme.colors.muted;
+    } else if (data.variant === 'accent' || data.variant === 'highlight') {
+      return theme.colors.primary;
+    }
+    return theme.colors.foreground;
+  };
+
+  // Get font weight based on type
+  const getFontWeight = () => {
+    switch (data.type) {
+      case 'header':
+        return 'bold';
+      case 'subheader':
+        return 'semibold';
+      case 'lead':
+        return 'normal';
+      case 'blockquote':
+        return 'medium';
+      default:
+        return 'medium';
+    }
   };
 
   return (
@@ -76,29 +127,29 @@ export const TextCard: React.FC<TextCardProps> = ({ data, theme, className }) =>
           background: theme.gradients.background,
         }}
       >
-        <CardContent className="p-10 flex items-center justify-center h-full">
+        <CardContent className={cn(
+          "p-10 flex h-full",
+          data.type === 'blockquote' && "border-l-4 border-primary pl-12"
+        )}>
           <div
             className={cn(
-              "font-medium tracking-tight font-features-text",
-              // Weight classes with better hierarchy
-              data.weight === 'light' && "font-light",
-              data.weight === 'normal' && "font-normal",
-              data.weight === 'medium' && "font-medium",
-              data.weight === 'semibold' && "font-semibold",
-              data.weight === 'bold' && "font-bold",
-              data.weight === 'extrabold' && "font-extrabold",
+              "w-full font-features-text",
               // Alignment classes
               data.align === 'left' && "text-left",
               data.align === 'center' && "text-center",
               data.align === 'right' && "text-right",
-              data.align === 'justify' && "text-justify"
+              data.align === 'justify' && "text-justify",
+              // Type-specific styles
+              data.type === 'lead' && "tracking-wide",
+              data.type === 'blockquote' && "italic"
             )}
             style={{
               fontSize: getFontSize(),
+              fontWeight: getFontWeight(),
               lineHeight: getLineHeight(),
               letterSpacing: getLetterSpacing(),
-              color: data.color || theme.colors.foreground,
-              fontFamily: data.fontFamily || theme.typography?.fontFamily?.body,
+              color: getTextColor(),
+              fontFamily: getFontFamily(),
               textShadow: data.textShadow ? '0 1px 2px rgba(0,0,0,0.1)' : (theme.name === 'metallic-earth' ? '0 1px 2px rgba(0,0,0,0.1)' : undefined),
             }}
           >

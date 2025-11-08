@@ -1,0 +1,187 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Typography Showcase",
+    "subtitle": "Advanced Text Formatting Features",
+    "date": "2025-10-23",
+    "author": "Deck Skills",
+    "company": "AI Assistant"
+  },
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Typography Excellence"
+    },
+    {
+      "layout": "content-slide",
+      "title": "Rich Text Segments",
+      "items": [
+        {
+          "i": "rich-text-demo",
+          "data": {
+            "content": [
+              {"text": "Welcome to ", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": "advanced typography", "formatting": {"italic": true, "color": "#A78BFA"}},
+              {"text": " with rich text segments that support ", "formatting": {}},
+              {"text": "bold", "formatting": {"bold": true}},
+              {"text": ", ", "formatting": {}},
+              {"text": "italic", "formatting": {"italic": true}},
+              {"text": ", and ", "formatting": {}},
+              {"text": "underline", "formatting": {"underline": true}},
+              {"text": " formatting within a single text block.", "formatting": {}}
+            ],
+            "type": "paragraph",
+            "size": "lg",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Typography Variants",
+      "items": [
+        {
+          "i": "header-demo",
+          "data": {
+            "content": "Stunning Header Typography",
+            "type": "header",
+            "size": "xl",
+            "align": "center",
+            "variant": "accent",
+            "fontFamily": "Inter, sans-serif"
+          }
+        },
+        {
+          "i": "subheader-demo",
+          "data": {
+            "content": "Clean subheaders with proper hierarchy",
+            "type": "subheader",
+            "size": "lg",
+            "align": "center",
+            "variant": "muted"
+          }
+        },
+        {
+          "i": "lead-demo",
+          "data": {
+            "content": "Lead text with wider letter spacing for introductory content and better readability",
+            "type": "lead",
+            "size": "base",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "wide"
+          }
+        },
+        {
+          "i": "blockquote-demo",
+          "data": {
+            "content": "Blockquotes with distinct styling for highlighted content and important messages",
+            "type": "blockquote",
+            "size": "lg",
+            "align": "left",
+            "variant": "highlight"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Text Styling Options",
+      "items": [
+        {
+          "i": "styling-demo",
+          "data": {
+            "text": [
+              {"text": "Custom Colors: ", "formatting": {"bold": true}},
+              {"text": "Primary", "formatting": {"color": "#8B5CF6", "bold": true}},
+              {"text": " • ", "formatting": {}},
+              {"text": "Secondary", "formatting": {"color": "#7C3AED", "italic": true}},
+              {"text": " • ", "formatting": {}},
+              {"text": "Accent", "formatting": {"color": "#A78BFA", "underline": true}}
+            ],
+            "size": "base",
+            "align": "center",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "textShadow": true
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Font Families & Themes",
+      "items": [
+        {
+          "i": "corporate-font",
+          "data": {
+            "text": "Corporate Theme: Segoe UI",
+            "size": "xl",
+            "align": "center",
+            "weight": "medium",
+            "fontFamily": "'Segoe UI', Tahoma, sans-serif"
+          }
+        },
+        {
+          "i": "modern-font",
+          "data": {
+            "text": "Modern Theme: Inter",
+            "size": "xl",
+            "align": "center",
+            "weight": "medium",
+            "fontFamily": "Inter, sans-serif"
+          }
+        },
+        {
+          "i": "creative-font",
+          "data": {
+            "text": "Creative Theme: Poppins",
+            "size": "xl",
+            "align": "center",
+            "weight": "medium",
+            "fontFamily": "'Poppins', sans-serif"
+          }
+        }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Alignment & Spacing",
+      "items": [
+        {
+          "i": "left-align",
+          "data": {
+            "text": "Left-aligned text creates a clean, traditional reading experience with natural flow from left to right.",
+            "size": "base",
+            "align": "left",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal"
+          }
+        },
+        {
+          "i": "center-align",
+          "data": {
+            "text": "Center-aligned text draws attention and works perfectly for headings and important statements that need emphasis.",
+            "size": "base",
+            "align": "center",
+            "lineHeight": "relaxed"
+          }
+        },
+        {
+          "i": "justify-align",
+          "data": {
+            "text": "Justified text creates a formal, newspaper-like appearance with straight edges on both sides, though it can create awkward spacing in some situations.",
+            "size": "base",
+            "align": "justify",
+            "lineHeight": "relaxed"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+

@@ -22,6 +22,28 @@ if (command === 'generate' || command === 'gen') {
 function generateDeck() {
   const options = parseGenerateArgs();
 
+  // Load optional input JSON if provided
+  let inputData = null;
+  if (options.input) {
+    try {
+      const inputPath = path.isAbsolute(options.input)
+        ? options.input
+        : path.join(process.cwd(), options.input);
+      inputData = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+    } catch (error) {
+      console.error('❌ Failed to read --input JSON:', error.message);
+      process.exit(1);
+    }
+  }
+
+  // Apply input overrides (JSON takes precedence over defaults)
+  if (inputData) {
+    if (inputData.theme) options.theme = inputData.theme;
+    if (Array.isArray(inputData.slides)) options.slides = inputData.slides;
+    // If slides provided via input, clear single-layout to avoid ambiguity
+    if (options.slides && options.slides.length > 0) options.layout = undefined;
+  }
+
   console.log('🎨 Marketing Deck Generator');
   console.log('===========================');
   if (options.slides && options.slides.length > 0) {
@@ -31,17 +53,32 @@ function generateDeck() {
   }
   console.log(`Theme: ${options.theme}`);
   console.log(`Output: ${options.output}`);
+  if (options.input) {
+    console.log(`Input: ${options.input}`);
+  }
   console.log('');
 
   try {
-    // Import the export function dynamically
-    const exportModule = require('./exportPptx.js');
+    // Prefer compiled TS exporter (CommonJS) if present, else fallback to legacy JS
+    let exportModule;
+    const compiledPathA = path.join(__dirname, 'dist', 'exportPptx.js');
+    const compiledPathB = path.join(__dirname, 'dist', 'scripts', 'exportPptx.js');
+    if (fs.existsSync(compiledPathA)) {
+      exportModule = require(compiledPathA);
+    } else if (fs.existsSync(compiledPathB)) {
+      exportModule = require(compiledPathB);
+    } else {
+      exportModule = require('./exportPptx.js');
+    }
 
     exportModule.exportToPptx({
       layout: options.layout,
       slides: options.slides,
       theme: options.theme,
-      outputPath: options.output
+      outputPath: options.output,
+      // Pass through optional input fields for richer customization
+      titleSlide: inputData && inputData.titleSlide ? inputData.titleSlide : undefined,
+      assetsBasePath: inputData && inputData.assetsBasePath ? inputData.assetsBasePath : undefined
     }).then(() => {
       console.log(`✅ Deck generated successfully: ${options.output}`);
     }).catch((error) => {

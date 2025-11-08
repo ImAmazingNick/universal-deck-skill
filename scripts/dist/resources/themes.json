@@ -1,0 +1,84 @@
+{
+    "themes": {
+        "metallic-earth": {
+            "name": "Metallic Earth",
+            "colors": {
+                "primary": "#00FFFF",
+                "secondary": "#FF6B35",
+                "accent": "#00FFFF",
+                "background": "#0F0F0F",
+                "foreground": "#FFFFFF",
+                "muted": "#1A1A1A",
+                "border": "#333333"
+            },
+            "gradients": {
+                "primary": "linear-gradient(135deg, #00FFFF 0%, #FF6B35 100%)",
+                "background": "linear-gradient(180deg, #0F0F0F 0%, #1A1A1A 100%)"
+            }
+        },
+        "corporate-blue": {
+            "name": "Corporate Blue",
+            "colors": {
+                "primary": "#0066CC",
+                "secondary": "#004499",
+                "accent": "#00A3FF",
+                "background": "#FFFFFF",
+                "foreground": "#000000",
+                "muted": "#F5F5F5",
+                "border": "#E5E5E5"
+            },
+            "gradients": {
+                "primary": "linear-gradient(135deg, #0066CC 0%, #00A3FF 100%)",
+                "background": "linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%)"
+            }
+        },
+        "startup-green": {
+            "name": "Startup Green",
+            "colors": {
+                "primary": "#00D4AA",
+                "secondary": "#00A67E",
+                "accent": "#00F5D4",
+                "background": "#FFFFFF",
+                "foreground": "#000000",
+                "muted": "#F0F9F6",
+                "border": "#D1F2EB"
+            },
+            "gradients": {
+                "primary": "linear-gradient(135deg, #00D4AA 0%, #00F5D4 100%)",
+                "background": "linear-gradient(180deg, #FFFFFF 0%, #F0F9F6 100%)"
+            }
+        },
+        "tech-purple": {
+            "name": "Tech Purple",
+            "colors": {
+                "primary": "#8B5CF6",
+                "secondary": "#7C3AED",
+                "accent": "#A78BFA",
+                "background": "#0F0F0F",
+                "foreground": "#FFFFFF",
+                "muted": "#1A1A1A",
+                "border": "#374151"
+            },
+            "gradients": {
+                "primary": "linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%)",
+                "background": "linear-gradient(180deg, #0F0F0F 0%, #1A1A1A 100%)"
+            }
+        },
+        "warm-orange": {
+            "name": "Warm Orange",
+            "colors": {
+                "primary": "#FF6B35",
+                "secondary": "#E55A2B",
+                "accent": "#FF8A65",
+                "background": "#FFFFFF",
+                "foreground": "#000000",
+                "muted": "#FFF8F5",
+                "border": "#FFE5D9"
+            },
+            "gradients": {
+                "primary": "linear-gradient(135deg, #FF6B35 0%, #FF8A65 100%)",
+                "background": "linear-gradient(180deg, #FFFFFF 0%, #FFF8F5 100%)"
+            }
+        }
+    }
+}

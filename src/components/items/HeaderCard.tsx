@@ -28,8 +28,11 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({ data, theme, className }
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-2xl md:text-3xl font-bold tracking-tight leading-tight"
-              style={{ color: theme.colors.primary }}
+              className="text-4xl md:text-5xl font-bold tracking-tight leading-heading font-features-text"
+              style={{
+                color: theme.colors.primary,
+                fontFamily: theme.typography?.fontFamily?.heading
+              }}
             >
               {data.title}
             </motion.h1>
@@ -39,8 +42,11 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({ data, theme, className }
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-base md:text-lg font-medium opacity-90"
-                style={{ color: theme.colors.foreground }}
+                className="text-xl md:text-2xl font-medium opacity-90 font-features-text"
+                style={{
+                  color: theme.colors.foreground,
+                  fontFamily: theme.typography?.fontFamily?.body
+                }}
               >
                 {data.subtitle}
               </motion.p>

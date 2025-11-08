@@ -29,6 +29,12 @@ node scripts/cli.js generate --layout "data-grid-dashboard" --theme "metallic-ea
 # Multiple layouts in one deck
 node scripts/cli.js generate --slides "bold-minimalist-hero,data-grid-dashboard,testimonial-gallery" --theme "tech-purple" --output multi-layout-deck.pptx
 
+# All available layouts in one deck
+node scripts/cli.js generate --slides "bold-minimalist-hero,data-grid-dashboard,chart-showcase,testimonial-gallery,comparison-table,photo-narrative-flow,timeline-roadmap,metrics-breakdown,call-to-action" --theme "tech-purple" --output complete-all-layouts.pptx
+
+# Generate from input JSON (supports titleSlide, item overrides, assetsBasePath)
+node scripts/cli.js generate --input resources/sample-input.json --output complete-all-layouts-customized.pptx
+
 # Or use default filename (output/deck.pptx)
 node scripts/cli.js generate --layout "data-grid-dashboard" --theme "metallic-earth"
 ```
@@ -53,8 +59,33 @@ This skill can be invoked by Claude agents using natural language prompts:
 - `--theme` (optional): Visual theme (metallic-earth, corporate-blue, startup-green, tech-purple, warm-orange)
 - `--input` (optional): JSON file with slide data
 - `--output` (optional): Output filename (defaults to "output/deck.pptx", files saved to output/ folder)
+- `titleSlide` (input JSON): Controls first slide metadata (title, subtitle, author, company, date)
+- `assetsBasePath` (input JSON): Base path for resolving images for `photo-card`
+- `slides[].items[]` (input JSON): Override items by `i` key from `resources/layouts.json`; merged into base items
 
 **Note**: Use either `--layout` for single-slide decks or `--slides` for multi-slide decks with different layouts.
+
+## Input JSON Schema (Advanced)
+
+Customize slides via JSON. Example:
+
+```json
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Q4 Performance Overview",
+    "subtitle": "North America | 2025",
+    "author": "Marketing Team",
+    "company": "Acme Inc.",
+    "date": "2025-10-21"
+  },
+  "assetsBasePath": "./public",
+  "slides": [
+    { "layout": "bold-minimalist-hero", "title": "Welcome", "items": [ { "i": "title", "data": { "text": "Acme Marketing" } } ] },
+    { "layout": "data-grid-dashboard", "title": "KPIs", "items": [ { "i": "kpi1", "data": { "metric": "+32%", "label": "Growth" } } ] }
+  ]
+}
+```
 
 ## Layout Templates
 

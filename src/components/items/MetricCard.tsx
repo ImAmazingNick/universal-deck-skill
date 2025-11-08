@@ -33,19 +33,19 @@ export const MetricCard: React.FC<MetricCardProps> = ({ data, theme, className }
           background: theme.gradients.background,
         }}
       >
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-3">
           <CardTitle
-            className="text-base font-medium"
+            className="text-lg font-semibold font-features-text"
             style={{ color: theme.colors.foreground }}
           >
             {data.label}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
+        <CardContent className="pt-0">
+          <div className="space-y-4">
             <div className="flex items-baseline gap-2">
               <span
-                className="text-3xl font-bold tracking-tight"
+                className="text-3xl font-bold tracking-tight font-features-stats leading-stats"
                 style={{ color: theme.colors.accent }}
               >
                 {data.value.toLocaleString()}

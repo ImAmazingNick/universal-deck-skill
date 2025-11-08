@@ -1,0 +1,190 @@
+{
+  "theme": "corporate-blue",
+  "titleSlide": {
+    "title": "Series A Investment Deck",
+    "subtitle": "Seeking $5M | Q1 2026",
+    "date": "2025-10-23",
+    "author": "CEO & Co-Founder",
+    "company": "NexusAI"
+  },
+  "assetsBasePath": "./public",
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "NexusAI",
+      "items": [
+        { "i": "title", "data": { "text": "NexusAI", "size": "5xl", "align": "center" } },
+        { "i": "subtitle", "data": { "text": "AI-Powered Enterprise Intelligence Platform\nTransforming How Companies Make Decisions", "size": "xl", "align": "center" } }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "The Problem",
+      "items": [
+        { "i": "image1", "data": { "src": "globe.svg", "caption": "Data Overload Crisis" } },
+        { "i": "text1", "data": { "text": "Enterprise teams drown in 2.5 quintillion bytes of data daily, yet struggle to extract actionable insights. Legacy BI tools are slow, complex, and disconnected from modern workflows.\n\nResult: Poor decisions, missed opportunities, and frustrated employees.", "size": "lg", "align": "left" } }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Market Opportunity",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "label": "Global Enterprise Analytics Market",
+            "data": [
+              { "name": "2025", "value": 50.4 },
+              { "name": "2026", "value": 62.1 },
+              { "name": "2027", "value": 76.8 },
+              { "name": "2028", "value": 95.2 },
+              { "name": "2029", "value": 117.9 },
+              { "name": "2030", "value": 145.8 }
+            ]
+          }
+        },
+        { "i": "legend", "data": { "text": "TAM: $145B by 2030 | AI segment growing 25% YoY\nOur initial target: $2.5B Enterprise Intelligence niche", "size": "base" } }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "Our Solution",
+      "items": [
+        { "i": "image1", "data": { "src": "vercel.svg", "caption": "NexusAI Platform" } },
+        { "i": "text1", "data": { "text": "NexusAI is the first AI-native enterprise intelligence platform that:\n\n• Automatically discovers insights across all data sources\n• Delivers natural language queries and conversational analytics\n• Integrates seamlessly with existing workflows (Slack, Teams, etc.)\n• Provides real-time alerts and automated reporting\n\nBuilt for the modern data team, not data scientists.", "size": "lg", "align": "left" } }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Competitive Landscape",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Feature", "NexusAI", "Tableau", "Power BI", "ThoughtSpot"],
+            "rows": [
+              ["AI-Native", "✅ Built-in", "❌ Add-on", "❌ Limited", "✅ Partial"],
+              ["Natural Language", "✅ Advanced", "❌ No", "❌ No", "✅ Basic"],
+              ["Real-time Alerts", "✅ Automated", "❌ Manual", "❌ Manual", "❌ Manual"],
+              ["Workflow Integration", "✅ Slack/Teams", "❌ Limited", "❌ Limited", "❌ Limited"],
+              ["Time to Insights", "5 minutes", "2-3 days", "1-2 days", "1 day"],
+              ["Learning Curve", "1 hour", "2 weeks", "1 week", "3 days"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Key Metrics",
+      "items": [
+        { "i": "kpi1", "data": { "metric": "2,400", "label": "Active Users" } },
+        { "i": "kpi2", "data": { "metric": "$850K", "label": "ARR" } },
+        { "i": "kpi3", "data": { "metric": "156%", "label": "YoY Growth" } },
+        { "i": "kpi4", "data": { "metric": "92%", "label": "Retention" } }
+      ]
+    },
+    {
+      "layout": "metrics-breakdown",
+      "title": "Product Metrics",
+      "items": [
+        { "i": "metric1", "data": { "value": 2400, "unit": "", "label": "Daily Queries", "change": 23 } },
+        { "i": "metric2", "data": { "value": 94, "unit": "%", "label": "Accuracy Rate", "change": 3 } },
+        { "i": "metric3", "data": { "value": 1.2, "unit": "min", "label": "Avg Response", "change": -0.3 } }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Revenue Growth",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "line",
+            "label": "Monthly Recurring Revenue",
+            "data": [
+              { "name": "Jan", "value": 120 },
+              { "name": "Feb", "value": 145 },
+              { "name": "Mar", "value": 180 },
+              { "name": "Apr", "value": 220 },
+              { "name": "May", "value": 280 },
+              { "name": "Jun", "value": 350 },
+              { "name": "Jul", "value": 450 },
+              { "name": "Aug", "value": 580 },
+              { "name": "Sep", "value": 720 },
+              { "name": "Oct", "value": 850 }
+            ]
+          }
+        },
+        { "i": "legend", "data": { "text": "Achieved product-market fit in Q2 | 25% MoM growth\nPath to $5M ARR by end of 2026", "size": "base" } }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Customer Success",
+      "items": [
+        { "i": "testimonial1", "data": { "quote": "\"NexusAI cut our reporting time from 3 days to 3 hours. It's transformed how our leadership makes decisions.\"", "author": "Sarah Chen", "role": "VP of Operations", "company": "TechFlow Inc." } },
+        { "i": "testimonial2", "data": { "quote": "\"Finally, business intelligence that speaks our language. The AI insights are game-changing for our sales team.\"", "author": "Marcus Rodriguez", "role": "Head of Sales", "company": "DataCorp" } }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Product Roadmap",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              { "date": "Q4 2025", "title": "Advanced AI Models", "description": "Multi-modal analysis & predictive insights" },
+              { "date": "Q1 2026", "title": "Enterprise Features", "description": "SSO, audit logs, compliance tools" },
+              { "date": "Q2 2026", "title": "Mobile App Launch", "description": "iOS/Android apps for on-the-go insights" },
+              { "date": "Q3 2026", "title": "API Platform", "description": "Full API access for custom integrations" },
+              { "date": "Q4 2026", "title": "Global Expansion", "description": "Multi-region deployment & localization" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Financial Projections",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "area",
+            "label": "Revenue Projections",
+            "data": [
+              { "name": "2026", "value": 3200 },
+              { "name": "2027", "value": 8500 },
+              { "name": "2028", "value": 18500 },
+              { "name": "2029", "value": 32000 }
+            ]
+          }
+        },
+        { "i": "legend", "data": { "text": "Path to profitability: Q2 2027\n5-year target: $32M ARR\nGross margins: 85%+", "size": "base" } }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Use of Funds",
+      "items": [
+        { "i": "kpi1", "data": { "metric": "$2.5M", "label": "Product Development" } },
+        { "i": "kpi2", "data": { "metric": "$1.2M", "label": "Sales & Marketing" } },
+        { "i": "kpi3", "data": { "metric": "$0.8M", "label": "Operations" } },
+        { "i": "kpi4", "data": { "metric": "$0.5M", "label": "Working Capital" } }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Investment Opportunity",
+      "items": [
+        { "i": "cta-text", "data": { "text": "Join Us in Building the Future of Enterprise Intelligence\n\nSeeking $5M for 15% Equity\n\nPre-money: $25M | Post-money: $30M", "size": "2xl", "align": "center" } },
+        { "i": "cta-button", "data": { "text": "Schedule Meeting" } }
+      ]
+    }
+  ]
+}
+
+

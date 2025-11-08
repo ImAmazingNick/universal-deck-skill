@@ -57,25 +57,26 @@ export const KpiCard: React.FC<KpiCardProps> = ({ data, theme, className }) => {
     >
       <Card
         className={cn(
-          "h-full border-2 transition-all duration-300 hover:shadow-lg",
-          "bg-gradient-to-br from-card to-card/50"
+          "h-full border transition-all duration-300 hover:shadow-lg hover:shadow-primary/10",
+          "bg-gradient-to-br from-card via-card/95 to-card/80",
+          "rounded-xl shadow-md"
         )}
         style={{
           borderColor: theme.colors.border,
           background: theme.gradients.background,
         }}
       >
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <CardTitle
-              className="text-lg font-medium"
+              className="text-xl font-semibold font-features-text"
               style={{ color: theme.colors.foreground }}
             >
               {data.label}
             </CardTitle>
             {data.icon && (
               <div
-                className="p-2 rounded-full"
+                className="p-3 rounded-full"
                 style={{
                   backgroundColor: theme.colors.primary,
                   color: theme.colors.background,
@@ -86,10 +87,10 @@ export const KpiCard: React.FC<KpiCardProps> = ({ data, theme, className }) => {
             )}
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
+        <CardContent className="pt-0">
+          <div className="space-y-4">
             <div
-              className="text-4xl font-bold tracking-tight"
+              className="text-4xl font-bold tracking-tight font-features-stats leading-stats"
               style={{ color: theme.colors.primary }}
             >
               {data.metric}

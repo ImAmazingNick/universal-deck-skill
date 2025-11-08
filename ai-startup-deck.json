@@ -1,0 +1,151 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Nexus AI",
+    "subtitle": "Revolutionizing Enterprise Intelligence",
+    "logo": "public/globe.svg",
+    "date": "2025-10-23",
+    "author": "Nexus AI Team",
+    "company": "Nexus AI Inc."
+  },
+  "assetsBasePath": "./public",
+  "slides": [
+    {
+      "layout": "bold-minimalist-hero",
+      "title": "Nexus AI",
+      "items": [
+        { "i": "title", "data": { "content": "Nexus AI", "type": "header", "size": "5xl", "align": "center" } },
+        { "i": "subtitle", "data": { "content": "Intelligent Enterprise Solutions for the Modern Age", "type": "subheader", "size": "xl", "align": "center", "variant": "muted" } }
+      ]
+    },
+    {
+      "layout": "data-grid-dashboard",
+      "title": "Key Performance Metrics",
+      "items": [
+        { "i": "kpi1", "data": { "metric": "247%", "label": "YoY Growth", "icon": "trending-up", "trend": "up" } },
+        { "i": "kpi2", "data": { "metric": "$42.5M", "label": "Annual Revenue", "icon": "dollar-sign" } },
+        { "i": "kpi3", "data": { "metric": "1.2M", "label": "Active Users", "icon": "users" } },
+        { "i": "kpi4", "data": { "metric": "99.7%", "label": "Uptime SLA", "icon": "smile" } }
+      ]
+    },
+    {
+      "layout": "photo-narrative-flow",
+      "title": "Intelligent Platform Overview",
+      "items": [
+        { "i": "image1", "data": { "src": "globe.svg", "alt": "Nexus AI Platform", "caption": "Unified Intelligence Dashboard" } },
+        { "i": "text1", "data": { "content": "Nexus AI combines advanced machine learning with enterprise-grade security to deliver actionable insights across your entire organization. Our platform processes billions of data points in real-time, providing predictive analytics that drive strategic decision-making.", "type": "paragraph", "size": "lg", "align": "left" } }
+      ]
+    },
+    {
+      "layout": "comparison-table",
+      "title": "Competitive Advantages",
+      "items": [
+        {
+          "i": "table",
+          "data": {
+            "headers": ["Feature", "Nexus AI", "Legacy Solutions", "Competitor X"],
+            "rows": [
+              ["AI Accuracy", "99.7%", "87.2%", "92.1%"],
+              ["Processing Speed", "<100ms", "2-5s", "500ms"],
+              ["Data Security", "SOC2 Type II", "Basic Encryption", "Enterprise"],
+              ["Scalability", "Auto-scaling", "Manual Provisioning", "Limited"],
+              ["Integration APIs", "50+", "12", "25"],
+              ["Cost Efficiency", "60% Lower TCO", "Baseline", "30% Lower"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "chart-showcase",
+      "title": "Revenue Growth Trajectory",
+      "items": [
+        {
+          "i": "chart",
+          "data": {
+            "type": "bar",
+            "series": [
+              { "name": "2024", "values": [2.1, 3.8, 5.2, 7.9, 9.3, 12.8, 15.6, 18.9, 22.4, 28.7, 35.2, 42.5] },
+              { "name": "2025 (Projected)", "values": [45.2, 48.9, 52.7, 57.1, 62.8, 68.9, 75.3, 82.1, 89.7, 97.8, 106.4, 115.8] }
+            ],
+            "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          }
+        },
+        { "i": "legend", "data": { "content": "2025 projections based on current growth trajectory of 247% YoY. Revenue acceleration driven by enterprise expansion and AI adoption.", "type": "paragraph", "size": "sm" } }
+      ]
+    },
+    {
+      "layout": "timeline-roadmap",
+      "title": "Company Milestones",
+      "items": [
+        {
+          "i": "timeline",
+          "data": {
+            "events": [
+              { "date": "Jan 2023", "title": "Founded", "description": "Nexus AI founded with $5M seed funding" },
+              { "date": "Jun 2023", "title": "MVP Launch", "description": "First enterprise deployment with Fortune 500 client" },
+              { "date": "Dec 2023", "title": "Series A", "description": "$25M funding, expanded engineering team to 50" },
+              { "date": "Mar 2024", "title": "Global Expansion", "description": "Opened offices in London, Singapore, and Tokyo" },
+              { "date": "Aug 2024", "title": "Enterprise Scale", "description": "Processed first billion data points, 10k+ users" },
+              { "date": "Jan 2025", "title": "Series B", "description": "$75M funding, AI capabilities expanded 300%" },
+              { "date": "Jun 2025", "title": "IPO Preparation", "description": "Filed S-1, targeting $500M market cap" },
+              { "date": "Dec 2025", "title": "Global Leadership", "description": "Industry leader in enterprise AI intelligence" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "layout": "testimonial-gallery",
+      "title": "Customer Success Stories",
+      "items": [
+        { "i": "testimonial1", "data": { "quote": "Nexus AI transformed our decision-making process. We reduced operational costs by 40% while improving accuracy by 300%. The ROI was evident within the first month.", "author": "Sarah Chen", "role": "CTO", "company": "TechFlow Inc." } },
+        { "i": "testimonial2", "data": { "quote": "The predictive capabilities are incredible. We can now anticipate market shifts 6 months in advance. Nexus AI isn't just a tool—it's our competitive advantage.", "author": "Marcus Rodriguez", "role": "VP Operations", "company": "Global Dynamics" } }
+      ]
+    },
+    {
+      "layout": "metrics-breakdown",
+      "title": "Performance Indicators",
+      "items": [
+        { "i": "metric1", "data": { "value": 99.7, "unit": "%", "label": "Prediction Accuracy", "change": 2.3, "changeLabel": "from last quarter" } },
+        { "i": "metric2", "data": { "value": 47, "unit": "ms", "label": "Response Time", "change": -12, "changeLabel": "improvement" } },
+        { "i": "metric3", "data": { "value": 4.9, "unit": "/5", "label": "Customer Satisfaction", "change": 0.2, "changeLabel": "increase" } }
+      ]
+    },
+    {
+      "layout": "content-slide",
+      "title": "Technical Architecture",
+      "items": [
+        { "i": "content", "data": { "content": "Our proprietary neural architecture combines transformer models with reinforcement learning, processing 50 billion parameters in real-time. The distributed computing framework ensures 99.9% uptime while maintaining sub-100ms latency globally.\n\nAdvanced security protocols including end-to-end encryption, zero-trust architecture, and SOC2 Type II compliance protect sensitive enterprise data.", "type": "paragraph", "size": "base", "align": "left" } }
+      ]
+    },
+    {
+      "layout": "code-presentation",
+      "title": "AI Integration Example",
+      "items": [
+        { "i": "code", "data": { "code": "import { NexusAI } from '@nexus-ai/sdk';\n\nconst client = new NexusAI({\n  apiKey: process.env.NEXUS_API_KEY,\n  model: 'enterprise-v2'\n});\n\n// Real-time predictive analytics\nconst insights = await client.analyze({\n  dataset: enterpriseData,\n  prediction: 'revenue_forecast',\n  confidence: 0.997\n});\n\nconsole.log(`Predicted growth: ${insights.growth}%`);\n// Output: Predicted growth: 247%", "language": "typescript", "showLineNumbers": true } },
+        { "i": "explanation", "data": { "content": "Simple 4-line integration provides enterprise-grade AI capabilities. Our SDK handles scaling, security, and optimization automatically.", "type": "paragraph", "size": "sm" } }
+      ]
+    },
+    {
+      "layout": "documentation-slide",
+      "title": "Feature Overview",
+      "items": [
+        { "i": "lead", "data": { "content": "Nexus AI delivers comprehensive intelligence solutions with unmatched accuracy and performance.", "type": "lead", "size": "base" } },
+        { "i": "features", "data": { "items": ["Real-time Predictive Analytics", "Automated Decision Intelligence", "Multi-modal Data Processing", "Enterprise Security & Compliance", "Global Scalability", "Advanced ML Model Training"], "type": "bullet", "icon": "arrow" } },
+        { "i": "code", "data": { "code": "const intelligence = await nexus.analyze({\n  type: 'predictive',\n  accuracy: 0.997,\n  realTime: true\n});", "language": "javascript" } },
+        { "i": "note", "data": { "title": "Pro Tip", "content": "All features include automatic scaling and 99.9% uptime SLA.", "type": "tip" } }
+      ]
+    },
+    {
+      "layout": "call-to-action",
+      "title": "Join the AI Revolution",
+      "items": [
+        { "i": "cta-text", "data": { "content": "Partner with Nexus AI to transform your enterprise intelligence capabilities.", "type": "header", "size": "4xl", "align": "center" } },
+        { "i": "cta-button", "data": { "text": "Schedule Demo", "variant": "primary" } }
+      ]
+    }
+  ]
+}
+
+

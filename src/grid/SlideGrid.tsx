@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { DeckItem, ThemeConfig } from '@/lib/deck-types';
 import { HeaderCard } from '@/components/items/HeaderCard';
+import { TextCard, KpiCard, PhotoCard, ChartCard, TestimonialCard, MetricCard, TimelineCard, RichTextCard, ListCard, QuoteCard, CodeCard, NoteCard, TableCard } from '@/components/items';
+import { Button } from '@/components/ui/button';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
@@ -43,9 +45,9 @@ const GridItem: React.FC<GridItemProps> = ({ item, theme, isEditable, onItemChan
       layout
       className={cn(
         "grid-item relative group cursor-pointer overflow-hidden",
-        "border border-border/20 rounded-lg",
-        "hover:border-border/50 transition-colors",
-        theme.colors.background === '#FFFFFF' ? 'bg-white' : 'bg-gray-900'
+        "border border-border/30 rounded-xl shadow-sm",
+        "hover:border-border/60 hover:shadow-md hover:shadow-primary/5 transition-all duration-300",
+        theme.colors.background === '#FFFFFF' ? 'bg-white/95 backdrop-blur-sm' : 'bg-gray-900/95 backdrop-blur-sm'
       )}
       onClick={handleClick}
       whileHover={{ scale: isEditable ? 1.02 : 1 }}
@@ -56,165 +58,74 @@ const GridItem: React.FC<GridItemProps> = ({ item, theme, isEditable, onItemChan
         borderColor: theme.colors.border,
       }}
     >
-      {/* Render different item types */}
-      <div className="w-full h-full p-4 flex items-center justify-center">
+      {/* Render different item types using shared components */}
+      <div className="w-full h-full p-3 flex items-stretch">
         {item.type === 'text' && (
-          <div
-            className={cn(
-              "text-center font-medium",
-              (item.data as any).size === '4xl' && "text-4xl",
-              (item.data as any).size === '3xl' && "text-3xl",
-              (item.data as any).size === '2xl' && "text-2xl",
-              (item.data as any).size === 'xl' && "text-xl",
-              (item.data as any).size === 'lg' && "text-lg",
-              (item.data as any).size === 'base' && "text-base",
-              (item.data as any).size === 'sm' && "text-sm",
-              (item.data as any).size === 'xs' && "text-xs",
-              (item.data as any).align === 'left' && "text-left",
-              (item.data as any).align === 'center' && "text-center",
-              (item.data as any).align === 'right' && "text-right"
-            )}
-            style={{ color: theme.colors.foreground }}
-          >
-            {(item.data as any).text}
-          </div>
+          <TextCard data={item.data as any} theme={theme} className="w-full" />
+        )}
+
+        {item.type === 'rich-text' && (
+          <RichTextCard data={item.data as any} theme={theme} className="w-full" />
+        )}
+
+        {item.type === 'list' && (
+          <ListCard data={item.data as any} theme={theme} className="w-full" />
+        )}
+
+        {item.type === 'quote' && (
+          <QuoteCard data={item.data as any} theme={theme} className="w-full" />
+        )}
+
+        {item.type === 'code' && (
+          <CodeCard data={item.data as any} theme={theme} className="w-full" />
+        )}
+
+        {item.type === 'note' && (
+          <NoteCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'header' && (
-          <HeaderCard
-            data={item.data as any}
-            theme={theme}
-          />
+          <HeaderCard data={item.data as any} theme={theme} />
         )}
 
         {item.type === 'kpi-card' && (
-          <div className="text-center">
-            <div
-              className="text-4xl font-bold mb-2"
-              style={{ color: theme.colors.primary }}
-            >
-              {(item.data as any).metric}
-            </div>
-            <div
-              className="text-lg opacity-80"
-              style={{ color: theme.colors.foreground }}
-            >
-              {(item.data as any).label}
-            </div>
-          </div>
+          <KpiCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'photo-card' && (
-          <div className="w-full h-full flex items-center justify-center">
-            <div
-              className="w-full h-full bg-muted rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: theme.colors.muted }}
-            >
-              <span className="text-muted-foreground text-sm">
-                {(item.data as any).alt || 'Image Placeholder'}
-              </span>
-            </div>
-          </div>
+          <PhotoCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'chart' && (
-          <div className="w-full h-full flex items-center justify-center">
-            <div
-              className="w-full h-full bg-muted rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: theme.colors.muted }}
-            >
-              <span className="text-muted-foreground text-sm">
-                Chart: {(item.data as any).type}
-              </span>
-            </div>
-          </div>
+          <ChartCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'table' && (
-          <div className="w-full h-full flex items-center justify-center">
-            <div
-              className="w-full h-full bg-muted rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: theme.colors.muted }}
-            >
-              <span className="text-muted-foreground text-sm">
-                Table
-              </span>
-            </div>
-          </div>
+          <TableCard data={item.data as any} theme={theme} className="w-full h-full" />
         )}
 
         {item.type === 'testimonial' && (
-          <div className="text-center">
-            <blockquote
-              className="text-lg italic mb-4"
-              style={{ color: theme.colors.foreground }}
-            >
-              &ldquo;{(item.data as any).quote}&rdquo;
-            </blockquote>
-            <cite
-              className="text-sm font-medium"
-              style={{ color: theme.colors.primary }}
-            >
-              — {(item.data as any).author}
-            </cite>
-          </div>
+          <TestimonialCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'timeline' && (
-          <div className="w-full h-full flex items-center justify-center">
-            <div
-              className="w-full h-full bg-muted rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: theme.colors.muted }}
-            >
-              <span className="text-muted-foreground text-sm">
-                Timeline
-              </span>
-            </div>
-          </div>
+          <TimelineCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'metric-card' && (
-          <div className="text-center">
-            <div
-              className="text-3xl font-bold mb-2"
-              style={{ color: theme.colors.accent }}
-            >
-              {(item.data as any).value}{(item.data as any).unit}
-            </div>
-            <div
-              className="text-base opacity-80"
-              style={{ color: theme.colors.foreground }}
-            >
-              {(item.data as any).label}
-            </div>
-          </div>
+          <MetricCard data={item.data as any} theme={theme} className="w-full" />
         )}
 
         {item.type === 'button' && (
           <div className="w-full h-full flex items-center justify-center">
-            <button
-              className={cn(
-                "px-6 py-3 rounded-lg font-medium transition-colors",
-                (item.data as any).variant === 'primary' && "bg-primary text-primary-foreground hover:bg-primary/90",
-                (item.data as any).variant === 'secondary' && "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-                (item.data as any).variant === 'outline' && "border border-border bg-background hover:bg-accent"
-              )}
-              style={{
-                backgroundColor: (item.data as any).variant === 'primary' ? theme.colors.primary : undefined,
-                color: (item.data as any).variant === 'primary' ? theme.colors.background : theme.colors.foreground,
-                borderColor: theme.colors.border,
-              }}
-            >
-              {(item.data as any).text}
-            </button>
+            <Button variant={(item.data as any).variant === 'outline' ? 'outline' : (item.data as any).variant === 'secondary' ? 'secondary' : 'default'}>
+              {(item.data as any).text || 'Click Here'}
+            </Button>
           </div>
         )}
 
-        {/* Placeholder for unknown types */}
-        {!['text', 'header', 'kpi-card', 'photo-card', 'chart', 'table', 'testimonial', 'timeline', 'metric-card', 'button'].includes(item.type) && (
-          <div className="text-center text-muted-foreground">
-            Unknown item type: {item.type}
-          </div>
+        {!['text', 'rich-text', 'list', 'quote', 'code', 'note', 'header', 'kpi-card', 'photo-card', 'chart', 'table', 'testimonial', 'timeline', 'metric-card', 'button'].includes(item.type) && (
+          <div className="text-center text-muted-foreground w-full">Unknown item type: {item.type}</div>
         )}
       </div>
 
@@ -301,7 +212,7 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
     <div className={cn("w-full h-full relative", className)}>
       {/* Fixed Header - positioned outside grid */}
       {header && (
-        <div className="absolute top-4 left-4 right-4 z-20">
+        <div className="absolute top-6 left-6 right-6 z-20">
           <GridItem
             item={header}
             theme={theme}
@@ -318,8 +229,8 @@ export const SlideGrid: React.FC<SlideGridProps> = ({
         breakpoints={{ lg: 1200, md: 996, sm: 768 }}
         cols={{ lg: 12, md: 10, sm: 6 }}
         rowHeight={30}
-        margin={[10, 10]}
-        containerPadding={[10, 10]}
+        margin={[12, 12]}
+        containerPadding={[15, 15]}
         isDraggable={isEditable}
         isResizable={isEditable}
         useCSSTransforms={true}

@@ -1,0 +1,40 @@
+{
+  "theme": "tech-purple",
+  "titleSlide": {
+    "title": "Rich Text Test",
+    "subtitle": "Testing rich text formatting",
+    "date": "2025-10-23",
+    "author": "Test",
+    "company": "Typography"
+  },
+  "slides": [
+    {
+      "layout": "content-slide",
+      "title": "Rich Text Formatting Test",
+      "items": [
+        {
+          "i": "test-text",
+          "data": {
+            "content": [
+              {"text": "Normal text, ", "formatting": {}},
+              {"text": "bold text", "formatting": {"bold": true, "color": "#8B5CF6"}},
+              {"text": ", ", "formatting": {}},
+              {"text": "italic text", "formatting": {"italic": true, "color": "#059669"}},
+              {"text": ", ", "formatting": {}},
+              {"text": "underline text", "formatting": {"underline": true, "color": "#DC2626"}},
+              {"text": ", and ", "formatting": {}},
+              {"text": "mixed formatting", "formatting": {"bold": true, "italic": true, "color": "#D97706"}}
+            ],
+            "type": "paragraph",
+            "size": "lg",
+            "align": "center",
+            "lineHeight": "relaxed",
+            "letterSpacing": "normal"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
