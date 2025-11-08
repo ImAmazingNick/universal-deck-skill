@@ -1,0 +1,115 @@
+{
+  "theme": "tech-purple",
+  "assetsBasePath": "./public",
+  "deckRequest": {
+    "topic": "Aurora AI Launch Blueprint",
+    "subtitle": "Market Entry Strategy | 2026",
+    "audience": "Executive Stakeholders",
+    "tone": "visionary",
+    "goals": [
+      "Highlight launch readiness for Aurora AI assistant",
+      "Demonstrate market momentum and customer validation",
+      "Secure alignment on next-quarter investments"
+    ],
+    "keyMessages": [
+      "Aurora AI delivers measurable productivity gains within 30 days",
+      "Enterprise pilots confirm scalable adoption potential",
+      "Go-to-market engine is primed for high-velocity growth"
+    ],
+    "takeaways": [
+      "Pipeline coverage exceeds target by 180%",
+      "Enterprise expansion unlocking $42M ARR upside",
+      "Team is prepared to accelerate launch campaigns globally"
+    ],
+    "context": [
+      "Aurora AI is the next-generation assistant that orchestrates cross-application workflows with secure, compliant automation. The product has completed six enterprise pilots and is pacing 3x faster deployment than the previous platform."
+    ],
+    "sections": [
+      {
+        "title": "Launch Narrative",
+        "focus": "overview",
+        "narrative": "Aurora AI unifies disjointed enterprise workflows with an autonomous assistant that collaborates with every teammate. Our launch motion emphasizes measurable time-to-value, secure automation, and extensible integrations.",
+        "bullets": [
+          "Positioned as the trusted AI co-pilot for regulated industries",
+          "Launch assets localized for North America, EMEA, and APAC",
+          "Partner ecosystem ready with 18 certified implementation teams"
+        ]
+      },
+      {
+        "title": "Pilot Performance Snapshot",
+        "focus": "metrics",
+        "narrative": "Enterprise pilots unlocked rapid adoption, strong satisfaction, and contract expansion opportunities.",
+        "metrics": [
+          { "label": "Pilot Conversion", "value": "92%", "change": 14, "changeLabel": "QoQ uplift" },
+          { "label": "Time-to-Value", "value": "28 days", "change": -12, "changeLabel": "implementation days" },
+          { "label": "Net Promoter", "value": "78", "change": 9, "changeLabel": "point increase" },
+          { "label": "Expansion Pipeline", "value": "$18.6M", "change": 7.4, "changeLabel": "ARR upside" }
+        ]
+      },
+      {
+        "title": "Revenue Trajectory",
+        "focus": "chart",
+        "narrative": "Projected ARR accelerates as Aurora AI lands in enterprise segments with higher attach rates.",
+        "chart": {
+          "type": "area",
+          "categories": ["Q1", "Q2", "Q3", "Q4"],
+          "series": [
+            { "name": "Core ARR", "values": [4.2, 6.1, 9.3, 13.8] },
+            { "name": "Expansion ARR", "values": [0.8, 2.4, 5.1, 8.6] }
+          ],
+          "summary": "Aurora AI contributes 47% of total ARR growth by Q4 2026."
+        }
+      },
+      {
+        "title": "Customer Validation",
+        "focus": "testimonials",
+        "testimonials": [
+          {
+            "quote": "Aurora AI collapsed cross-department workflow time from hours to minutes. The assistant is now embedded in every daily standup.",
+            "author": "Naomi Rhodes",
+            "role": "VP Operations",
+            "company": "Helios Financial"
+          },
+          {
+            "quote": "Security reviews completed in record time thanks to Aurora's compliance controls. Our teams trust it with sensitive workflows.",
+            "author": "Felix Khan",
+            "role": "CISO",
+            "company": "Riverline Logistics"
+          }
+        ]
+      },
+      {
+        "title": "Roadmap Readiness",
+        "focus": "timeline",
+        "timeline": [
+          { "date": "Q1 2025", "title": "Pilot Cohort", "description": "Six enterprise pilots delivered with 97% satisfaction." },
+          { "date": "Q3 2025", "title": "Security & Compliance", "description": "SOC2 Type II and ISO 27001 certifications completed." },
+          { "date": "Q1 2026", "title": "Partner Ecosystem", "description": "Launch partners trained across 18 global regions." },
+          { "date": "Q3 2026", "title": "Launch Expansion", "description": "General availability with localized playbooks in three languages." }
+        ]
+      },
+      {
+        "title": "Product Experience",
+        "focus": "product",
+        "image": {
+          "src": "window.svg",
+          "alt": "Aurora AI workflow interface",
+          "caption": "Adaptive workspace with live assistant suggestions."
+        },
+        "narrative": "Aurora AI synthesizes CRM, ITSM, and productivity data to recommend the next best action. Coverage spans 40 integrations with enterprise-grade controls."
+      },
+      {
+        "title": "Call To Action",
+        "focus": "cta",
+        "callToAction": {
+          "headline": "Greenlight the Aurora AI launch wave",
+          "subheadline": "Authorize global campaign investments and rollout resources.",
+          "buttonLabel": "Approve Launch Plan",
+          "url": "https://aurora.example.com/launch"
+        }
+      }
+    ]
+  }
+}
+
+
