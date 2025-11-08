@@ -1,38 +1,50 @@
-# Marketing Deck Generator Skill
+# Claude Skills Directory
 
-This directory contains the Claude Skill definition for the Marketing Deck Generator.
+This directory contains Claude Skills for this project.
 
 ## Structure
 
-- **SKILL.md** - Main skill definition with YAML frontmatter
-- **workflows/** - Step-by-step workflows for common tasks
-- **reference/** - Detailed reference documentation
-- **examples/** - Usage examples and patterns
+```
+.claude/
+├── skills/
+│   ├── marketing-deck-generator/    # Deck generation skill
+│   └── brand-guidelines/            # Brand consistency skill
+└── README.md                        # This file
+```
 
-## Quick Reference
+## Available Skills
 
-### Main Entry Point
-- `.claude/SKILL.md` - Start here for skill overview
+### Marketing Deck Generator
+Generate professional PPTX marketing presentations from JSON input or CLI parameters.
 
-### Workflows
-- `workflows/basic-generation.md` - Standard deck generation
-- `workflows/context-driven.md` - Context-driven generation
-- `workflows/customization.md` - Customizing slides and items
+**Location**: `.claude/skills/marketing-deck-generator/`
 
-### Reference Documentation
-- `reference/layouts.md` - Layout definitions
-- `reference/themes.md` - Theme styles
-- `reference/schemas.md` - JSON schemas
+**Main File**: `skills/marketing-deck-generator/SKILL.md`
 
-### Examples
-- `examples/quick-start.md` - Quick start examples
+### HTML Deck Generator
+Create interactive longevity-style HTML decks that can be shared in a browser.
+
+**Location**: `.claude/skills/html-deck-generator/`
+
+**Main File**: `skills/html-deck-generator/SKILL.md`
+
+### Brand Guidelines
+Maintain consistent branding across all generated content and presentations.
+
+**Location**: `.claude/skills/brand-guidelines/`
+
+**Main File**: `skills/brand-guidelines/SKILL.md`
 
 ## Usage
 
-This skill enables Claude to generate professional PowerPoint presentations (PPTX) from:
-- CLI parameters
-- JSON input files
-- Strategic context descriptions
+Each skill has its own directory with:
+- `SKILL.md` - Main skill definition with YAML frontmatter
+- `reference/` - Detailed reference documentation
+- `examples/` - Usage examples (if applicable)
+- `workflows/` - Step-by-step workflows (if applicable)
 
-See `SKILL.md` for complete documentation.
+See individual skill directories for complete documentation.
 
+## Project Configuration
+
+See `CLAUDE.md` in the repository root for project-wide Claude configuration.

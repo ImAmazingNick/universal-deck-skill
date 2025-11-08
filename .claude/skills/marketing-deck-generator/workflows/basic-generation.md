@@ -4,6 +4,11 @@ Standard workflow for generating PowerPoint presentations.
 
 ## Workflow Steps
 
+0. **Analyze User Intent**
+   - Parse request to understand audience, tone, goals, and desired outcomes
+   - Map goals to candidate layouts (e.g., metrics → KPI cards, narrative → photo flow)
+   - Outline slide sequence before generating
+
 1. **Prepare Input Data**
    - Choose layout(s) or use context-driven approach
    - Select theme

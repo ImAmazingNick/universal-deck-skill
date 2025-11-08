@@ -15,6 +15,28 @@ Use this skill when you need to:
 - Produce branded PowerPoint files programmatically
 - Convert strategic context (goals, metrics, testimonials) into slide decks
 
+## Required Intent Analysis
+
+Before generating or suggesting slides, Claude **must** think through the user's intent and audience:
+
+1. **Understand the Request**  
+   - Identify primary goal (e.g., persuade investors, educate customers, report metrics)  
+   - Note audience, tone, time horizon, and any explicit constraints
+2. **Plan Slide Strategy**  
+   - Map goals to layouts (e.g., KPIs → `data-grid-dashboard`, roadmap → `timeline-roadmap`, testimonials → `testimonial-gallery`)  
+   - Decide slide sequencing and transitions that support the narrative arc
+3. **Choose Layouts Intentionally**  
+   - Prefer layouts that reinforce the message (metrics → KPI cards, comparisons → tables, vision → hero slide)  
+   - Avoid redundant slides; each layout should add new insight
+4. **Validate Against Intent**  
+   - Ensure selected layouts, themes, and data support the desired tone and outcome  
+   - If information is missing, ask for clarification or propose assumptions explicitly
+5. **Prefer Context-Driven Flow**  
+   - When the request contains goals/sections, use the context-driven workflow to auto-map intent to layouts  
+   - When intent is ambiguous, outline options and explain trade-offs before generating content
+
+Document your reasoning (at least briefly) before producing the final deck so the user can see how intent informed layout selection.
+
 ## Quick Start
 
 ```bash
@@ -84,9 +106,9 @@ Provide strategic context (topic, goals, sections with metrics/charts/timelines/
 - `reference/themes.md` - Theme styles and color palettes
 - `reference/schemas.md` - JSON input schemas and field reference
 - `examples/quick-start.md` - Common usage patterns
-- `resources/layouts.json` - Layout configurations (grid, items, defaults)
-- `resources/themes.json` - Theme color definitions
-- `resources/examples/` - Working example JSON files
+- `resources/layouts.json` - Layout configurations (grid, items, defaults) (repository root)
+- `resources/themes.json` - Theme color definitions (repository root)
+- `resources/examples/` - Working example JSON files (repository root)
 
 ## Development
 

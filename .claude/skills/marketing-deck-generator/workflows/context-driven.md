@@ -11,6 +11,11 @@ Use context-driven generation when:
 
 ## Workflow
 
+0. **Understand Intent from Context**
+   - Review topic, audience, tone, and goals to determine presentation strategy
+   - Map each goal/section to the most suitable layout before generating
+   - Identify gaps or clarifications needed and ask the user if required
+
 1. **Prepare Context JSON**
    - Define topic, audience, tone
    - List goals

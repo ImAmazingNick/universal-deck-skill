@@ -12,6 +12,11 @@ Use customization when:
 
 ## Workflow
 
+0. **Clarify Intent and Audience**
+   - Capture audience, goal, tone, and key messages from request
+   - Determine which layout best matches each intent before editing JSON
+   - Document rationale for selected layouts/items
+
 1. **Start with Base Layout**
    - Choose layout from `resources/layouts.json`
    - Note item identifiers (`i` keys)
